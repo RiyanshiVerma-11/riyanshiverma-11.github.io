@@ -1,7 +1,7 @@
 <!-- Premium GitHub Profile README for Riyanshi Verma -->
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/RiyanshiVerma-11/riyanshiverma-11.github.io/main/assets/banner.svg" alt="Riyanshi Verma - Generative AI & Systems Developer" width="100%" />
+  <img src="https://raw.githubusercontent.com/RiyanshiVerma-11/riyanshiverma-11.github.io/main/assets/banner.svg" alt="Riyanshi Verma - AI Developer & Data Science Student" width="100%" />
 </div>
 
 <br />
@@ -25,11 +25,12 @@
 
 ### 🧬 About Me
 
-I am a **Generative AI Engineer & Systems Developer** dedicated to building high-performance intelligent systems. My focus lies at the intersection of large language models (LLMs), semantic search, and autonomous multi-agent architectures. I design workflows that enable AI to reason, plan, and execute complex workflows securely and efficiently.
+I am an **AI Developer & Data Science Student** dedicated to building high-performance intelligent systems. My focus lies at the intersection of large language models (LLMs), semantic search, and autonomous multi-agent architectures. I design workflows that enable AI to reason, plan, and execute complex workflows securely and efficiently.
 
 *   🔭 **Current Focus:** Developing production-grade Retrieval-Augmented Generation (RAG) frameworks and agentic reasoning systems.
 *   🧠 **R&D Interests:** Low-latency vector indexing, agent memory orchestration, fine-tuning techniques (LoRA/QLoRA), and deep learning model optimizations.
 *   🚀 **Core Mission:** Bridging the gap between raw foundation models and robust, reliable enterprise software solutions.
+*   💼 **Target Roles:** AI Developer / Generative AI Intern | Python Backend Engineer | Data Scientist / ML Associate | Full-Stack Developer (AI Apps) | Prompt Engineer & Agentic Workflows
 
 ---
 

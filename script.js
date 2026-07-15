@@ -1,6 +1,6 @@
 /* ==========================================================================
    DIGITAL ATELIER — Interactivity, Parallax & Neural Visualizations
-   Riyanshi Verma | Generative AI & Systems Developer
+   Riyanshi Verma | AI Developer & Data Science Student
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {

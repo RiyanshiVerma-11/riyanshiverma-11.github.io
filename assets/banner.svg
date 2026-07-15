@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="100%" height="100%">
   <!-- Definitions for gradients and shadows -->
   <defs>
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" x2="100%">
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#07090e" />
       <stop offset="50%" stop-color="#0c101b" />
       <stop offset="100%" stop-color="#111627" />
@@ -69,7 +69,7 @@
     
     <!-- Subtitle / Role -->
     <text x="0" y="195" fill="url(#text-grad)" font-family="'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="4">
-      GENERATIVE AI ENGINEER &amp; SYSTEMS DEVELOPER
+      AI DEVELOPER &amp; DATA SCIENCE STUDENT
     </text>
 
     <!-- Bio bullet line -->
