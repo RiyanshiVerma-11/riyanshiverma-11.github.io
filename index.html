@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riyanshi Verma | Generative AI & Systems Developer</title>
+    <meta name="description"
+        content="Portfolio of Riyanshi Verma, Generative AI Engineer and Systems Developer specializing in multi-agent orchestration, RAG, and LLM optimizations.">
+    <!-- Google Fonts & Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scroll-progress"></div>
+    </div>
+
+    <!-- Preloader / System Boot Sequence -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <span class="preloader-symbol">&lt;/&gt;</span>
+                <span class="preloader-text">Riyanshi<span class="highlight">.ai</span></span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-progress" id="preloader-progress"></div>
+            </div>
+            <div class="preloader-status" id="preloader-status">INITIALIZING SYSTEM NEURONS...</div>
+        </div>
+    </div>
+
+    <!-- Ambient Cursor Glow Blob -->
+    <div class="ambient-glow" id="ambient-glow"></div>
+
+    <!-- Background Particle Canvas -->
+    <canvas id="neural-canvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-symbol">&lt;/&gt;</span>
+                <span class="logo-text">Riyanshi<span class="highlight">.ai</span></span>
+            </a>
+            <nav class="nav-links" id="nav-links">
+                <a href="#about" class="nav-link active">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#sandbox" class="nav-link">Sandbox</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <!-- Theme Switcher -->
+                <div class="theme-switcher" id="theme-switcher">
+                    <button class="btn-outline btn-sm theme-toggle-btn" id="theme-toggle-btn" aria-label="Switch color theme">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8c.28 0 .5-.22.5-.5a.54.54 0 0 0-.14-.35c-.41-.46-.63-1.05-.63-1.65a2.5 2.5 0 0 1 2.5-2.5H16c2.21 0 4-1.79 4-4 0-3.86-3.59-7-8-7z"/><circle cx="6.5" cy="11.5" r="1.5" fill="currentColor"/><circle cx="9.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="14.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="17.5" cy="11.5" r="1.5" fill="currentColor"/></svg>
+                    </button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-option active" data-theme="default"><span class="theme-dot" style="background: linear-gradient(135deg, #F7B267, #EC4899, #8B5CF6);"></span>Warm Cyber</button>
+                        <button class="theme-option" data-theme="matrix"><span class="theme-dot" style="background: linear-gradient(135deg, #22C55E, #84CC16);"></span>Matrix Green</button>
+                        <button class="theme-option" data-theme="deepspace"><span class="theme-dot" style="background: linear-gradient(135deg, #F472B6, #06B6D4);"></span>Deep Space</button>
+                        <button class="theme-option" data-theme="mono"><span class="theme-dot" style="background: linear-gradient(135deg, #E2E8F0, #64748B);"></span>Monochrome</button>
+                    </div>
+                </div>
+                <!-- Ctrl+K Command Palette Trigger -->
+                <button class="btn-outline btn-sm cmd-trigger" id="cmd-trigger" aria-label="Open command palette">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M15 7.5V2H9v5.5l3 3 3-3zM7.5 9H2v6h5.5l3-3-3-3zM9 16.5V22h6v-5.5l-3-3-3 3zM16.5 9l-3 3 3 3H22V9h-5.5z"/></svg>
+                    <span class="cmd-kbd">⌘K</span>
+                </button>
+                <a href="https://github.com/RiyanshiVerma-11" class="btn-outline btn-sm" target="_blank"
+                    rel="noopener noreferrer">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor"
+                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                    </svg>
+                    <span class="nav-btn-text">GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" class="btn-outline btn-sm"
+                    style="margin-left: 0.5rem;" target="_blank" rel="noopener noreferrer">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor"
+                            d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.8v8.37h2.8v-4.67c0-.25.02-.5.1-.68a1.14 1.14 0 0 1 1-.77c.76 0 1 .58 1 1.42v4.7h2.8M6.5 8.37a1.37 1.37 0 0 0 1.37-1.37A1.37 1.37 0 0 0 6.5 5.63A1.37 1.37 0 0 0 5.13 7A1.37 1.37 0 0 0 6.5 8.37m1.4 10.13V10.13h-2.8v8.37h2.8z" />
+                    </svg>
+                    <span class="nav-btn-text">LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/builds.by.riyanshi?igsh=MTFpcGpwOTlsYmtldQ=="
+                    class="btn-outline btn-sm" style="margin-left: 0.5rem;" target="_blank" rel="noopener noreferrer">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor"
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                    </svg>
+                    <span class="nav-btn-text">Instagram</span>
+                </a>
+            </div>
+            <button class="mobile-toggle" aria-label="Toggle navigation menu" id="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-left reveal">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        <span class="hero-badge-text">SYSTEM ACTIVE // GENERATIVE AI ENGINEER</span>
+                    </div>
+                    <h4 class="hero-greeting">Hi, I am</h4>
+                    <h1 class="hero-name">Riyanshi Verma</h1>
+                    <h2 class="hero-tagline">
+                        Engineering Intelligence. <br>
+                        Optimizing <span class="gradient-text">Models</span>.
+                    </h2>
+                    <p class="hero-description">
+                        I build and deploy advanced AI architectures, multi-agent orchestrations, and optimized
+                        retrieval networks designed for real-world impact.
+                    </p>
+                    <div class="hero-typed-line">
+                        <span>&gt;_</span> <span id="typed-text"></span><span class="cursor-blink">|</span>
+                    </div>
+                    <div class="hero-ctas">
+                        <a href="#projects" class="btn-primary">Explore Projects</a>
+                        <a href="assets/Riyanshi%20Verma%20Resume.pdf" target="_blank" class="btn-secondary"
+                            id="resume-btn">
+                            <span>Get Resume</span>
+                            <span class="btn-icon">📥</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-right reveal reveal-delay-2">
+                    <div class="photo-showcase">
+                        <!-- Floating Tech Tags Orbiting the Photo -->
+                        <span class="floating-badge">Agentic AI</span>
+                        <span class="floating-badge">RAG Systems</span>
+                        <span class="floating-badge">Python</span>
+                        <span class="floating-badge">FastAPI</span>
+                        <span class="floating-badge">LLMOps</span>
+
+                        <!-- Rotating decorative rings -->
+                        <div class="photo-ring-inner"></div>
+                        <div class="photo-ring"></div>
+
+                        <!-- Main profile photo wrapper -->
+                        <div class="photo-wrapper">
+                            <img src="assets/profile.png" alt="Riyanshi Verma portrait"
+                                onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop'">
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="hero-stats-ticker">
+                        <div class="ticker-item">
+                            <span class="ticker-val">7</span>
+                            <span class="ticker-lbl">AI Systems Deployed</span>
+                        </div>
+                        <div class="ticker-item">
+                            <span class="ticker-val">Rank 1</span>
+                            <span class="ticker-lbl">Women Dev (PromptWars '26)</span>
+                        </div>
+                        <div class="ticker-item">
+                            <span class="ticker-val">21K+</span>
+                            <span class="ticker-lbl">Google Cloud Points</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphic background grids and glows -->
+            <div class="hero-grid-bg"></div>
+            <div class="hero-gradient-orb orb-1"></div>
+            <div class="hero-gradient-orb orb-2"></div>
+            <div class="hero-gradient-orb orb-3"></div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="scroll-down-indicator" id="scroll-down-btn">
+                <a href="#about" aria-label="Scroll to About Section">
+                    <svg class="chevron-down" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- About Section (Bento Grid) -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-tag">identity</div>
+                    <h2 class="section-title">Decentralizing Complexity</h2>
+                    <p class="section-subtitle">Translating advanced neural network research into robust,
+                        deployment-ready software systems.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <!-- Card 1: Apple-style Mission (Span 2) -->
+                    <div class="bento-card card-glass span-2 reveal">
+                        <div class="bento-card-label">
+                            <span class="label-dot"></span> Mission Statement
+                        </div>
+                        <h3>Bridging AI Research &amp; Enterprise Systems</h3>
+                        <p>
+                            As an aspiring <strong>AI &amp; Generative AI Systems Engineer</strong>, my focus lies in
+                            designing and building systems that bridge the gap between academic model capabilities and
+                            enterprise-grade deployment. I specialize in designing context-aware RAG pipelines,
+                            fine-tuning lightweight foundation models, and writing backend logic that orchestrates
+                            multi-agent environments.
+                        </p>
+                        <p style="margin-top: 1rem;">
+                            I believe the future of AI lies in modular, low-latency, and highly specialized systems. By
+                            coupling Python-based AI development with modern cloud and database technologies, I strive
+                            to create agents that solve actual user pain points with minimal hallucination and maximum
+                            reliability.
+                        </p>
+                    </div>
+
+                    <!-- Card 2: Interactive Manifesto / Code terminal -->
+                    <div class="bento-card card-glass bento-terminal reveal reveal-delay-2">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="terminal-title">agent_manifesto.py</span>
+                        </div>
+                        <div class="terminal-body">
+                            <pre><code class="language-python"><span class="keyword">class</span> <span class="class-name">GenerativeDeveloper</span>:
+    <span class="keyword">def</span> <span class="function-name">__init__</span>(<span class="keyword">self</span>):
+        <span class="keyword">self</span>.name = <span class="string">"Riyanshi Verma"</span>
+        <span class="keyword">self</span>.role = <span class="string">"AI Systems Engineer"</span>
+ 
+    <span class="keyword">def</span> <span class="function-name">core_belief</span>(<span class="keyword">self</span>):
+        <span class="keyword">return</span> [
+            <span class="string">"RAG beats massive params"</span>,
+            <span class="string">"Strict agent checks"</span>,
+            <span class="string">"Quantized edge models"</span>
+        ]
+
+agent = GenerativeDeveloper()
+print(agent.core_belief())</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: CGPA & Education details -->
+                    <div class="bento-card card-glass reveal">
+                        <div class="bento-card-label">
+                            <span class="label-dot"></span> Academic Profile
+                        </div>
+                        <h3>Education &amp; Core Fields</h3>
+                        <p>Pursuing a rigorous curriculum focused on advanced algorithms, data structures, neural
+                            architectures, and big data systems engineering.</p>
+
+                        <div class="edu-card">
+                            <div class="edu-icon">🎓</div>
+                            <div class="edu-details">
+                                <h4>B.Tech in CSE (Data Science)</h4>
+                                <span>CGPA: <strong style="color: var(--gold);">8.53</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Metrics Showcase (Span 2) -->
+                    <div class="bento-card card-glass span-2 reveal reveal-delay-2">
+                        <div class="bento-card-label">
+                            <span class="label-dot"></span> Performance metrics
+                        </div>
+                        <h3>Ecosystem Benchmarks &amp; Achievements</h3>
+                        <p>Demonstrated competitive excellence in fast-paced AI validation challenges and hackathons
+                            globally.</p>
+
+                        <div class="bento-metrics">
+                            <div class="metric">
+                                <span class="metric-value gradient-text counter" data-target="1">0</span>
+                                <span class="metric-label">Rank 1 Women Dev (PromptWars '26)</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value gradient-text counter" data-target="30">0</span>
+                                <span class="metric-label">Top 30 overall out of 21,090+</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value gradient-text counter" data-target="7">0</span>
+                                <span class="metric-label">AI Systems Deployed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Experience & Credentials Section -->
+        <section id="experience" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-tag">timeline</div>
+                    <h2 class="section-title">System Experience</h2>
+                    <p class="section-subtitle">Chronological footprint of enterprise AI implementations, collaborative
+                        research, and credentials.</p>
+                </div>
+
+                <div class="experience-layout">
+                    <!-- Left: Internships & Timeline -->
+                    <div class="timeline-container reveal">
+                        <div class="timeline-line"></div>
+
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card-glass">
+                                <div class="timeline-header-info">
+                                    <span class="timeline-date">JUL 2026 – PRESENT</span>
+                                    <h3 class="timeline-role">AI Intern</h3>
+                                    <h4 class="timeline-company">Infosys Springboard 7.0 <span
+                                            class="badge-status">Active</span></h4>
+                                </div>
+                                <ul class="timeline-bullets">
+                                    <li>Selected for a highly competitive virtual internship program under the 7.0
+                                        cohort, focusing on enterprise-level AI applications to design and develop
+                                        **CommAI** (an AI-powered multilingual mass communication platform).</li>
+                                    <li>Integrated **Groq API (Llama 3.3/3.1)** to build an AI content drafting engine
+                                        that localizes public campaigns across **22 official regional Indian languages**
+                                        and generates dynamic, responsive previews across device layouts.</li>
+                                    <li>Developed an **offline content compliance auditor** that evaluates campaign
+                                        drafts for shouting patterns, duplicate phrasing, character counts, and
+                                        sensitive keywords, improving message quality before bulk broadcasts.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card-glass">
+                                <div class="timeline-header-info">
+                                    <span class="timeline-date">SEP 2024 – OCT 2024</span>
+                                    <h3 class="timeline-role">Generative AI Intern</h3>
+                                    <h4 class="timeline-company">Smart Internz &amp; Google Cloud</h4>
+                                </div>
+                                <ul class="timeline-bullets">
+                                    <li>Successfully completed a virtual internship in Generative AI through Smart
+                                        Internz in collaboration with Google Cloud, gaining hands-on experience with
+                                        **Vertex AI** for building and deploying generative models.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Google Cloud Skills Boost Profile & Credentials -->
+                    <div class="credentials-sidebar reveal reveal-delay-2">
+                        <!-- Google Cloud Skills Boost Card -->
+                        <div class="cred-card card-glass google-cloud-cred">
+                            <div class="cred-glow-glow"></div>
+                            <div class="cred-card-top">
+                                <div class="google-cloud-badge-logo">
+                                    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"
+                                        style="color: #4285F4;">
+                                        <path
+                                            d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                                    </svg>
+                                </div>
+                                <div class="cred-details">
+                                    <span class="cred-subtitle">GOOGLE CLOUD PROFILE</span>
+                                    <h3>Diamond League</h3>
+                                    <span class="gcp-points">💎 21,635 Points</span>
+                                </div>
+                            </div>
+                            <p class="cred-desc">Verified skills in Vertex AI, cloud orchestration, model fine-tuning,
+                                and big data systems architecture.</p>
+                            <a href="https://www.skills.google/public_profiles/ef613bba-04fa-46f7-8ff7-3a867cf4db7f"
+                                class="btn-outline btn-block cred-btn" target="_blank" rel="noopener noreferrer">
+                                <span>Verify Cloud Profile</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2"
+                                    style="margin-left: 4px; display: inline-block; vertical-align: middle;">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- Achievements & Academic Excellence -->
+                        <div class="cred-card card-glass">
+                            <div class="bento-card-label"><span class="label-dot"></span> Honors &amp; Awards</div>
+                            <div class="achievement-item">
+                                <div class="ach-icon">🏆</div>
+                                <div class="ach-text">
+                                    <h4>Rank 1 (Women Developer)</h4>
+                                    <p>Overall Rank 30 / 26,090+ in Google/Hack2Skills PromptWars 2026. Code scored
+                                        96.98% by AI evaluation.</p>
+                                </div>
+                            </div>
+                            <div class="achievement-item" style="margin-top: 1.2rem;">
+                                <div class="ach-icon">🏅</div>
+                                <div class="ach-text">
+                                    <h4>Academic Excellence Cup</h4>
+                                    <p>Awarded by Gateway Classes for outstanding first year performance (9.02 YGPA /
+                                        8.53 CGPA B.Tech).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certifications list -->
+                        <div class="cred-card card-glass">
+                            <div class="bento-card-label"><span class="label-dot"></span> Certifications</div>
+                            <ul class="cert-list">
+                                <li>
+                                    <span class="cert-check">✓</span>
+                                    <div>
+                                        <strong>Infosys Pragati (Cohort 6)</strong>
+                                        <p>Path to Future AI engineering preparation</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="cert-check">✓</span>
+                                    <div>
+                                        <strong>Prompt Engineering Certification</strong>
+                                        <p>Infosys Springboard verified expert</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section bg-alt">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-tag">capabilities</div>
+                    <h2 class="section-title">Technical Matrix</h2>
+                    <p class="section-subtitle">Deep capability across the full vertical stack of model integration,
+                        deep learning pipelines, and backend MLOps infrastructure.</p>
+                </div>
+
+                <div class="skills-tabs-container reveal">
+                    <div class="skills-tabs">
+                        <button class="tab-btn active" data-tab="genai">GenAI &amp; LLM Orchestration</button>
+                        <button class="tab-btn" data-tab="ml-core">Deep Learning &amp; ML</button>
+                        <button class="tab-btn" data-tab="infrastructure">Backend &amp; MLOps</button>
+                    </div>
+
+                    <!-- Tab Content 1: GenAI -->
+                    <div class="tab-content active" id="genai">
+                        <div class="skills-grid">
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🔌</div>
+                                    </div>
+                                    <h4>LLM Integration &amp; APIs</h4>
+                                    <span class="skill-percentage">90%</span>
+                                </div>
+                                <p>Orchestrating foundational APIs (OpenAI, Claude, open-source Llama/Mistral) into
+                                    production workflows with precise control.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="90%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🤖</div>
+                                    </div>
+                                    <h4>Agentic Orchestration</h4>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <p>Building autonomous agents that use planning, execution tools, and dynamic loops
+                                    using LangChain, LlamaIndex, and CrewAI.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="85%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">📂</div>
+                                    </div>
+                                    <h4>RAG &amp; Vector Databases</h4>
+                                    <span class="skill-percentage">88%</span>
+                                </div>
+                                <p>Designing high-precision semantic retrieval systems with hybrid search, dense-sparse
+                                    embeddings, and vector stores (Qdrant, Pinecone).</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="88%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🎯</div>
+                                    </div>
+                                    <h4>Prompt Engineering &amp; Eval</h4>
+                                    <span class="skill-percentage">92%</span>
+                                </div>
+                                <p>Structuring system prompts, implementing output schemas, and validating model
+                                    behavior using LangSmith and custom LLM-as-a-judge patterns.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content 2: ML Core -->
+                    <div class="tab-content" id="ml-core">
+                        <div class="skills-grid">
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🧠</div>
+                                    </div>
+                                    <h4>Deep Learning &amp; NLP</h4>
+                                    <span class="skill-percentage">82%</span>
+                                </div>
+                                <p>Training, evaluating, and fine-tuning sequence-to-sequence models and transformers in
+                                    PyTorch and Hugging Face Ecosystem.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="82%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">📊</div>
+                                    </div>
+                                    <h4>Classical Machine Learning</h4>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <p>Applying traditional regressions, trees, clustering models, dimensionality reduction,
+                                    and preprocessing workflows using Scikit-Learn.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="85%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">⚙️</div>
+                                    </div>
+                                    <h4>Fine-Tuning &amp; Quantization</h4>
+                                    <span class="skill-percentage">78%</span>
+                                </div>
+                                <p>Applying parameter-efficient methods (PEFT, LoRA, QLoRA) and post-training
+                                    optimizations to shrink models for edge inference.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="78%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content 3: Infrastructure -->
+                    <div class="tab-content" id="infrastructure">
+                        <div class="skills-grid">
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🚀</div>
+                                    </div>
+                                    <h4>FastAPI &amp; Backend APIs</h4>
+                                    <span class="skill-percentage">86%</span>
+                                </div>
+                                <p>Building high-throughput, async RESTful APIs and streaming endpoints in Python to
+                                    power real-time generative interfaces.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="86%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">🐳</div>
+                                    </div>
+                                    <h4>Docker &amp; Containerization</h4>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <p>Packaging codebases and deep learning dependencies into isolated, reproducible,
+                                    GPU-accessible container environments.</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="80%"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-card card-glass">
+                                <div class="skill-top">
+                                    <div class="skill-orb">
+                                        <div class="skill-orb-ring"></div>
+                                        <div class="skill-orb-core">☁️</div>
+                                    </div>
+                                    <h4>MLOps &amp; Clouds</h4>
+                                    <span class="skill-percentage">75%</span>
+                                </div>
+                                <p>Managing model monitoring, data lineage, evaluation runs, and container deployments
+                                    across cloud services (AWS / GCP).</p>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" data-width="75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Systems Sandbox Section (Interactive AI Lab) -->
+        <section id="sandbox" class="section bg-alt">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-tag">interactive</div>
+                    <h2 class="section-title">Systems Sandbox</h2>
+                    <p class="section-subtitle">Run live simulation traces of advanced retrieval, multi-agent
+                        coordination, and system guardrail pipelines.</p>
+                </div>
+
+                <!-- Visual Flow Map -->
+                <div class="sandbox-flowmap reveal" id="sandbox-flowmap">
+                    <!-- RAG Flow -->
+                    <svg class="flowmap-svg active" id="flowmap-rag" viewBox="0 0 780 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="flow-node" id="rag-n1" x="0" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="55" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">USER QUERY</text>
+                        <text x="55" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Input</text>
+                        <path class="flow-path" id="rag-p1" d="M112 40 H138" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="rag-n2" x="140" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="195" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">EMBEDDINGS</text>
+                        <text x="195" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">gecko-002</text>
+                        <path class="flow-path" id="rag-p2" d="M252 40 H278" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="rag-n3" x="280" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="335" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">QDRANT DB</text>
+                        <text x="335" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Cosine Top-K</text>
+                        <path class="flow-path" id="rag-p3" d="M392 40 H418" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="rag-n4" x="420" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="475" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">CONTEXT</text>
+                        <text x="475" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Prompt Build</text>
+                        <path class="flow-path" id="rag-p4" d="M532 40 H558" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="rag-n5" x="560" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="615" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">LLM API</text>
+                        <text x="615" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Claude-3.5</text>
+                        <path class="flow-path" id="rag-p5" d="M672 40 H698" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="rag-n6" x="700" y="15" width="78" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="739" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">OUTPUT</text>
+                    </svg>
+                    <!-- Agent Flow -->
+                    <svg class="flowmap-svg" id="flowmap-agent" viewBox="0 0 780 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="flow-node" id="agent-n1" x="0" y="15" width="100" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="50" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">REQUEST</text>
+                        <path class="flow-path" id="agent-p1" d="M102 40 H128" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="agent-n2" x="130" y="15" width="100" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="180" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">PLANNER</text>
+                        <path class="flow-path" id="agent-p2" d="M232 30 H258" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <path class="flow-path" id="agent-p2b" d="M232 50 H258" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="agent-n3" x="260" y="0" width="120" height="35" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="320" y="22" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">CLINICAL</text>
+                        <rect class="flow-node" id="agent-n4" x="260" y="42" width="120" height="35" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="320" y="64" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">BILLING</text>
+                        <path class="flow-path" id="agent-p3" d="M382 18 H418" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <path class="flow-path" id="agent-p3b" d="M382 60 H418" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="agent-n5" x="420" y="15" width="120" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="480" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">CONSENSUS</text>
+                        <path class="flow-path" id="agent-p4" d="M542 40 H578" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="agent-n6" x="580" y="15" width="100" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="630" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">OUTPUT</text>
+                    </svg>
+                    <!-- Guardrail Flow -->
+                    <svg class="flowmap-svg" id="flowmap-guardrail" viewBox="0 0 780 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="flow-node" id="guard-n1" x="0" y="15" width="120" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="60" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">PROMPT IN</text>
+                        <path class="flow-path" id="guard-p1" d="M122 40 H148" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="guard-n2" x="150" y="15" width="130" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="215" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">KEYWORD SCAN</text>
+                        <path class="flow-path" id="guard-p2" d="M282 40 H308" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="guard-n3" x="310" y="15" width="140" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="380" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">SEMANTIC CHECK</text>
+                        <path class="flow-path" id="guard-p3" d="M452 40 H478" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="guard-n4" x="480" y="15" width="130" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="545" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">SHIELD</text>
+                        <path class="flow-path" id="guard-p4" d="M612 40 H638" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <rect class="flow-node" id="guard-n5" x="640" y="15" width="120" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="700" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">BLOCKED</text>
+                    </svg>
+                </div>
+
+                <div class="sandbox-container card-glass reveal">
+                    <!-- Left: Control Deck -->
+                    <div class="sandbox-deck">
+                        <h3 class="deck-title">Orchestration Dashboard</h3>
+                        <p class="deck-subtitle">Select a pipeline simulation model to deploy on the node logs.</p>
+
+                        <div class="sandbox-modes">
+                            <button class="sandbox-btn active" data-simulation="rag">
+                                <div class="btn-sim-icon">🔍</div>
+                                <div class="btn-sim-text">
+                                    <strong>RAG Semantic Retrieval</strong>
+                                    <span>Query &rarr; Embedding &rarr; Top-K Context</span>
+                                </div>
+                            </button>
+                            <button class="sandbox-btn" data-simulation="agent">
+                                <div class="btn-sim-icon">🤖</div>
+                                <div class="btn-sim-text">
+                                    <strong>Multi-Agent Orchestrator</strong>
+                                    <span>Planner &rarr; Specialists &rarr; Auditor Consensus</span>
+                                </div>
+                            </button>
+                            <button class="sandbox-btn" data-simulation="guardrail">
+                                <div class="btn-sim-icon">🛡️</div>
+                                <div class="btn-sim-text">
+                                    <strong>System Guardrail Audit</strong>
+                                    <span>Prompt Injection Shield &rarr; Semantic Flag</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="sandbox-action">
+                            <button class="btn-primary" id="run-simulation-btn">
+                                <span class="btn-text">Execute Simulation Pipeline</span>
+                                <span class="btn-icon">▶</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Terminal Logger Console -->
+                    <div class="sandbox-console">
+                        <div class="console-header">
+                            <div class="console-controls">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="console-title">terminal://riyanshi.ai/sandbox-logger</span>
+                            <button class="console-clear" id="console-clear-btn">Clear Logs</button>
+                        </div>
+                        <div class="console-body" id="console-logs">
+                            <div class="log-line system">[SYSTEM] Sandbox terminal active. Select a pipeline and click
+                                'Execute Simulation Pipeline' to initialize audit traces.</div>
+                            <div class="log-line command">&gt;_ ready for execution query</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-tag">builds</div>
+                    <h2 class="section-title">Showcase Deployments</h2>
+                    <p class="section-subtitle">A collection of custom architectures, agentic pipelines, and optimized
+                        systems built for production benchmarks.</p>
+                </div>
+
+                <!-- Project Filter Buttons -->
+                <div class="project-filters reveal">
+                    <button class="filter-btn active" data-filter="all">All Ecosystems</button>
+                    <button class="filter-btn" data-filter="genai">GenAI &amp; Agents</button>
+                    <button class="filter-btn" data-filter="ml-ops">AI Infrastructure</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="projects-grid">
+                    <!-- Project 1: HospiSynAI -->
+                    <div class="project-card card-glass reveal featured-project" data-category="genai">
+                        <div class="featured-badge">⭐ Featured</div>
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">MULTI-AGENT ECOSYSTEM // LLM INFRASTRUCTURE</span>
+                                <h3 class="project-title">HospiSynAI</h3>
+                            </div>
+                            <p class="project-description">
+                                Architected a multi-agent AI ecosystem leveraging Groq LLMs (Llama-3.3-70b) to process
+                                raw clinical notes into structured, rule-compliant patient handouts. Includes a
+                                real-time AI Billing Auditor that identifies financial anomalies, containerized with
+                                Docker and deployed on Vercel/Render.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Docker Compose</span>
+                                <span class="tag">Llama-3.3</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/HospiSynAI" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://hospi-syn-ai.vercel.app/" class="project-link" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                                <button class="project-link btn-inspect-arch" data-project="hospisyn"
+                                    style="background: transparent; border: none; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: FinSight -->
+                    <div class="project-card card-glass reveal reveal-delay-1" data-category="genai">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">FINTECH // BEHAVIORAL MODELING</span>
+                                <h3 class="project-title">FinSight</h3>
+                            </div>
+                            <p class="project-description">
+                                An AI-driven analytics platform analyzing UPI and banking transactions via RFM
+                                behavioral modeling. Features interactive 'what-if' simulation dashboards using React
+                                and Groq LLMs to quantify business intervention ROI.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Groq LLMs</span>
+                                <span class="tag">Explainable AI</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/FinSight" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://finsight-frontend-r0a8.onrender.com/" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                                <button class="project-link btn-inspect-arch" data-project="finsight"
+                                    style="background: transparent; border: none; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: VoteWise-AI -->
+                    <div class="project-card card-glass reveal reveal-delay-2 featured-project" data-category="genai">
+                        <div class="featured-badge">🏆 Rank 1</div>
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">GEMINI AI // PROMPTWARS RANK 1</span>
+                                <h3 class="project-title">VoteWise-AI</h3>
+                            </div>
+                            <p class="project-description">
+                                Award-winning conversational election assistant powered by Google Gemini 2.0 Flash.
+                                Provides real-time fact-checking, localized booth routing via Google Maps API, and
+                                election guidance in 6 regional languages.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">Gemini 2.0</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Google Maps API</span>
+                                <span class="tag">Civic Tech</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/VoteWise-AI" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://votewise-ai-bode.onrender.com/" class="project-link" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: MediScribe-AI -->
+                    <div class="project-card card-glass reveal" data-category="genai">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">AMBIENT CLINICAL DOCUMENTATION</span>
+                                <h3 class="project-title">MediScribe-AI</h3>
+                            </div>
+                            <p class="project-description">
+                                Ambient Clinical Scribe Assistant built with TypeScript and React. Leverages real-time
+                                audio transcription feeds to summarize and catalog patient consultation flows into
+                                structured formats.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">React</span>
+                                <span class="tag">AI Scribe</span>
+                                <span class="tag">Speech Pipelines</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/MediScribe-AI" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://medi-scribe-ai.vercel.app" class="project-link"
+                                    style="margin-left: 1.2rem;" target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5: DeciXAI -->
+                    <div class="project-card card-glass reveal reveal-delay-1" data-category="genai">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">EXPLAINABLE AI // PYTHON</span>
+                                <h3 class="project-title">DeciXAI</h3>
+                            </div>
+                            <p class="project-description">
+                                Decision Intelligence System providing risk-aware predictions and explanations. Features
+                                feature-importance metrics and scenario testing to clarify ML outcomes.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Explainable AI</span>
+                                <span class="tag">Machine Learning</span>
+                                <span class="tag">Data Analysis</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/DeciXAI" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 6: SmartStadium-AI -->
+                    <div class="project-card card-glass reveal reveal-delay-2" data-category="ml-ops">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">EDGE TELEMETRY // FASTAPI</span>
+                                <h3 class="project-title">SmartStadium-AI</h3>
+                            </div>
+                            <p class="project-description">
+                                A dockerized edge-computing prototype simulating real-time stadium telemetry. Fuses
+                                FastAPI backends, WebSockets channels, and a vanilla Javascript interface to orchestrate
+                                staff workflows and fan commands in high-traffic conditions.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Docker</span>
+                                <span class="tag">WebSockets</span>
+                                <span class="tag">HTML/JS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/SmartStadium-AI" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://smartstadium-ai.onrender.com" class="project-link"
+                                    style="margin-left: 1.2rem;" target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 7: MagicEraser -->
+                    <div class="project-card card-glass reveal" data-category="ml-ops">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">COMPUTER VISION // REAL-TIME</span>
+                                <h3 class="project-title">MagicEraser</h3>
+                            </div>
+                            <p class="project-description">
+                                A computer vision project built with Python and OpenCV that captures/freezes screens and
+                                enables real-time visual unfreezing brush movements to simulate living photo layers.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">OpenCV</span>
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">Real-Time UI</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/MagicEraser" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://www.linkedin.com/posts/riyanshi-verma-ba363a2b2_python-opencv-computervision-ugcPost-7373292161028636674-QnFz/"
+                                    class="project-link" style="margin-left: 1.2rem;" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg>
+                                    Demo Post
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 8: The Last-Minute Life Saver -->
+                    <div class="project-card card-glass reveal reveal-delay-1" data-category="genai">
+                        <div class="card-spotlight"></div>
+                        <div class="project-body">
+                            <div class="project-header">
+                                <span class="project-label">AI PRODUCTIVITY COMPANION // GEMINI API</span>
+                                <h3 class="project-title">The Last-Minute Life Saver</h3>
+                            </div>
+                            <p class="project-description">
+                                Designed an active AI productivity companion for the Vibe2Ship Hackathon. Integrates
+                                Google's Gemini API to dynamically prioritize task loads, manage calendar queues, and
+                                generate custom, context-aware nudge schedules to prevent last-minute deadline rushes.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Gemini API</span>
+                                <span class="tag">Google AI Studio</span>
+                                <span class="tag">Productivity</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/RiyanshiVerma-11/TheLifeSaver" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                    </svg>
+                                    Repository
+                                </a>
+                                <a href="https://the-life-saver.vercel.app/" class="project-link"
+                                    style="margin-left: 1.2rem;" target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path
+                                            d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2z" />
+                                    </svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="contact-box card-glass reveal">
+                    <div class="contact-header">
+                        <div class="section-tag">handshake</div>
+                        <h2 class="section-title">Initialize Connection</h2>
+                        <p>Have an open role, an interesting project, or want to collaborate on generative AI
+                            infrastructure? Shoot me a message below.</p>
+                        <div class="contact-alternative">
+                            <span>OR CONNECT DIRECTLY:</span>
+                            <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank"
+                                rel="noopener noreferrer" class="contact-link-social">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
+                                    style="display: inline-block; vertical-align: middle;">
+                                    <path
+                                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                </svg>
+                                LinkedIn
+                            </a>
+                            <span style="color: var(--text-tertiary);">//</span>
+                            <a href="https://github.com/RiyanshiVerma-11" target="_blank" rel="noopener noreferrer"
+                                class="contact-link-social">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
+                                    style="display: inline-block; vertical-align: middle;">
+                                    <path
+                                        d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                                </svg>
+                                GitHub
+                            </a>
+                            <span style="color: var(--text-tertiary);">//</span>
+                            <a href="https://www.instagram.com/builds.by.riyanshi?igsh=MTFpcGpwOTlsYmtldQ=="
+                                target="_blank" rel="noopener noreferrer" class="contact-link-social">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
+                                    style="display: inline-block; vertical-align: middle;">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                                </svg>
+                                Instagram
+                            </a>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <input type="text" id="name" name="name" required placeholder=" ">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="email" name="email" required placeholder=" ">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="subject" name="subject" required placeholder=" ">
+                            <label for="subject">Subject</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" name="message" required rows="5" placeholder=" "></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="btn-primary btn-block">
+                            <span class="btn-text">Transmit Message</span>
+                            <span class="btn-icon">⚡</span>
+                        </button>
+                        <div id="form-status" class="form-status"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="footer-logo">&lt;/&gt; Riyanshi<span class="highlight">.ai</span></span>
+                    <p class="footer-tagline">Built with ☕ &amp; Neural Networks</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="https://github.com/RiyanshiVerma-11" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                    </a>
+                    <a href="https://linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/riyanshi_verma" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-left">
+                    <p>&copy; <span id="footer-year">2026</span> Riyanshi Verma. Engineered with precision.</p>
+                </div>
+                <div class="footer-right">
+                    <span class="pulse-indicator"></span>
+                    <span class="footer-diag">NODE_01 // SECURE // 200 OK</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Architecture Inspection Modals -->
+    <!-- Architecture Inspection Modal (Multi-Tab) -->
+    <div id="arch-modal" class="modal-overlay">
+        <div class="modal-card card-glass">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <div class="modal-body">
+                <span class="modal-badge">SYSTEM ARCHITECTURE MAP</span>
+                <h3 class="modal-title" id="modal-project-title">Project Name</h3>
+                <p class="modal-description" id="modal-project-desc">Description</p>
+                <!-- Modal Tabs -->
+                <div class="modal-tabs">
+                    <button class="modal-tab-btn active" data-modal-tab="system-map">System Map</button>
+                    <button class="modal-tab-btn" data-modal-tab="tech-specs">Tech Specs</button>
+                    <button class="modal-tab-btn" data-modal-tab="dry-run">Live Dry-Run</button>
+                </div>
+                <!-- Tab 1: System Map -->
+                <div class="modal-tab-content active" id="modal-tab-system-map">
+                    <div class="modal-svg-container" id="modal-svg-content">
+                        <!-- SVG gets dynamically loaded here -->
+                    </div>
+                </div>
+                <!-- Tab 2: Tech Specs -->
+                <div class="modal-tab-content" id="modal-tab-tech-specs">
+                    <div class="modal-metrics-grid" id="modal-metrics-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <!-- Tab 3: Live Dry-Run -->
+                <div class="modal-tab-content" id="modal-tab-dry-run">
+                    <div class="modal-dryrun">
+                        <div class="dryrun-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="dryrun-title">dry-run://pipeline-test</span>
+                        </div>
+                        <div class="dryrun-body" id="dryrun-output">
+                            <div class="log-line system">[SYSTEM] Enter a mock query below to test this pipeline.</div>
+                        </div>
+                        <div class="dryrun-input-row">
+                            <span class="dryrun-prompt">&gt;_</span>
+                            <input type="text" class="dryrun-input" id="dryrun-input" placeholder="Type a query..." autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Command Palette Overlay (Ctrl+K) -->
+    <div id="cmd-palette" class="cmd-palette-overlay">
+        <div class="cmd-palette-box card-glass">
+            <div class="cmd-input-row">
+                <span class="cmd-prefix">&gt;_</span>
+                <input type="text" class="cmd-input" id="cmd-input" placeholder="Type a command... (try /help)" autocomplete="off" />
+                <span class="cmd-esc">ESC</span>
+            </div>
+            <div class="cmd-results" id="cmd-results">
+                <div class="cmd-item" data-cmd="/help"><span class="cmd-name">/help</span><span class="cmd-desc">List all available commands</span></div>
+                <div class="cmd-item" data-cmd="/about"><span class="cmd-name">/about</span><span class="cmd-desc">Scroll to About section</span></div>
+                <div class="cmd-item" data-cmd="/skills"><span class="cmd-name">/skills</span><span class="cmd-desc">Open Technical Matrix</span></div>
+                <div class="cmd-item" data-cmd="/experience"><span class="cmd-name">/experience</span><span class="cmd-desc">View experience timeline</span></div>
+                <div class="cmd-item" data-cmd="/projects"><span class="cmd-name">/projects</span><span class="cmd-desc">Browse project deployments</span></div>
+                <div class="cmd-item" data-cmd="/sandbox rag"><span class="cmd-name">/sandbox rag</span><span class="cmd-desc">Run RAG simulation</span></div>
+                <div class="cmd-item" data-cmd="/sandbox agent"><span class="cmd-name">/sandbox agent</span><span class="cmd-desc">Run Multi-Agent simulation</span></div>
+                <div class="cmd-item" data-cmd="/sandbox guardrail"><span class="cmd-name">/sandbox guardrail</span><span class="cmd-desc">Run Guardrail audit</span></div>
+                <div class="cmd-item" data-cmd="/resume"><span class="cmd-name">/resume</span><span class="cmd-desc">Open resume PDF</span></div>
+                <div class="cmd-item" data-cmd="/contact"><span class="cmd-name">/contact</span><span class="cmd-desc">Jump to contact form</span></div>
+                <div class="cmd-item" data-cmd="/theme matrix"><span class="cmd-name">/theme [name]</span><span class="cmd-desc">Switch theme (matrix/deepspace/mono/default)</span></div>
+            </div>
+            <div class="cmd-footer">
+                <span>↑↓ Navigate</span><span>↵ Execute</span><span>ESC Close</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
