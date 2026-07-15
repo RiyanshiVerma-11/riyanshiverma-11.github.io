@@ -445,6 +445,8 @@ a {
 .nav-links {
     display: flex;
     gap: 2rem;
+    margin-left: auto;
+    margin-right: 2rem;
 }
 
 .nav-mobile-socials {
@@ -1611,6 +1613,7 @@ a {
         left: 0;
         width: 100%;
         height: calc(100vh - var(--nav-h));
+        margin: 0;
         background: rgba(6, 8, 16, 0.98);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
