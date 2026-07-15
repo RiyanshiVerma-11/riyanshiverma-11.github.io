@@ -484,7 +484,7 @@ a {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-left: auto;
     margin-right: 2rem;
 }
@@ -526,6 +526,23 @@ a {
 .nav-actions {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
+}
+
+.nav-btn-text {
+    display: none;
+}
+
+.nav-actions a.desktop-only,
+.nav-actions .btn-outline {
+    padding: 0.45rem;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+}
+
+.nav-actions a.desktop-only {
+    margin-left: 0.25rem !important;
 }
 
 .mobile-toggle {
@@ -1661,27 +1678,14 @@ a {
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: 1200px) {
-    .nav-btn-text {
-        display: none;
-    }
-
-    .nav-actions a,
-    .nav-actions .btn-outline {
-        padding: 0.45rem;
-        width: 34px;
-        height: 34px;
-        justify-content: center;
-        margin-left: 0.25rem !important;
+@media (max-width: 1024px) {
+    .nav-container {
+        padding: 0 1rem;
     }
 
     .nav-links {
-        gap: 1.2rem;
-        margin-right: 1.5rem;
+        gap: 1rem;
     }
-}
-
-@media (max-width: 1024px) {
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1730,7 +1734,7 @@ a {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     :root {
         --nav-h: 68px;
     }
@@ -2946,7 +2950,7 @@ a {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .timeline-container {
         padding-left: 1.2rem;
     }
