@@ -8,10 +8,10 @@
 
 <div align="center">
   <h3>
-    <a href="https://riyanshiverma-11.github.io">Portfolio Webpage</a> •
+    <a href="https://RiyanshiVerma-11.github.io">Portfolio Webpage</a> •
     <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2">LinkedIn</a> •
     <a href="https://www.instagram.com/builds.by.riyanshi?igsh=MTFpcGpwOTlsYmtldQ==">Instagram</a> •
-    <a href="mailto:riyanshi.verma.work@gmail.com">Email</a>
+    <a href="mailto:riyanshiverma46@gmail.com">Email</a>
   </h3>
 </div>
 
