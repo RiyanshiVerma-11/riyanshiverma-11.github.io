@@ -15,6 +15,12 @@
   </h3>
 </div>
 
+<div align="center">
+  <img src="https://komarev.com/normal-badge.png?key=RiyanshiVerma-11&label=PROFILE+VIEWS&color=00f2fe&style=flat-square" alt="Profile Visits Tracker" />
+</div>
+
+<br />
+
 ---
 
 ### 🧬 About Me
@@ -125,5 +131,4 @@ I am a **Generative AI Engineer & Systems Developer** dedicated to building high
 
 <div align="center">
   <p>💡 <i>"The best way to predict the future is to encode it."</i></p>
-  <img src="https://komarev.com/normal-badge.png?key=RiyanshiVerma-11&type=operations&color=00f2fe&style=flat-square" alt="Profile Visits Tracker" />
 </div>
