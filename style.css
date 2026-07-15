@@ -1564,14 +1564,14 @@ a {
         padding: 0 1.2rem;
     }
 
-    .nav-actions .cmd-trigger,
-    .nav-actions a[href*="github.com"],
-    .nav-actions a[href*="linkedin.com"],
-    .nav-actions a[href*="instagram.com"] {
-        display: none;
+    .desktop-only {
+        display: none !important;
     }
 
-    .nav-btn-text { display: none; }
+    .nav-actions {
+        margin-left: auto;
+        margin-right: 1rem;
+    }
 
     .nav-actions .btn-outline {
         padding: 0.45rem;
