@@ -87,7 +87,7 @@ I am a **Generative AI Engineer & Systems Developer** dedicated to building high
 > *   Built interactive what-if simulation dashboards enabling product managers to quantify ROI of specific interventions.
 
 > **[VoteWise-AI](https://github.com/RiyanshiVerma-11/VoteWise-AI)** | *JavaScript, Gemini AI, Google Maps API* | **[Live Demo](https://votewise-ai-bode.onrender.com/)**
-> *   **Rank 1 (Women Developer) & Overall Rank 30 / 21,090+ (Virtual PromptWars 2026).**
+> *   **Rank 1 (Women Developer) & Overall Rank 30 / 26,090+ (Virtual PromptWars 2026).**
 >   An intelligent, bilingual civic-tech voter guidance assistant powered by Gemini 2.0 Flash and localized booth routing.
 
 > **[MediScribe-AI](https://github.com/RiyanshiVerma-11/MediScribe-AI)** | *TypeScript, Next.js, Speech-to-Text*
@@ -104,10 +104,10 @@ I am a **Generative AI Engineer & Systems Developer** dedicated to building high
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        <img src="https://github-readme-stats.vercel.app/api?username=RiyanshiVerma-11&show_icons=true&theme=tokyonight&border_radius=10&bg_color=0c101b&title_color=00f2fe&icon_color=4facfe&text_color=8f9cae" alt="Riyanshi's GitHub Stats" height="195" />
+        <img src="https://github-readme-stats.shion.dev/api?username=RiyanshiVerma-11&show_icons=true&theme=tokyonight&border_radius=10&bg_color=0c101b&title_color=00f2fe&icon_color=4facfe&text_color=8f9cae" alt="Riyanshi's GitHub Stats" height="195" />
       </td>
       <td>
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RiyanshiVerma-11&layout=compact&theme=tokyonight&border_radius=10&bg_color=0c101b&title_color=00f2fe&text_color=8f9cae" alt="Riyanshi's Top Languages" height="195" />
+        <img src="https://github-readme-stats.shion.dev/api/top-langs?username=RiyanshiVerma-11&layout=compact&theme=tokyonight&border_radius=10&bg_color=0c101b&title_color=00f2fe&text_color=8f9cae" alt="Riyanshi's Top Languages" height="195" />
       </td>
     </tr>
   </table>
