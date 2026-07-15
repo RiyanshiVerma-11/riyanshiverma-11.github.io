@@ -1,7 +1,7 @@
 <!-- Premium GitHub Profile README for Riyanshi Verma -->
 
 <div align="center">
-  <img src="./assets/banner.svg" alt="Riyanshi Verma - Generative AI & Systems Developer" width="100%" />
+  <img src="https://raw.githubusercontent.com/RiyanshiVerma-11/riyanshiverma-11.github.io/main/assets/banner.svg" alt="Riyanshi Verma - Generative AI & Systems Developer" width="100%" />
 </div>
 
 <br />
@@ -16,7 +16,7 @@
 </div>
 
 <div align="center">
-  <img src="https://komarev.com/normal-badge.png?key=RiyanshiVerma-11&label=PROFILE+VIEWS&color=00f2fe&style=flat-square" alt="Profile Visits Tracker" />
+  <img src="https://komarev.com/ghpvc/?username=RiyanshiVerma-11&label=PROFILE+VIEWS&color=00f2fe&style=flat-square" alt="Profile Visits Tracker" />
 </div>
 
 <br />
