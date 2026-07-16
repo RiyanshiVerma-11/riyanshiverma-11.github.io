@@ -156,12 +156,14 @@
 
                 <div class="hero-right reveal reveal-delay-2">
                     <div class="photo-showcase">
-                        <!-- Floating Tech Tags Orbiting the Photo -->
-                        <span class="floating-badge">Agentic AI</span>
-                        <span class="floating-badge">RAG Systems</span>
+                        <span class="floating-badge">Prompt Eng</span>
+                        <span class="floating-badge">Google Cloud</span>
                         <span class="floating-badge">Python</span>
                         <span class="floating-badge">FastAPI</span>
-                        <span class="floating-badge">LLMOps</span>
+                        <span class="floating-badge">React</span>
+                        <span class="floating-badge">RAG</span>
+                        <span class="floating-badge">Agentic AI</span>
+                        <span class="floating-badge">Docker</span>
 
                         <!-- Rotating decorative rings -->
                         <div class="photo-ring-inner"></div>
@@ -237,11 +239,16 @@
 
                     <!-- Card 2: Interactive Manifesto / Code terminal -->
                     <div class="bento-card card-glass bento-terminal reveal reveal-delay-2">
-                        <div class="terminal-header">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                            <span class="terminal-title">agent_manifesto.py</span>
+                        <div class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                                <span class="terminal-title" style="margin-left: 0.5rem;">agent_manifesto.py</span>
+                            </div>
+                            <button class="btn-terminal-run" id="btn-run-manifesto" aria-label="Run Python manifesto script">
+                                <span class="run-icon">▶</span> Run
+                            </button>
                         </div>
                         <div class="terminal-body">
                             <pre><code class="language-python"><span class="keyword">class</span> <span class="class-name">GenerativeDeveloper</span>:
@@ -258,6 +265,13 @@
 
 agent = GenerativeDeveloper()
 print(agent.core_belief())</code></pre>
+                            
+                            <div class="terminal-output" id="manifesto-output" style="display: none;">
+                                <div class="output-divider"></div>
+                                <div class="output-line command">&gt; python agent_manifesto.py</div>
+                                <div class="output-line system">[SYSTEM] Compiling runtime nodes...</div>
+                                <div class="output-line success">['RAG beats massive params', 'Strict agent checks', 'Quantized edge models']</div>
+                            </div>
                         </div>
                     </div>
 
@@ -712,11 +726,11 @@ print(agent.core_belief())</code></pre>
                         <path class="flow-path" id="rag-p1" d="M112 40 H138" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
                         <rect class="flow-node" id="rag-n2" x="140" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
                         <text x="195" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">EMBEDDINGS</text>
-                        <text x="195" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">gecko-002</text>
+                        <text x="195" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Google Embed</text>
                         <path class="flow-path" id="rag-p2" d="M252 40 H278" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
                         <rect class="flow-node" id="rag-n3" x="280" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-                        <text x="335" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">QDRANT DB</text>
-                        <text x="335" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Cosine Top-K</text>
+                        <text x="335" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">SQLITE3</text>
+                        <text x="335" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Dense Top-K</text>
                         <path class="flow-path" id="rag-p3" d="M392 40 H418" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
                         <rect class="flow-node" id="rag-n4" x="420" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
                         <text x="475" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">CONTEXT</text>
@@ -724,7 +738,7 @@ print(agent.core_belief())</code></pre>
                         <path class="flow-path" id="rag-p4" d="M532 40 H558" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
                         <rect class="flow-node" id="rag-n5" x="560" y="15" width="110" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
                         <text x="615" y="38" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">LLM API</text>
-                        <text x="615" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Claude-3.5</text>
+                        <text x="615" y="52" fill="#475569" font-family="JetBrains Mono" font-size="7" text-anchor="middle">Gemini 2.0</text>
                         <path class="flow-path" id="rag-p5" d="M672 40 H698" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-dasharray="4 4"/>
                         <rect class="flow-node" id="rag-n6" x="700" y="15" width="78" height="50" rx="8" fill="#0A0E1A" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
                         <text x="739" y="44" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="600" text-anchor="middle">OUTPUT</text>
@@ -849,9 +863,9 @@ print(agent.core_belief())</code></pre>
 
                 <!-- Project Filter Buttons -->
                 <div class="project-filters reveal">
-                    <button class="filter-btn active" data-filter="all">All Ecosystems</button>
-                    <button class="filter-btn" data-filter="genai">GenAI &amp; Agents</button>
-                    <button class="filter-btn" data-filter="ml-ops">AI Infrastructure</button>
+                    <button class="filter-btn active" data-filter="all">All Systems</button>
+                    <button class="filter-btn" data-filter="genai">Generative AI</button>
+                    <button class="filter-btn" data-filter="ml-data">Machine Learning &amp; Data</button>
                 </div>
 
                 <!-- Projects Grid -->
@@ -917,7 +931,7 @@ print(agent.core_belief())</code></pre>
                     </div>
 
                     <!-- Project 2: FinSight -->
-                    <div class="project-card card-glass reveal reveal-delay-1" data-category="genai">
+                    <div class="project-card card-glass reveal reveal-delay-1" data-category="ml-data">
                         <div class="card-spotlight"></div>
                         <div class="project-body">
                             <div class="project-header">
@@ -1074,7 +1088,7 @@ print(agent.core_belief())</code></pre>
                     </div>
 
                     <!-- Project 5: DeciXAI -->
-                    <div class="project-card card-glass reveal reveal-delay-1" data-category="genai">
+                    <div class="project-card card-glass reveal reveal-delay-1" data-category="ml-data">
                         <div class="card-spotlight"></div>
                         <div class="project-body">
                             <div class="project-header">
@@ -1105,7 +1119,7 @@ print(agent.core_belief())</code></pre>
                     </div>
 
                     <!-- Project 6: SmartStadium-AI -->
-                    <div class="project-card card-glass reveal reveal-delay-2" data-category="ml-ops">
+                    <div class="project-card card-glass reveal reveal-delay-2" data-category="ml-data">
                         <div class="card-spotlight"></div>
                         <div class="project-body">
                             <div class="project-header">
@@ -1145,7 +1159,7 @@ print(agent.core_belief())</code></pre>
                     </div>
 
                     <!-- Project 7: MagicEraser -->
-                    <div class="project-card card-glass reveal" data-category="ml-ops">
+                    <div class="project-card card-glass reveal" data-category="ml-data">
                         <div class="card-spotlight"></div>
                         <div class="project-body">
                             <div class="project-header">
@@ -1400,6 +1414,73 @@ print(agent.core_belief())</code></pre>
         </div>
     </div>
 
+    <!-- Recruiter Specialized Diagnostic Modal -->
+    <div id="recruiter-modal" class="modal-overlay">
+        <div class="modal-card card-glass recruiter-modal-card">
+            <button class="modal-close" id="recruiter-modal-close-btn">&times;</button>
+            <div class="modal-body">
+                <span class="modal-badge" style="color: var(--gold); border-color: rgba(var(--gold-rgb), 0.35);">RECRUITER HOT-PATH DIAL // 200 OK</span>
+                <h3 class="modal-title">Riyanshi Verma Summary</h3>
+                <p class="modal-description">A high-impact executive diagnostic panel for recruiters and hiring managers looking for AI Developers &amp; Data Scientists.</p>
+                
+                <div class="recruiter-grid">
+                    <div class="recruiter-col-info">
+                        <div class="recruiter-spec-card">
+                            <span class="spec-icon">🎓</span>
+                            <div>
+                                <h4>Academic Standing</h4>
+                                <p>B.Tech in CSE (Data Science) // CGPA: <strong>8.53</strong></p>
+                            </div>
+                        </div>
+                        <div class="recruiter-spec-card">
+                            <span class="spec-icon">🏆</span>
+                            <div>
+                                <h4>PromptWars Rank 1</h4>
+                                <p>Rank 1 (Women Dev) &amp; Top 30 overall out of 26k+ in Google/Hack2Skills Challenge.</p>
+                            </div>
+                        </div>
+                        <div class="recruiter-spec-card">
+                            <span class="spec-icon">💼</span>
+                            <div>
+                                <h4>AI Internship Impact</h4>
+                                <p>Infosys Springboard 7.0: Designed 22-language Groq Llama text translator &amp; compliance auditor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recruiter-col-specs">
+                        <div class="recruiter-spec-card">
+                            <span class="spec-icon">⚡</span>
+                            <div>
+                                <h4>Core Target Roles</h4>
+                                <p>AI Developer | Generative AI Intern | Python Backend Engineer (FastAPI) | Data Scientist</p>
+                            </div>
+                        </div>
+                        <div class="recruiter-spec-card">
+                            <span class="spec-icon">⚙️</span>
+                            <div>
+                                <h4>Verified Skills</h4>
+                                <p>Python, React, FastAPI, Docker, Gemini/Groq APIs, Google Cloud, XGBoost, Streamlit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recruiter-ctas" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="assets/Riyanshi%20Verma%20Resume.pdf" target="_blank" class="btn-primary" style="flex: 1; text-align: center; text-decoration: none;">
+                        <span>Get Resume</span> <span class="btn-icon">📥</span>
+                    </a>
+                    <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank" class="btn-secondary" style="flex: 1; text-align: center; text-decoration: none;">
+                        <span>Book Call</span> <span class="btn-icon">📅</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank" class="btn-secondary" style="flex: 0.5; text-align: center; text-decoration: none;">
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Command Palette Overlay (Ctrl+K) -->
     <div id="cmd-palette" class="cmd-palette-overlay">
         <div class="cmd-palette-box card-glass">
@@ -1410,6 +1491,7 @@ print(agent.core_belief())</code></pre>
             </div>
             <div class="cmd-results" id="cmd-results">
                 <div class="cmd-item" data-cmd="/help"><span class="cmd-name">/help</span><span class="cmd-desc">List all available commands</span></div>
+                <div class="cmd-item" data-cmd="/recruiter"><span class="cmd-name">/recruiter</span><span class="cmd-desc" style="color: var(--gold);">Inspect specialized candidate summary [HOT-PATH]</span></div>
                 <div class="cmd-item" data-cmd="/about"><span class="cmd-name">/about</span><span class="cmd-desc">Scroll to About section</span></div>
                 <div class="cmd-item" data-cmd="/skills"><span class="cmd-name">/skills</span><span class="cmd-desc">Open Technical Matrix</span></div>
                 <div class="cmd-item" data-cmd="/experience"><span class="cmd-name">/experience</span><span class="cmd-desc">View experience timeline</span></div>

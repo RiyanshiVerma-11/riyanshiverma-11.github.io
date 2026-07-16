@@ -836,6 +836,30 @@ a {
     border-color: rgba(16, 185, 129, 0.2);
 }
 
+.floating-badge:nth-child(6) {
+    top: -5%;
+    right: 5%;
+    animation-delay: 1.8s;
+    color: var(--gold);
+    border-color: rgba(var(--gold-rgb), 0.2);
+}
+
+.floating-badge:nth-child(7) {
+    bottom: -10%;
+    left: 10%;
+    animation-delay: 0.5s;
+    color: var(--violet);
+    border-color: rgba(var(--violet-rgb), 0.2);
+}
+
+.floating-badge:nth-child(8) {
+    top: 60%;
+    right: -25%;
+    animation-delay: 2.1s;
+    color: var(--rose);
+    border-color: rgba(var(--rose-rgb), 0.2);
+}
+
 /* Hero background effects */
 .hero-gradient-orb {
     position: absolute;
@@ -1969,7 +1993,10 @@ a {
         height: 200px;
     }
 
-    .floating-badge:nth-child(5) {
+    .floating-badge:nth-child(5),
+    .floating-badge:nth-child(6),
+    .floating-badge:nth-child(7),
+    .floating-badge:nth-child(8) {
         display: none;
     }
 
@@ -4150,4 +4177,118 @@ html[data-theme="light"] .gcp-badge-showcase {
 html[data-theme="light"] .project-metric {
     background: rgba(var(--gold-rgb), 0.08) !important;
     border-color: rgba(var(--gold-rgb), 0.3) !important;
+}
+
+/* --- Interactive Python Manifesto & Recruiter Modal Styles --- */
+.btn-terminal-run {
+    background: rgba(var(--gold-rgb), 0.1);
+    border: 1px solid rgba(var(--gold-rgb), 0.4);
+    border-radius: var(--radius-sm);
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all var(--t-fast);
+}
+
+.btn-terminal-run:hover {
+    background: rgba(var(--gold-rgb), 0.25);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.3);
+}
+
+.terminal-output {
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-align: left;
+}
+
+.output-divider {
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    margin-bottom: 0.6rem;
+}
+
+.output-line {
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+
+.output-line.command {
+    color: var(--text-secondary);
+}
+
+.output-line.system {
+    color: var(--text-tertiary);
+}
+
+.output-line.success {
+    color: var(--emerald);
+}
+
+/* Recruiter Modal Grid */
+.recruiter-modal-card {
+    max-width: 720px !important;
+}
+
+.recruiter-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.recruiter-col-info, .recruiter-col-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.recruiter-spec-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.spec-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.recruiter-spec-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.recruiter-spec-card p {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.recruiter-spec-card p strong {
+    color: var(--gold);
+}
+
+@media (max-width: 640px) {
+    .recruiter-grid {
+        grid-template-columns: 1fr;
+    }
 }

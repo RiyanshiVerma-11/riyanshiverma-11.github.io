@@ -222,6 +222,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
+    // 3b. Interactive Python Manifesto Run Simulation
+    // ----------------------------------------------------------------------
+    const btnRunManifesto = document.getElementById('btn-run-manifesto');
+    const manifestoOutput = document.getElementById('manifesto-output');
+    if (btnRunManifesto && manifestoOutput) {
+        let isRunningManifesto = false;
+        btnRunManifesto.addEventListener('click', () => {
+            if (isRunningManifesto) return;
+            isRunningManifesto = true;
+            btnRunManifesto.style.opacity = '0.6';
+            const runIcon = btnRunManifesto.querySelector('.run-icon');
+            if (runIcon) runIcon.textContent = '⚡';
+            
+            // Clear and show output
+            manifestoOutput.style.display = 'block';
+            const lines = manifestoOutput.querySelectorAll('.output-line');
+            lines.forEach(l => l.style.display = 'none');
+            
+            // Staggered output simulation
+            let lineIdx = 0;
+            function printLine() {
+                if (lineIdx < lines.length) {
+                    lines[lineIdx].style.display = 'block';
+                    lineIdx++;
+                    setTimeout(printLine, lineIdx === 1 ? 500 : 300);
+                } else {
+                    isRunningManifesto = false;
+                    btnRunManifesto.style.opacity = '1';
+                    if (runIcon) runIcon.textContent = '▶';
+                }
+            }
+            printLine();
+        });
+    }
+
+    // ----------------------------------------------------------------------
     // 4. Scroll Reveal Animations (IntersectionObserver)
     // ----------------------------------------------------------------------
     const revealElements = document.querySelectorAll('.reveal');
@@ -626,14 +662,14 @@ document.addEventListener('DOMContentLoaded', () => {
         rag: [
             { type: 'system', text: '[SYSTEM] Initializing Retrieval-Augmented Generation workflow...', activeNodes: [] },
             { type: 'command', text: '>_ USER QUERY: "Search guidelines for pediatric invoicing codes."', activeNodes: ['rag-n1'] },
-            { type: 'step', text: '[STEP 1] Generating dense query embeddings using google-gecko-002... [OK]', activeNodes: ['rag-n2'], activePaths: ['rag-p1'] },
-            { type: 'step', text: '[STEP 2] Dispatching Cosine Similarity search to Qdrant vector database...', activeNodes: ['rag-n3'], activePaths: ['rag-p2'] },
+            { type: 'step', text: '[STEP 1] Generating dense query embeddings using Google Embeddings API... [OK]', activeNodes: ['rag-n2'], activePaths: ['rag-p1'] },
+            { type: 'step', text: '[STEP 2] Dispatching indexing query search to SQLite3 caching database...', activeNodes: ['rag-n3'], activePaths: ['rag-p2'] },
             { type: 'trace', text: '↳ Found 2 matching document chunks (similarity threshold: 0.86)', activeNodes: ['rag-n3'], activePaths: ['rag-p2'] },
             { type: 'trace', text: '↳ Chunk [ID: doc-24a]: "Pediatric checkups under age 3 report billing code P30..."', activeNodes: ['rag-n3'], activePaths: ['rag-p2'] },
             { type: 'trace', text: '↳ Chunk [ID: doc-88b]: "All pediatric preventative checkups are subject to 0% copay..."', activeNodes: ['rag-n3'], activePaths: ['rag-p2'] },
             { type: 'step', text: '[STEP 3] Formatting context-enriched system prompt template...', activeNodes: ['rag-n4'], activePaths: ['rag-p3'] },
-            { type: 'step', text: '[STEP 4] Dispatching structured payload to Claude-3.5-Sonnet API...', activeNodes: ['rag-n5'], activePaths: ['rag-p4'] },
-            { type: 'trace', text: '↳ API Latency: 420ms | Total tokens processed: Prompt: 1,420 | Output: 120', activeNodes: ['rag-n5'], activePaths: ['rag-p4'] },
+            { type: 'step', text: '[STEP 4] Dispatching structured payload to Gemini 2.0 Flash API...', activeNodes: ['rag-n5'], activePaths: ['rag-p4'] },
+            { type: 'trace', text: '↳ API Latency: 210ms | Total tokens processed: Prompt: 1,420 | Output: 120', activeNodes: ['rag-n5'], activePaths: ['rag-p4'] },
             { type: 'success', text: '[SUCCESS] Context matched and output generated safely. Sending back to client node.', activeNodes: ['rag-n6'], activePaths: ['rag-p5'] },
             { type: 'command', text: '>_ OUTPUT: "Under pediatric guidelines, preventative checkups use billing code P30 with $0 copay."', activeNodes: ['rag-n6'], activePaths: ['rag-p5'] }
         ],
@@ -1108,6 +1144,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Recruiter Modal Handlers
+    const recruiterModal = document.getElementById('recruiter-modal');
+    const recruiterModalCloseBtn = document.getElementById('recruiter-modal-close-btn');
+
+    function openRecruiterModal() {
+        if (recruiterModal) {
+            recruiterModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeRecruiterModal() {
+        if (recruiterModal) {
+            recruiterModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (recruiterModalCloseBtn) {
+        recruiterModalCloseBtn.addEventListener('click', closeRecruiterModal);
+    }
+
+    if (recruiterModal) {
+        recruiterModal.addEventListener('click', (e) => {
+            if (e.target === recruiterModal) {
+                closeRecruiterModal();
+            }
+        });
+    }
+
     // Modal tabs click handling
     modalTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1270,6 +1336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allCommands = [
         { name: '/help', desc: 'List all available commands', action: () => {} },
+        { name: '/recruiter', desc: 'Inspect specialized candidate summary [HOT-PATH]', action: () => openRecruiterModal() },
         { name: '/about', desc: 'Scroll to About section', action: () => scrollToSection('#about') },
         { name: '/skills', desc: 'Open Technical Matrix', action: () => scrollToSection('#skills') },
         { name: '/experience', desc: 'View experience timeline', action: () => scrollToSection('#experience') },
