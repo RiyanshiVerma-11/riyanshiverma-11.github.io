@@ -3809,8 +3809,7 @@ html[data-theme="light"] .theme-toggle-quick .moon-icon {
     width: 100%;
     height: auto;
     display: block;
-    aspect-ratio: 16/10;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /* Technical Skills Upgrades */

@@ -96,6 +96,11 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 > *   Designed an offline-capable PWA integrated with the Google Maps API to visualize polling booths and voter density heatmaps with WCAG 2.1 AA accessibility.
 > *   Integrated Google One-Tap OAuth and configured a GitHub Actions CI/CD pipeline with Pytest to automate testing and secure user onboarding.
 
+> **[AssessIQ](https://github.com/RiyanshiVerma-11/AssessIQ)** | *FastAPI, SQLite, WebSockets, MediaPipe, TensorFlow.js, Docker, Render* | **[Live Demo](https://assessiq-z5cg.onrender.com/)**
+> *   Developed a smart assessment platform incorporating browser-side edge AI proctoring via MediaPipe Face Mesh and Coco-SSD object detection to flag suspicious behaviors (like mobile phone usage) directly on the client's GPU, minimizing backend streaming load.
+> *   Designed real-time alert dispatch pipelines over WebSockets to sync browser proctoring warnings to a FastAPI backend instantly.
+> *   Integrated Groq Llama 3 models to enable fully dynamic, topic-specific exam generation and instant qualitative auto-grading for subjective questions.
+
 ---
 
 ### 📊 Github Diagnostics & Stats

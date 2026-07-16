@@ -1072,6 +1072,77 @@ document.addEventListener('DOMContentLoaded', () => {
     </defs>
 </svg>
 `
+        },
+        assessiq: {
+            title: 'AssessIQ System Architecture',
+            desc: 'AI-powered examination platform combining client-side WebGL face mesh tracking, coco-ssd proctoring alerts, and dynamic cloud Llama 3 generation.',
+            specs: [
+                { label: 'Proctoring Latency', val: 'Client-side (0ms)' },
+                { label: 'Dynamic Exam Gen', val: 'Llama 3 / Groq' },
+                { label: 'Communication Protocol', val: 'WebSockets JSON' },
+                { label: 'Backend Server', val: 'FastAPI / SQLite' }
+            ],
+            dryRunResponses: {
+                '/generate-exam': `[SYSTEM] Generating custom questionnaire on-demand...
+- Topic: "Intro to Neural Networks" | Difficulty: Medium
+- Payload context matched. Llama-3-70b inference call: SUCCESS
+- Response time: 240ms | Output: 5 unique conceptual queries generated.`,
+                '/grading': `[SYSTEM] Instantly evaluating essay response...
+- Student text: "An activation function maps inputs to outputs..."
+- AI auto-graded rating: 8.5/10
+- Qualitative Feedback: "Accurate summary of non-linear mappings. Could expand on vanishing gradients."`
+            },
+            svg: `
+<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nodes -->
+    <!-- Node 1: Examinee Browser -->
+    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Examinee UI</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Vanilla HTML/JS</text>
+ 
+    <!-- Node 2: Client Proctor (MediaPipe) -->
+    <rect x="180" y="30" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">MediaPipe Edge</text>
+    <text x="240" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">WebGL Face Mesh</text>
+ 
+    <!-- Node 3: FastAPI Backend -->
+    <rect x="360" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="420" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="420" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">REST &amp; WebSockets</text>
+ 
+    <!-- Node 4: Groq Llama 3 -->
+    <rect x="540" y="30" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="605" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq Llama-3</text>
+    <text x="605" y="82" fill="#06B6D4" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Dynamic Question Gen</text>
+ 
+    <!-- Node 5: SQLite Database -->
+    <rect x="540" y="140" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="605" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">SQLite Storage</text>
+    <text x="605" y="192" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Exam Logs &amp; Alerts</text>
+ 
+    <!-- Connections -->
+    <path d="M130 100 L180 65" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M130 120 H360" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M300 65 L360 100" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
+    <path d="M480 100 L540 65" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
+    <path d="M480 120 L540 165" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
+ 
+    <defs>
+        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+    </defs>
+</svg>
+`
         }
     };
 
