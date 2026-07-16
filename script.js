@@ -53,8 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.vx = (Math.random() - 0.5) * 0.4;
                 this.vy = (Math.random() - 0.5) * 0.4;
                 this.radius = Math.random() * 2 + 1;
-                // Palette themed colors (gold, violet)
-                this.color = Math.random() > 0.4 ? '#F7B267' : '#8B5CF6';
+                // Palette themed colors tracking
+                this.isGold = Math.random() > 0.4;
+                this.baseColor = this.isGold ? '#F7B267' : '#8B5CF6';
             }
 
             update() {
@@ -68,7 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
+                
+                // Dynamically fetch current theme colors for drawing
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                let drawColor = this.baseColor;
+                if (currentTheme === 'light') {
+                    drawColor = this.isGold ? '#B45309' : '#4338CA';
+                } else if (currentTheme === 'matrix') {
+                    drawColor = this.isGold ? '#22C55E' : '#84CC16';
+                } else if (currentTheme === 'deepspace') {
+                    drawColor = this.isGold ? '#F472B6' : '#06B6D4';
+                } else if (currentTheme === 'mono') {
+                    drawColor = this.isGold ? '#F8FAFC' : '#64748B';
+                } else {
+                    drawColor = this.isGold ? '#F7B267' : '#8B5CF6';
+                }
+                
+                ctx.fillStyle = drawColor;
                 ctx.fill();
             }
         }
@@ -90,8 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (distance < 130) {
                         const alpha = (1 - (distance / 130)) * 0.12;
-                        // Linear gradient connection for premium aesthetics
-                        ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+                        
+                        // Dynamically fetch connector colors based on theme
+                        const currentTheme = document.documentElement.getAttribute('data-theme');
+                        let strokeColor = `rgba(139, 92, 246, ${alpha})`; // default violet
+                        if (currentTheme === 'light') {
+                            strokeColor = `rgba(67, 56, 202, ${alpha})`;
+                        } else if (currentTheme === 'matrix') {
+                            strokeColor = `rgba(132, 204, 22, ${alpha})`;
+                        } else if (currentTheme === 'deepspace') {
+                            strokeColor = `rgba(6, 182, 212, ${alpha})`;
+                        } else if (currentTheme === 'mono') {
+                            strokeColor = `rgba(100, 116, 139, ${alpha})`;
+                        }
+                        
+                        ctx.strokeStyle = strokeColor;
                         ctx.lineWidth = 0.8;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
@@ -107,7 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (mDist < mouse.radius) {
                         const alpha = (1 - (mDist / mouse.radius)) * 0.22;
-                        ctx.strokeStyle = `rgba(247, 178, 103, ${alpha})`;
+                        
+                        // Dynamically fetch mouse connector colors based on theme
+                        const currentTheme = document.documentElement.getAttribute('data-theme');
+                        let mouseStroke = `rgba(247, 178, 103, ${alpha})`; // default gold
+                        if (currentTheme === 'light') {
+                            mouseStroke = `rgba(180, 83, 9, ${alpha})`;
+                        } else if (currentTheme === 'matrix') {
+                            mouseStroke = `rgba(34, 197, 94, ${alpha})`;
+                        } else if (currentTheme === 'deepspace') {
+                            mouseStroke = `rgba(244, 114, 182, ${alpha})`;
+                        } else if (currentTheme === 'mono') {
+                            mouseStroke = `rgba(248, 250, 252, ${alpha})`;
+                        }
+                        
+                        ctx.strokeStyle = mouseStroke;
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
@@ -720,6 +764,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------------------------------------
+    // 14b. Sandbox Query Pills Interactive Click Action
+    // ----------------------------------------------------------------------
+    const queryPills = document.querySelectorAll('.query-pill');
+    queryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            if (isSimulating) return;
+            const targetSim = pill.getAttribute('data-sim');
+            const targetQuery = pill.getAttribute('data-query');
+            
+            // 1. Switch sandbox mode first
+            const matchingBtn = document.querySelector(`.sandbox-btn[data-simulation="${targetSim}"]`);
+            if (matchingBtn) {
+                matchingBtn.click();
+            }
+            
+            // 2. Inject query into trace array
+            if (simulationTraces[targetSim]) {
+                if (targetSim === 'rag') {
+                    simulationTraces.rag[1].text = `>_ USER QUERY: "${targetQuery}"`;
+                } else if (targetSim === 'agent') {
+                    simulationTraces.agent[1].text = `>_ REQUEST: "${targetQuery}"`;
+                } else if (targetSim === 'guardrail') {
+                    simulationTraces.guardrail[1].text = `>_ ATTACK: "${targetQuery}"`;
+                }
+            }
+            
+            // 3. Trigger simulation execution immediately
+            setTimeout(() => {
+                if (runSimBtn) {
+                    runSimBtn.click();
+                }
+            }, 100);
+        });
+    });
+
+
+    // ----------------------------------------------------------------------
     // 15. Project Architecture Inspector Modals
     // ----------------------------------------------------------------------
     const inspectArchBtns = document.querySelectorAll('.btn-inspect-arch');
@@ -883,6 +964,78 @@ document.addEventListener('DOMContentLoaded', () => {
     </defs>
 </svg>
 `
+        },
+        votewise: {
+            title: 'VoteWise-AI System Architecture',
+            desc: 'A civic technology assistant powered by Gemini 2.0 Flash reasoning engine, integrating Google Maps API for localized routing and multi-lingual processing.',
+            specs: [
+                { label: 'Evaluation Score', val: '96.98%' },
+                { label: 'Response Latency', val: '1.2s' },
+                { label: 'Reasoning Engine', val: 'Gemini 2.0 Flash' },
+                { label: 'Languages Supported', val: '6 Regional' }
+            ],
+            dryRunResponses: {
+                '/diagnostics': `[SYSTEM] Checking API connectivity...
+- Gemini 2.0 API Node: ONLINE (Latency: 92ms)
+- Google Maps API Gateway: ACTIVE (HTTP 200)
+- Fact-Checking Cache: Loaded (5,200 records)
+[SUCCESS] All civic tools operational.`,
+                '/booth-lookup': `[SYSTEM] Mock routing query resolved:
+- Found nearest booth: Municipal School Hall, Ward 4
+- Route distance: 1.2 km | ETA: 4 mins
+- Compliance check: Verified & safe.`
+            },
+            svg: `
+<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nodes -->
+    <!-- Node 1: Citizen Query -->
+    <rect x="20" y="80" width="100" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="70" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Citizen UI</text>
+    <text x="70" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Multi-lingual Input</text>
+
+    <!-- Node 2: Gemini 2.0 Agent -->
+    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Gemini 2.0 Flash</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Reasoning Core</text>
+
+    <!-- Node 3: Google Maps API -->
+    <rect x="360" y="30" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Google Maps API</text>
+    <text x="430" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Localized Routing</text>
+
+    <!-- Node 4: Fact-Check Cache -->
+    <rect x="360" y="140" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Fact-Check DB</text>
+    <text x="430" y="192" fill="#06B6D4" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Real-time Verify</text>
+
+    <!-- Node 5: Structured Civic Output -->
+    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Civic Roadmap</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Actionable output</text>
+
+    <!-- Connections -->
+    <path d="M120 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M300 100 L360 65" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
+    <path d="M300 130 L360 165" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
+    <path d="M500 65 L560 100" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
+    <path d="M500 175 L560 130" stroke="#06B6D4" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+
+    <defs>
+        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+    </defs>
+</svg>
+`
         }
     };
 
@@ -1024,6 +1177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const themeDropdown = document.getElementById('theme-dropdown');
     const themeOptions = document.querySelectorAll('.theme-option');
+    const themeToggleQuick = document.getElementById('theme-toggle-quick');
 
     if (themeToggleBtn && themeDropdown) {
         themeToggleBtn.addEventListener('click', (e) => {
@@ -1059,6 +1213,17 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(themeName);
         });
     });
+
+    if (themeToggleQuick) {
+        themeToggleQuick.addEventListener('click', () => {
+            const currentTheme = localStorage.getItem('riyanshi-portfolio-theme') || 'default';
+            if (currentTheme === 'light') {
+                applyTheme('default');
+            } else {
+                applyTheme('light');
+            }
+        });
+    }
 
     // Initialize theme from storage
     const savedTheme = localStorage.getItem('riyanshi-portfolio-theme') || 'default';
@@ -1117,6 +1282,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: '/theme matrix', desc: 'Switch to Matrix green theme', action: () => applyTheme('matrix') },
         { name: '/theme deepspace', desc: 'Switch to Deep Space theme', action: () => applyTheme('deepspace') },
         { name: '/theme mono', desc: 'Switch to Monochrome theme', action: () => applyTheme('mono') },
+        { name: '/theme light', desc: 'Switch to Classic Light theme', action: () => applyTheme('light') },
         { name: '/theme default', desc: 'Switch to Default Cyber theme', action: () => applyTheme('default') }
     ];
 
