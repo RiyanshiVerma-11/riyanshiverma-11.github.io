@@ -451,29 +451,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Project filters
+    // Project filters & Show More logic
     const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const categoryFilter = btn.getAttribute('data-filter');
+    let showAllProjects = false;
+    let currentFilter = 'all';
 
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    function updateProjectVisibility(shouldScroll = false) {
+        let visibleCount = 0;
+        let totalMatching = 0;
 
-            projectCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                if (categoryFilter === 'all' || cardCategory === categoryFilter) {
+        projectCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            const matchesFilter = (currentFilter === 'all' || cardCategory === currentFilter);
+
+            if (matchesFilter) {
+                totalMatching++;
+                if (showAllProjects || visibleCount < 3) {
                     card.style.display = 'flex';
                     // Trigger reflow & simple animation
                     card.style.animation = 'none';
                     card.offsetHeight; 
                     card.style.animation = 'fadeSlideUp 0.4s var(--ease-out) forwards';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
-            });
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        const showMoreBtn = document.getElementById('show-more-projects-btn');
+        if (showMoreBtn) {
+            if (totalMatching > 3) {
+                showMoreBtn.style.display = 'inline-flex';
+                const btnText = showMoreBtn.querySelector('.btn-text');
+                const chevron = showMoreBtn.querySelector('.chevron-icon');
+                if (showAllProjects) {
+                    if (btnText) btnText.textContent = 'Show Less Projects';
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    if (btnText) btnText.textContent = 'Show More Projects';
+                    if (chevron) chevron.style.transform = 'rotate(0deg)';
+                }
+            } else {
+                showMoreBtn.style.display = 'none';
+            }
+        }
+
+        if (shouldScroll && !showAllProjects) {
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+                projectsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentFilter = btn.getAttribute('data-filter');
+            showAllProjects = false; // Reset to show only top 3 on filter change
+
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            updateProjectVisibility();
         });
     });
+
+    const showMoreBtn = document.getElementById('show-more-projects-btn');
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', () => {
+            showAllProjects = !showAllProjects;
+            updateProjectVisibility(true);
+        });
+    }
+
+    // Run initially to show only top 3 on load
+    updateProjectVisibility();
 
     // ----------------------------------------------------------------------
     // 9. Magnetic Cursor Effect for Interactive UI Elements

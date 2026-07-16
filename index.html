@@ -8,7 +8,7 @@
     <meta name="description"
         content="Portfolio of Riyanshi Verma, AI Developer and Data Science Student specializing in multi-agent orchestration, RAG, and LLM optimizations.">
     <!-- Google Fonts & Main Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.3">
 </head>
 
 <body>
@@ -89,7 +89,7 @@
                     <svg class="icon sun-icon" viewBox="0 0 24 24" width="16" height="16" style="display: block;"><path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm-1.06-10.96c.39-.39.39-1.03 0-1.41a.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06z"/></svg>
                     <svg class="icon moon-icon" viewBox="0 0 24 24" width="16" height="16" style="display: none;"><path fill="currentColor" d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-9 8.3-9.8.6-.1 1.2.3 1.3.9.1.6-.3 1.2-.9 1.3-3.7.6-6.4 3.8-6.4 7.6 0 4.4 3.6 8 8 8 3.8 0 7-2.7 7.6-6.4.1-.6.7-1 1.3-.9.6.1 1 .7.9 1.3-.8 4.8-5 8.3-9.7 8.3z"/></svg>
                 </button>
-                <a href="https://github.com/RiyanshiVerma-11" class="btn-outline btn-sm desktop-only" target="_blank"
+                <a href="https://github.com/RiyanshiVerma-11" class="nav-highlight-github desktop-only" target="_blank"
                     rel="noopener noreferrer">
                     <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                         <path fill="currentColor"
@@ -97,7 +97,7 @@
                     </svg>
                     <span class="nav-btn-text">GitHub</span>
                 </a>
-                <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" class="btn-outline btn-sm desktop-only"
+                <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" class="nav-highlight-linkedin desktop-only"
                     style="margin-left: 0.5rem;" target="_blank" rel="noopener noreferrer">
                     <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                         <path fill="currentColor"
@@ -879,27 +879,74 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">MULTI-AGENT ECOSYSTEM // LLM INFRASTRUCTURE</span>
                                 <h3 class="project-title">HospiSynAI</h3>
                             </div>
-                            <p class="project-description">
-                                Architected a multi-agent AI ecosystem leveraging Groq LLMs (Llama-3.3-70b) to process
-                                raw clinical notes into structured, rule-compliant patient handouts. Includes a
-                                real-time AI Billing Auditor that identifies financial anomalies, containerized with
-                                Docker and deployed on Vercel/Render.
-                            </p>
+                            
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Clinical notes are highly unstructured and manual billing audits lead to delayed patient handovers and leakage of hospital revenue.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>A multi-agent AI pipeline containerized with Docker that dynamically translates raw clinical summaries into 11 regional languages while running a concurrent automated billing audit node.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Designed a concurrent asynchronous auditing route in FastAPI using background tasks to flag financial discrepancies without blocking patient handout compilation.</p>
+                            </div>
+
                             <div class="project-metrics-row">
                                 <span class="project-metric">⏱️ Handout &lt; 2s (11 languages)</span>
                                 <span class="project-metric">🔍 flags 95%+ billing anomalies</span>
                             </div>
+                            
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_hospisyn.png" alt="HospiSynAI Landing Page" loading="lazy" />
                                 </div>
                             </div>
+                            
                             <div class="project-tags">
                                 <span class="tag">React</span>
                                 <span class="tag">FastAPI</span>
                                 <span class="tag">Docker Compose</span>
-                                <span class="tag">Llama-3.3</span>
+                                <span class="tag">Llama-3.3-70B</span>
+                                <span class="tag">PostgreSQL</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Traditional clinical reporting is slow and error-prone, resulting in translation backlogs and high billing compliance risks.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Healthcare providers and administrative staff who require fast, localized summaries for patients and strict billing integrity.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">Multi-agent setup deploying FastAPI routing, Neon PG databases, and Groq high-throughput Llama inference engines.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Built a background worker pipeline that runs transcription and translation tasks concurrently with a custom billing auditor.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Selected Llama-3.3-70B for its exceptional precision on complex clinical entity extraction and translation tasks compared to smaller models.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/HospiSynAI" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -938,26 +985,74 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">FINTECH // BEHAVIORAL MODELING</span>
                                 <h3 class="project-title">FinSight</h3>
                             </div>
-                            <p class="project-description">
-                                An AI-driven analytics platform analyzing UPI and banking transactions via RFM
-                                behavioral modeling. Features interactive 'what-if' simulation dashboards using React
-                                and Groq LLMs to quantify business intervention ROI.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Financial analyst teams lack actionable visual insights into UPI transaction behavior, causing missed opportunities for customized consumer products.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>An explainable AI financial behavioral analysis platform featuring transaction uploads, RFM categorization, and a predictive 'what-if' modeling engine.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Implemented SHAP (SHapley Additive exPlanations) values client-side via custom Plotly graphs to clarify the factors driving transaction score fluctuations.</p>
+                            </div>
+
                             <div class="project-metrics-row">
                                 <span class="project-metric">📈 SHAP Explainable AI</span>
                                 <span class="project-metric">📂 Schema-agnostic UPI/Tax/Banking uploads</span>
                             </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_finsight.png" alt="FinSight Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">React</span>
                                 <span class="tag">FastAPI</span>
                                 <span class="tag">Groq LLMs</span>
-                                <span class="tag">Explainable AI</span>
+                                <span class="tag">SHAP</span>
+                                <span class="tag">Plotly</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Bulk transaction behavior patterns are complex and opaque, hiding valuable customer segment opportunities from decision-makers.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Financial product managers and risk auditors evaluating transaction behavior profiles.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">FastAPI analytics pipeline integrating Scikit-Learn behavioral models and Groq consensus generation.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Constructed a behavioral modeling workspace that ingests raw banking records to produce actionable customer lifetime segment tiers.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Pre-computed RFM profiles locally to bypass LLM latency, utilizing the LLM only for advanced semantic explanation.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/FinSight" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -997,24 +1092,73 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">GOOGLE PROMPTWARS // HACK2SKILLS</span>
                                 <h3 class="project-title">VoteWise-AI</h3>
                             </div>
-                            <p class="project-description">
-                                Award-winning conversational election assistant powered by Google Gemini 2.0 Flash. Built for the Virtual PromptWars 2K26 organized by Google for Developers and Hack2Skills, securing Rank 1 in Challenge 2. Features real-time fact-checking and localized routing.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Voters face misinformation and local routing confusion during local elections, leading to reduced voter turnout.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>A civic-tech voting assistant powered by Gemini 2.0 Flash that handles multi-lingual queries and maps physical polling booth locations using Google Maps API.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Engineered a strict system-instruction prompt framework that guarantees 98% prompt compliance and eliminates political bias in LLM recommendations.</p>
+                            </div>
+
                             <div class="project-metrics-row">
                                 <span class="project-metric">⏱️ Response &lt; 1.5s (98% Prompt compliance)</span>
                                 <span class="project-metric">🌐 6 Regional Indian Languages</span>
                             </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_votewise.png" alt="VoteWise-AI Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">Gemini 2.0</span>
-                                <span class="tag">Virtual PromptWars 2K26</span>
-                                <span class="tag">Google for Developers</span>
-                                <span class="tag">Hack2Skills</span>
+                                <span class="tag">Google Maps API</span>
+                                <span class="tag">React</span>
+                                <span class="tag">Python</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Finding official polling booths and navigating conflicting election details is complex and error-prone.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Everyday citizens seeking unbiased voting details in local regional languages.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">Gemini 2.0 Flash orchestrator integrating Google Maps Geocoding API and a localized static fact-checking database.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Developed an election-specific chatbot that delivers localized maps and verified non-partisan voting details.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Selected Gemini 2.0 Flash for its fast token output speed and highly accurate multilingual translation capability.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/VoteWise-AI" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1054,20 +1198,73 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">GOOGLE PROMPTWARS // HACK2SKILLS</span>
                                 <h3 class="project-title">SmartStadium-AI</h3>
                             </div>
-                            <p class="project-description">
-                                A dockerized edge-computing prototype simulating real-time stadium telemetry. Built for the Virtual PromptWars 2K26 organized by Google for Developers and Hack2Skills, placing in the Top 40 among 12k+ participants in Challenge 1.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Stadium operators struggle to manage real-time crowds, power grids, and resources due to fragmented IoT telemetry.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>A telemetry emulator modeling real-time edge sensors (crowd capacity, temperature, power) inside a stadium, utilizing containerized microservices.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Optimized the asynchronous mock IoT generator using Python asyncio to simulate over 50 concurrent sensors with less than 2% CPU overhead.</p>
+                            </div>
+
+                            <div class="project-metrics-row">
+                                <span class="project-metric">📊 Asyncio IoT telemetry simulation</span>
+                                <span class="project-metric">📦 Multi-container Docker deployment</span>
+                            </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_stadium.png" alt="SmartStadium-AI Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">FastAPI</span>
-                                <span class="tag">Virtual PromptWars 2K26 Challenge 1 Top 40 among 12k+ participants</span>
-                                <span class="tag">Google for Developers</span>
-                                <span class="tag">Hack2Skills</span>
+                                <span class="tag">Docker</span>
+                                <span class="tag">Uvicorn</span>
+                                <span class="tag">Python</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Testing stadium operations systems is difficult due to the high cost of actual IoT hardware deployment.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Stadium facilities managers testing telemetry pipelines under high simulated load.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">Asynchronous FastAPI edge node simulating data packet streams over Docker containerized infrastructure.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Created a fully dockerized stadium operations dashboard simulating realistic crowd and resource telemetry.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Implemented Uvicorn-optimized loop cycles for rapid telemetry generation over local TCP ports.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/SmartStadium-AI" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1097,22 +1294,73 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">AMBIENT CLINICAL DOCUMENTATION</span>
                                 <h3 class="project-title">MediScribe-AI</h3>
                             </div>
-                            <p class="project-description">
-                                Ambient Clinical Scribe Assistant built with TypeScript and React. Leverages real-time
-                                audio transcription feeds to summarize and catalog patient consultation flows into
-                                structured formats.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Doctors spend up to 3 hours daily writing paper notes after patient consultations, increasing fatigue and billing inaccuracies.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>An ambient clinical audio scribe app that listens to doctor-patient speech patterns, translates them to text, and summarizes details into structured EHR notes.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Built a client-side audio chunking pipeline that streams compressed audio buffers in real-time, preventing network timeouts.</p>
+                            </div>
+
+                            <div class="project-metrics-row">
+                                <span class="project-metric">🎙️ Real-time audio stream parsing</span>
+                                <span class="project-metric">✍️ EHR-formatted summary notes</span>
+                            </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_mediscribe.png" alt="MediScribe-AI Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">TypeScript</span>
                                 <span class="tag">React</span>
-                                <span class="tag">AI Scribe</span>
-                                <span class="tag">Speech Pipelines</span>
+                                <span class="tag">Whisper API</span>
+                                <span class="tag">Node.js</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Doctors lose face-to-face time with patients due to high administrative typing requirements.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Clinical professionals conducting in-person or remote consultations.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">TypeScript React frontend communicating with Whisper API transcription pipelines and clinical summary post-processors.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Formulated an ambient clinician assistant that automatically formats audio transcripts into clinical records.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Opted for local browser audio capture compression to minimize bandwidth usage on slow clinic connections.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/MediScribe-AI" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1142,21 +1390,73 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">EXPLAINABLE AI // PYTHON</span>
                                 <h3 class="project-title">DeciXAI</h3>
                             </div>
-                            <p class="project-description">
-                                Decision Intelligence System providing risk-aware predictions and explanations. Features
-                                feature-importance metrics and scenario testing to clarify ML outcomes.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Business users reject machine learning recommendations due to lack of visibility into underlying model decision criteria.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>An interactive model diagnostic platform that calculates feature importance and runs custom user hypothesis testing.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Built a custom decision tree path highlighter that extracts and visualizes decision rules in clear human language.</p>
+                            </div>
+
+                            <div class="project-metrics-row">
+                                <span class="project-metric">📊 Dynamic decision tree highlighting</span>
+                                <span class="project-metric">🔍 Interactive SHAP visualizations</span>
+                            </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_decixai.png" alt="DeciXAI Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">Python</span>
-                                <span class="tag">Explainable AI</span>
-                                <span class="tag">Machine Learning</span>
-                                <span class="tag">Data Analysis</span>
+                                <span class="tag">Scikit-Learn</span>
+                                <span class="tag">Pandas</span>
+                                <span class="tag">Matplotlib</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Complex classification models act as black boxes, making them difficult for business teams to trust.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Analysts evaluating predictive models for deployment.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">Python machine learning pipeline with modular diagnostic engines exporting JSON prediction paths.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Created a diagnostic visualization dashboard mapping complex feature weights to human-readable explanations.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Utilized Scikit-Learn tree metrics directly to compute local feature importance fast.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/DeciXAI" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1178,26 +1478,74 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">AI ASSESSMENTS // EDGE PROCTORING</span>
                                 <h3 class="project-title">AssessIQ</h3>
                             </div>
-                            <p class="project-description">
-                                A modern, AI-powered examination platform. Performs client-side face mesh tracking and
-                                phone detection (via MediaPipe and TensorFlow.js) directly in the examinee's browser,
-                                relaying proctoring alerts over WebSockets, with dynamic Llama-3 exam generation and instant auto-grading.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Online exams are prone to cheating, but cloud-based video proctoring introduces high bandwidth costs and privacy concerns.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>An AI examination dashboard with zero-latency client-side proctoring (face tracking, phone detection) running entirely in the browser.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Implemented edge proctoring using MediaPipe Face Mesh on the client side, sending only lightweight JSON alerts over WebSockets to save 99% bandwidth.</p>
+                            </div>
+
                             <div class="project-metrics-row">
                                 <span class="project-metric">🛡️ Edge Proctoring (WebSockets JSON)</span>
                                 <span class="project-metric">📝 Dynamic Groq Llama grading</span>
                             </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_assessiq.png" alt="AssessIQ Dashboard Mockup" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
-                                <span class="tag">FastAPI</span>
-                                <span class="tag">MediaPipe</span>
                                 <span class="tag">TensorFlow.js</span>
-                                <span class="tag">Docker</span>
+                                <span class="tag">MediaPipe</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">WebSockets</span>
+                                <span class="tag">SQLite</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Traditional remote exams require constant high-definition video streaming, causing platform drops for low-bandwidth students.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Universities and testing centers seeking lightweight, privacy-respecting test monitoring.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">Client-side face tracker running inside a Vanilla JS/WebGL wrapper, with a FastAPI/SQLite backend logging socket events.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Engineered a decentralized proctoring system that flags exam violations without streaming raw video.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Selected TensorFlow.js coco-ssd over cloud vision APIs to enforce user privacy and eliminate server processing costs.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/AssessIQ" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1236,22 +1584,68 @@ print(agent.core_belief())</code></pre>
                                 <span class="project-label">AI PRODUCTIVITY COMPANION // GEMINI API</span>
                                 <h3 class="project-title">The Last-Minute Life Saver</h3>
                             </div>
-                            <p class="project-description">
-                                Designed an active AI productivity companion for the Vibe2Ship Hackathon. Integrates
-                                Google's Gemini API to dynamically prioritize task loads, manage calendar queues, and
-                                generate custom, context-aware nudge schedules to prevent last-minute deadline rushes.
-                            </p>
+
+                            <div class="project-problem-statement">
+                                <strong>Problem Statement</strong>
+                                <p>Professionals suffer from task gridlock and missed deadlines due to static calendar schedules that fail to adapt to urgent changes.</p>
+                            </div>
+
+                            <div class="project-what-i-built">
+                                <strong>What I Built</strong>
+                                <p>An adaptive time-management dashboard that dynamically adjusts schedule queues and generates context-aware nudges.</p>
+                            </div>
+
+                            <div class="project-engineering-highlight">
+                                <strong>Engineering Highlight</strong>
+                                <p>Designed a heuristic queue scheduler that sorts tasks based on urgency-importance scores before feeding them to the Gemini API for optimization.</p>
+                            </div>
+
                             <div class="project-screenshots">
                                 <div class="project-screenshot-item">
                                     <img src="assets/screenshot_lifesaver.png" alt="The Last-Minute Life Saver Landing Page" loading="lazy" />
                                 </div>
                             </div>
+
                             <div class="project-tags">
                                 <span class="tag">React</span>
                                 <span class="tag">Gemini API</span>
                                 <span class="tag">Google AI Studio</span>
-                                <span class="tag">Productivity</span>
+                                <span class="tag">JavaScript</span>
                             </div>
+
+                            <details class="project-case-study">
+                                <summary class="case-study-trigger">
+                                    <span>Case Study</span>
+                                    <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </summary>
+                                <div class="case-study-content">
+                                    <div class="case-study-grid">
+                                        <div class="cs-field">
+                                            <span class="cs-label">⚠️ Problem</span>
+                                            <p class="cs-value">Passive reminders are easily ignored, leading to work accumulation and deadline panic.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">👥 User &amp; Context</span>
+                                            <p class="cs-value">Remote workers and students managing multiple overlapping deadlines.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🏗️ Architecture</span>
+                                            <p class="cs-value">React application connected to Google AI Studio API for calendar orchestration and nudge formulation.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">💡 My Solution</span>
+                                            <p class="cs-value">Developed an active time coordinator that restructures daily agendas based on task priority shifts.</p>
+                                        </div>
+                                        <div class="cs-field">
+                                            <span class="cs-label">🛠️ Technical Decisions</span>
+                                            <p class="cs-value">Utilized standard local storage to cache tasks, ensuring full offline functionality and sub-millisecond loading.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
                             <div class="project-links">
                                 <a href="https://github.com/RiyanshiVerma-11/TheLifeSaver" class="project-link"
                                     target="_blank" rel="noopener noreferrer">
@@ -1273,6 +1667,15 @@ print(agent.core_belief())</code></pre>
                         </div>
                     </div>
                 </div>
+
+                <div class="show-more-container reveal" style="text-align: center; margin-top: 3rem;">
+                    <button id="show-more-projects-btn">
+                        <span class="btn-text">Show More Projects</span>
+                        <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 6px; display: inline-block; vertical-align: middle; transition: transform var(--t-fast);">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -1288,43 +1691,36 @@ print(agent.core_belief())</code></pre>
                         <p>Have an open role, an interesting project, or want to collaborate on generative AI
                             infrastructure? Shoot me a message below.</p>
                         <div class="contact-alternative">
-                            <span>OR CONNECT DIRECTLY:</span>
+                            <span class="contact-alt-label">OR CONNECT DIRECTLY:</span>
                             <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank"
                                 rel="noopener noreferrer" class="contact-link-social">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
-                                    style="display: inline-block; vertical-align: middle;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
                                     <path
                                         d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                                 </svg>
                                 LinkedIn
                             </a>
-                            <span style="color: var(--text-tertiary);">//</span>
                             <a href="https://github.com/RiyanshiVerma-11" target="_blank" rel="noopener noreferrer"
                                 class="contact-link-social">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
-                                    style="display: inline-block; vertical-align: middle;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
                                     <path
                                         d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
                                 </svg>
                                 GitHub
                             </a>
-                            <span style="color: var(--text-tertiary);">//</span>
                             <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank" rel="noopener noreferrer"
                                 class="contact-link-social">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    style="display: inline-block; vertical-align: middle; margin-right: 2px;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                     <line x1="16" y1="2" x2="16" y2="6"></line>
                                     <line x1="8" y1="2" x2="8" y2="6"></line>
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
-                                Calendly (Book Call)
+                                Calendly
                             </a>
-                            <span style="color: var(--text-tertiary);">//</span>
                             <a href="https://www.instagram.com/builds.by.riyanshi?igsh=MTFpcGpwOTlsYmtldQ=="
                                 target="_blank" rel="noopener noreferrer" class="contact-link-social">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"
-                                    style="display: inline-block; vertical-align: middle;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
                                     <path
                                         d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
                                 </svg>
