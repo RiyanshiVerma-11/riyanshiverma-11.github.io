@@ -1109,10 +1109,18 @@ a {
 }
 
 .terminal-body {
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-tertiary: #64748B;
+    --rose: #F43F5E;
+    --gold: #FABD2F;
+    --emerald: #10B981;
+    
     padding: 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     background: rgba(6, 8, 16, 0.95);
+    color: var(--text-primary);
     overflow-x: auto;
     line-height: 1.8;
 }
@@ -3365,6 +3373,16 @@ html[data-theme="light"] .contact-link-social:hover {
     display: block;
 }
 
+.flowmap-svg text {
+    fill: var(--text-secondary) !important;
+    font-size: 11px !important;
+}
+
+.flowmap-svg text[font-weight="600"] {
+    fill: var(--text-primary) !important;
+    font-size: 12px !important;
+}
+
 .flow-node {
     transition: stroke 0.3s ease, fill 0.3s ease, filter 0.3s ease;
 }
@@ -3993,7 +4011,7 @@ html[data-theme="light"] .card-glass {
 }
 
 html[data-theme="light"] .card-glass::before {
-    background: rgba(255, 255, 255, 0.4) !important;
+    display: none !important;
 }
 
 html[data-theme="light"] .navbar {
@@ -4168,17 +4186,7 @@ html[data-theme="light"] .flow-node {
     stroke: rgba(15, 23, 42, 0.1) !important;
 }
 
-html[data-theme="light"] .flow-node text {
-    fill: #334155 !important;
-}
 
-html[data-theme="light"] .flow-node text[fill="#94A3B8"] {
-    fill: #0F172A !important;
-}
-
-html[data-theme="light"] .flow-node text[fill="#475569"] {
-    fill: #64748B !important;
-}
 
 html[data-theme="light"] .flow-path {
     stroke: rgba(15, 23, 42, 0.1) !important;
@@ -4655,6 +4663,16 @@ html[data-theme="light"] .tool-card {
 
 html[data-theme="light"] .tool-card:hover {
     background: #ffffff;
+}
+
+html[data-theme="light"] .query-pill {
+    background: #E2E8F0 !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+}
+
+html[data-theme="light"] .btn-sim-text span {
+    color: #475569 !important;
 }
 
 /* --- Mobile Polish Tweaks --- */
