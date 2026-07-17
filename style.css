@@ -2557,8 +2557,8 @@ html[data-theme="light"] .contact-link-social:hover {
 }
 
 .deck-subtitle {
-    font-size: 0.85rem;
-    color: var(--text-tertiary);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
     margin-bottom: 2rem;
 }
 
@@ -2614,8 +2614,8 @@ html[data-theme="light"] .contact-link-social:hover {
 }
 
 .btn-sim-text span {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .sandbox-action {
@@ -2664,8 +2664,8 @@ html[data-theme="light"] .contact-link-social:hover {
 
 .console-title {
     font-family: var(--font-mono);
-    color: var(--text-tertiary);
-    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
     letter-spacing: 0.05em;
 }
 
@@ -2686,7 +2686,7 @@ html[data-theme="light"] .contact-link-social:hover {
 .console-body {
     padding: 1.5rem;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     line-height: 1.6;
     overflow-y: auto;
     flex-grow: 1;
@@ -2701,7 +2701,7 @@ html[data-theme="light"] .contact-link-social:hover {
 }
 
 .log-line.system {
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
 }
 
 .log-line.command {
@@ -3969,10 +3969,10 @@ html[data-theme="light"] .theme-toggle-quick .moon-icon {
 
 .query-pill {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     padding: 0.35rem 0.75rem;
     border-radius: 20px;
     cursor: pointer;
