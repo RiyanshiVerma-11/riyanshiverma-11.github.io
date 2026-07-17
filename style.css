@@ -4658,6 +4658,37 @@ html[data-theme="light"] .tool-card:hover {
 }
 
 /* --- Mobile Polish Tweaks --- */
+.mobile-only {
+    display: none !important;
+}
+
+@media (max-width: 992px) {
+    .mobile-only {
+        display: flex !important;
+    }
+    .hero-mobile-socials {
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .hero-mobile-socials .social-link {
+        width: 48px;
+        height: 48px;
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .hero-mobile-socials .social-link[aria-label="GitHub"] {
+        background: #24292e;
+    }
+    .hero-mobile-socials .social-link[aria-label="LinkedIn"] {
+        background: #0a66c2;
+    }
+    .hero-mobile-socials .social-link[aria-label="Instagram"] {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+}
+
 @media (max-width: 640px) {
     .sandbox-deck {
         padding: 1.25rem;

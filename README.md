@@ -123,4 +123,5 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 
 <div align="center">
   <p>💡 <i>"The best way to predict the future is to encode it."</i></p>
+  <p><b>Built with &lt;/&gt; and 🤍 by Riyanshi Verma</b></p>
 </div>
