@@ -1623,6 +1623,77 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
         });
     });
+
+    // ----------------------------------------------------------------------
+    // 15. Skill Card Interactive Modal
+    // ----------------------------------------------------------------------
+    const skillCards = document.querySelectorAll('.skill-card, .tool-card');
+    const skillModal = document.getElementById('skill-modal');
+    const skillModalCloseBtn = document.getElementById('skill-modal-close-btn');
+    const skillModalTitle = document.getElementById('skill-modal-title');
+    const skillModalDesc = document.getElementById('skill-modal-desc');
+
+    const skillDescriptions = {
+        'Agentic Orchestration': 'This skill involves building smart AI agents that can think, plan, and execute tasks on their own. Instead of just answering questions, these agents use tools, follow dynamic workflows, and correct themselves to solve complex problems.',
+        'RAG & Vector Databases': 'RAG (Retrieval-Augmented Generation) makes AI smarter by giving it a memory. This skill involves connecting AI to databases so it can instantly search through private documents, ensuring its answers are accurate and factual.',
+        'LLM Integration & APIs': 'This is the ability to securely connect applications to powerful AI models like OpenAI, Claude, or Llama. It involves managing how data flows, handling rate limits, and ensuring AI features work smoothly within a product.',
+        'Prompt Engineering & Eval': 'Prompt engineering is the art of giving AI the perfect instructions to get the exact output you need. It also involves rigorously testing the AI’s responses to ensure it behaves consistently and safely every single time.',
+        'NLP & Generative Content': 'NLP enables software to understand and respond to human language naturally. Generative AI leverages this to create new, original content like text, code, or data summaries based on simple user instructions.',
+        'Classical Machine Learning': 'This involves training models to find patterns in data using robust statistical algorithms. It is used for tasks like predicting trends, classifying information, or grouping similar data points together efficiently.',
+        'Data Science & Analytics': 'This skill focuses on taking raw, messy data and turning it into clear, actionable insights. It involves cleaning datasets, visualizing hidden trends, and using analytical methods to solve real-world business problems.',
+        'FastAPI & Backend APIs': 'FastAPI is a modern web framework for building backend servers quickly. This skill is about writing high-performance Python code that can handle many AI requests at the same time without crashing or slowing down.',
+        'Docker & Containerization': 'Docker packages an application and all its requirements into a single, secure box (container). This ensures that the software will run perfectly exactly the same way whether it is on a local laptop or a cloud server.',
+        'MLOps & Clouds': 'MLOps is like a factory assembly line for AI, automating the testing and safe deployment of models. Cloud computing provides the massive, scalable remote servers needed to host these applications for users globally.',
+        'Python': 'The cornerstone of my entire development workflow. Python is the industry standard for Artificial Intelligence, Machine Learning, and backend architecture. Its extensive ecosystem—from PyTorch and TensorFlow for deep learning to robust backend frameworks—makes it incredibly versatile. I leverage Python to rapidly prototype complex neural networks, build data pipelines, and orchestrate multi-agent LLM systems. By writing clean, modular, and asynchronous Python code, I ensure that heavy machine learning inferences and data processing scripts run efficiently and scale effortlessly from local environments to cloud servers.',
+        'FastAPI': 'My preferred framework for building high-performance, production-ready backend servers. Unlike older, slower frameworks, FastAPI is built on modern Python standards, utilizing async/await capabilities out of the box to handle thousands of concurrent requests seamlessly. I use it to bridge the gap between heavy, slow AI models and fast, responsive user interfaces. Its automatic data validation through Pydantic and automatic API documentation generation ensures that the AI endpoints I build are strictly typed, secure against bad inputs, and incredibly easy for frontend developers to consume and integrate.',
+        'React': 'The driving force behind the dynamic, interactive user interfaces I build. React\'s component-based architecture allows me to create modular, reusable UI elements that perfectly mirror the complex logic of AI systems underneath. I use it to build dashboards that visualize live data streams, chat interfaces for LLM interactions, and diagnostic tools for monitoring machine learning models. By managing complex state efficiently, React ensures that even when the backend AI is taking time to generate a response, the user experience remains smooth, responsive, and highly engaging.',
+        'Llama / Mistral': 'These powerful, open-weights Large Language Models represent a massive shift in how AI is deployed. Instead of relying solely on closed, expensive APIs, I work extensively with Llama and Mistral when a project demands complete data privacy, cost-efficiency, or custom fine-tuning. By running these models locally or on private cloud infrastructure, I can heavily customize their system prompts and guardrails. This hands-on control is crucial for building specialized agentic workflows where the model needs to act strictly within the boundaries of a specific enterprise domain without hallucinating.',
+        'LangChain': 'An essential orchestration framework that acts as the connective tissue between Large Language Models and external data sources. Raw LLMs are often outdated or lack specific context; LangChain solves this by allowing me to build robust Retrieval-Augmented Generation (RAG) pipelines. I use it to connect AI to SQL databases, vector stores, and external APIs, granting the models the ability to "read" private documents before answering. Additionally, it provides the structural backbone for my multi-agent systems, where I define complex routing logic and tool-use capabilities for autonomous AI workers.',
+        'Groq API': 'A groundbreaking inference engine powered by specialized Language Processing Units (LPUs). When building AI applications, latency is often the biggest bottleneck, frustrating users who have to wait seconds for a response. I integrate the Groq API to run open-source models like Llama at blistering speeds—often generating hundreds of tokens per second. This near-instantaneous response time is critical for real-time applications, such as live voice assistants, high-speed text analysis, or interactive agents, dramatically elevating the end-user experience compared to traditional GPU hosting.',
+        'Gemini API': 'Google\'s flagship multimodal AI model, offering unparalleled capabilities in reasoning and massive context windows. I integrate the Gemini API when a project requires digesting enormous amounts of information at once—such as analyzing entire codebases, reading hundred-page PDF reports, or understanding complex reasoning tasks. Furthermore, its native multimodal ability allows me to build applications that don\'t just process text, but can simultaneously analyze images, charts, and video inputs, creating far more versatile and intelligent AI solutions.',
+        'OpenAI API': 'The gold standard for cutting-edge generative AI. I utilize OpenAI\'s models (like GPT-4o) when a task requires the highest possible level of logical reasoning, complex code generation, or nuanced conversational abilities. By deeply integrating their API, I build custom applications that leverage their advanced features, such as structured JSON outputs, function calling, and robust system instructions. This ensures that the applications I build are not just chatbots, but reliable software components capable of executing highly specific, deterministic tasks.',
+        'Pandas / NumPy': 'The absolute bedrock of data manipulation and numerical computing in Python. NumPy provides the high-performance, low-level mathematical operations required for matrix calculations—which is exactly how neural networks process information. Pandas builds on this to offer incredibly powerful data structures, allowing me to ingest, clean, and transform messy, real-world datasets. Before any machine learning model can be trained or any LLM can search a database, I use these tools to scrub anomalies, handle missing values, and engineer the features necessary for accurate predictions.',
+        'Scikit-Learn': 'The industry-standard library for classical machine learning. While deep learning gets all the hype, Scikit-Learn is what I reach for to solve standard predictive problems efficiently without the massive computational overhead. I use it to implement robust regression models, classify data, cluster unlabelled information, and perform rigorous statistical validation. It provides the essential tools for splitting datasets, cross-validating results, and tuning hyperparameters, ensuring that the predictive models I build are mathematically sound, highly interpretable, and ready for production deployment.',
+        'XGBoost': 'An exceptionally powerful, highly optimized machine learning library based on gradient boosted decision trees. Whenever a project involves structured, tabular data (like financial records, customer metrics, or inventory logs), XGBoost is consistently the top performer. I leverage its advanced algorithms to handle missing data natively and capture complex, non-linear relationships that simpler models miss. It is my go-to tool for maximizing predictive accuracy, having proven itself time and again as the winning algorithm in major data science competitions and enterprise solutions.',
+        'PostgreSQL': 'A rock-solid, incredibly advanced open-source relational database. When building full-stack applications, PostgreSQL serves as the reliable foundation for storing structured data. I use it to manage user profiles, application state, and complex relational records with absolute data integrity. Its advanced features, such as JSONB support and the pgvector extension, allow me to seamlessly bridge the gap between traditional web backend storage and modern AI workloads, storing both standard relational data and high-dimensional vector embeddings in the exact same system.',
+        'SQLite': 'A brilliantly lightweight, zero-configuration database that stores everything in a single local file. I rely on SQLite heavily during the prototyping and development phases of AI projects. Because it doesn\'t require setting up a complex background server, it is incredibly fast for testing new ideas, caching API responses, or storing small-scale RAG document chunks in memory. It allows me to build fully functional, self-contained AI applications that can be easily shared or deployed without the overhead of a heavy database infrastructure.',
+        'Docker': 'The ultimate tool for software consistency and deployment. Docker allows me to package an entire AI application—including the Python runtime, specific library versions, system dependencies, and environment variables—into a single, standardized container. This completely eliminates the dreaded "it works on my machine" problem. By containerizing my applications, I ensure that the complex machine learning pipelines and backend APIs I build will execute identically, whether they are being tested locally, reviewed on a peer\'s machine, or deployed at scale in a cloud cluster.',
+        'Google Cloud': 'A comprehensive, enterprise-grade cloud computing platform. I utilize Google Cloud Platform (GCP) to move my AI architectures from local prototypes to highly scalable, global deployments. Whether it is spinning up Compute Engine instances for heavy data processing, utilizing Cloud Storage for massive datasets, or integrating Vertex AI for managed model deployment, GCP provides the raw power and infrastructure required. Earning over 21,000 points in their ecosystem reflects my deep capability in architecting secure, scalable, and resilient cloud solutions.',
+        'Render / Vercel': 'Modern, developer-friendly cloud platforms that drastically simplify the deployment process. I use Vercel to host lightning-fast, globally distributed React frontends, taking advantage of their edge networks for zero-latency delivery. For the heavy lifting, I deploy my Python and FastAPI backend services to Render. Together, they provide a seamless, automated CI/CD pipeline—every time I push code to GitHub, these platforms automatically build, test, and deploy the latest version, allowing me to focus entirely on writing great AI logic instead of managing server configurations.',
+        'Git / GitHub': 'The absolute backbone of modern software development and collaboration. I use Git to track every single change in my codebase, allowing me to experiment with complex AI features safely in isolated branches without breaking the main application. GitHub serves as the central hub where I host my projects, document my architectures, and showcase my portfolio. By utilizing structured commits, pull requests, and GitHub Actions for automated testing, I maintain a professional, organized, and highly collaborative workflow that mimics enterprise software engineering standards.',
+        'Swagger / OpenAPI': 'Essential tools for defining, designing, and documenting backend architectures. When I build a FastAPI backend to serve an AI model, Swagger automatically generates an interactive, beautiful documentation interface. This is critical for collaboration, as it allows frontend developers or other stakeholders to easily understand exactly how to communicate with the AI endpoints, what data formats to send, and what responses to expect. It ensures my APIs are not just functional, but professional, discoverable, and incredibly easy to integrate with.'
+    };
+
+    if (skillModal && skillModalCloseBtn) {
+        // Close modal when clicking the X button
+        skillModalCloseBtn.addEventListener('click', () => {
+            skillModal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside the card
+        skillModal.addEventListener('click', (e) => {
+            if (e.target === skillModal) {
+                skillModal.classList.remove('active');
+            }
+        });
+
+        // Add click event to all skill cards
+        skillCards.forEach(card => {
+            // Make them appear clickable
+            card.style.cursor = 'pointer';
+            
+            card.addEventListener('click', () => {
+                const titleEl = card.querySelector('h4, .tool-card-name');
+                if (titleEl) {
+                    const titleText = titleEl.textContent.trim();
+                    const descText = skillDescriptions[titleText] || 'Detailed information about this skill is currently being updated in the system.';
+                    
+                    skillModalTitle.textContent = titleText;
+                    skillModalDesc.textContent = descText;
+                    
+                    skillModal.classList.add('active');
+                }
+            });
+        });
+    }
 });
-
-
