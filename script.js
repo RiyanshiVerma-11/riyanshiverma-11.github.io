@@ -162,18 +162,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        let animationId;
+        let isCanvasVisible = true;
+
+        const canvasObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isCanvasVisible = entry.isIntersecting;
+                if (isCanvasVisible) {
+                    if (!animationId) animate();
+                } else {
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                        animationId = null;
+                    }
+                }
+            });
+        }, { threshold: 0 });
+        canvasObserver.observe(canvas);
+
         function animate() {
+            if (!isCanvasVisible) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
             connectParticles();
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         }
 
         resizeCanvas();
-        animate();
     }
 
     // ----------------------------------------------------------------------
@@ -1372,12 +1390,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleQuick = document.getElementById('theme-toggle-quick');
 
     if (themeToggleBtn && themeDropdown) {
+        // Initialize accessibility attributes
+        themeToggleBtn.setAttribute('aria-expanded', 'false');
+        themeToggleBtn.setAttribute('aria-haspopup', 'true');
+
         themeToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            themeDropdown.classList.toggle('active');
+            const isActive = themeDropdown.classList.toggle('active');
+            themeToggleBtn.setAttribute('aria-expanded', isActive.toString());
         });
+        
+        // Handle keyboard navigation for accessibility
+        themeDropdown.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                themeDropdown.classList.remove('active');
+                themeToggleBtn.setAttribute('aria-expanded', 'false');
+                themeToggleBtn.focus();
+            }
+        });
+
         document.addEventListener('click', () => {
             themeDropdown.classList.remove('active');
+            themeToggleBtn.setAttribute('aria-expanded', 'false');
         });
     }
 
