@@ -1272,6 +1272,80 @@ document.addEventListener('DOMContentLoaded', () => {
     </defs>
 </svg>
 `
+        },
+        commai: {
+            title: 'CommAI System Architecture',
+            desc: 'AI-driven multilingual public notices & campaign generator leveraging Llama 3.3 on Groq high-throughput hardware, real-time multi-device rendering, and client-side compliance audits.',
+            specs: [
+                { label: 'Languages Supported', val: '22 Indian' },
+                { label: 'Turnaround Reduction', val: '70%' },
+                { label: 'Inference Backend', val: 'Groq API' },
+                { label: 'Translation Model', val: 'Llama 3.3 70B' }
+            ],
+            dryRunResponses: {
+                '/diagnostics': `[SYSTEM] Verifying system integrity...
+- Translation engine (Groq Llama 3.3): ONLINE
+- Offline Compliance Auditor: ACTIVE
+- Live Preview Rendering Node: OK
+[SUCCESS] All systems functional. Ready for broadcast.`,
+                '/audit': `[SYSTEM] Analyzing text pattern content...
+- Shouting pattern check: PASSED (No excessive caps)
+- Duplicate phrasing index: 0.05 (Excellent variety)
+- Sensitive terms screening: PASSED (Clean compliance profile)
+[SUCCESS] Campaign text is 100% compliant.`
+            },
+            svg: `
+<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nodes -->
+    <!-- Node 1: Campaign Creator React UI -->
+    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Creator Hub</text>
+
+    <!-- Node 2: Compliance Auditor (Client-side) -->
+    <rect x="180" y="30" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="245" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Compliance Audit</text>
+    <text x="245" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Offline Screener</text>
+
+    <!-- Node 3: Device Preview Node -->
+    <rect x="180" y="140" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="245" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Device Preview</text>
+    <text x="245" y="192" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Responsive Emulator</text>
+
+    <!-- Node 4: Groq API Gateway -->
+    <rect x="370" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq Gateway</text>
+    <text x="430" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Token Router</text>
+
+    <!-- Node 5: Translation Engine (Llama 3.3) -->
+    <rect x="550" y="80" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="615" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Llama 3.3 70B</text>
+    <text x="615" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">22 Languages</text>
+
+    <!-- Connections -->
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="none"/>
+    <path d="M130 100 L180 65" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M130 130 L180 175" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M310 65 L370 100" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
+    <path d="M310 175 L370 130" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
+    <path d="M490 115 H550" stroke="#06B6D4" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+
+    <defs>
+        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+    </defs>
+</svg>
+`
         }
     };
 

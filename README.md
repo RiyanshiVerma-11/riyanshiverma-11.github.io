@@ -81,6 +81,11 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 
 ### ☄️ Featured AI Projects
 
+> **[CommAI](https://github.com/RiyanshiVerma-11/CommAI)** | *React, Groq API, Llama-3.3, Vercel* | **[Live Demo](https://comm-ai-nine.vercel.app/)**
+> *   Engineered an AI-driven multilingual campaign generator supporting 22 Indian languages powered by Groq Llama 3.3, reducing drafting turnaround time by ~70%.
+> *   Integrated Groq API with real-time device previews to generate localized public notices with responsive multi-device rendering.
+> *   Developed an offline content compliance auditor that screens campaign drafts for shouting patterns, duplicate phrasing, and sensitive keywords prior to bulk broadcast.
+
 > **[HospiSynAI](https://github.com/RiyanshiVerma-11/HospiSynAI)** | *React, FastAPI, Docker, Vercel, Render* | **[Live Demo](https://hospi-syn-ai.vercel.app/)**
 > *   Architected a multi-agent AI ecosystem using FastAPI and Groq-powered Llama-3.3-70B to transform raw clinical notes into structured prescriptions and patient handouts in 11 languages, achieving average response latency below 1.5 seconds.
 > *   Developed a hybrid AI Billing Auditor that combines deterministic validation rules with LLM-based reasoning to identify potential clinical and billing inconsistencies before invoice generation, intended to improve billing accuracy while reducing manual verification effort by 76%.
