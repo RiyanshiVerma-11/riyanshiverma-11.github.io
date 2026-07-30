@@ -999,49 +999,52 @@ document.addEventListener('DOMContentLoaded', () => {
 - API Gateway: 100% ONLINE (HTTP 200)
 - PostgreSQL Database: Connected (Neon PG pool)
 - Groq Inference Node: Active (Latency: 85ms)
+- ReportLab PDF Engine: Loaded
 [SUCCESS] All microservices operational.`,
                 '/status': `[SYSTEM] Node Status: ONLINE
-- CPU Load: 18.4%
-- Memory: 4.12 GB / 8.00 GB
-- Docker Daemon: Active (uptime: 32h)`
+- CPU Load: 14.2%
+- Memory: 3.85 GB / 8.00 GB
+- Docker Containers: Active (db, backend, frontend)`
             },
             svg: `
 <svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- SVG Nodes -->
-    <!-- Node 1: Browser -->
-    <rect x="20" y="80" width="100" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="70" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
-    <text x="70" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Browser Client</text>
+    <!-- Nodes -->
+    <!-- Node 1: React UI Client -->
+    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Clinician Console</text>
 
-    <!-- Node 2: FastAPI Gateway -->
-    <rect x="180" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="235" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI</text>
-    <text x="235" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">API Gateway</text>
+    <!-- Node 2: FastAPI Core -->
+    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Billing &amp; EHR API</text>
 
-    <!-- Node 3: Docker Compose Services -->
-    <rect x="340" y="30" width="160" height="170" rx="8" fill="#0F1424" stroke="rgba(255,255,255,0.1)" stroke-dasharray="4 4" stroke-width="1.5"/>
-    <text x="420" y="50" fill="#EC4899" font-family="JetBrains Mono" font-size="9" font-weight="700" text-anchor="middle">DOCKER CONTAINER</text>
-    
-    <!-- Redis Cache Inside Container -->
-    <rect x="360" y="65" width="120" height="40" rx="4" fill="#0A0E1A" stroke="#EC4899" stroke-width="1.5"/>
-    <text x="420" y="89" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" text-anchor="middle">Neon PG DB</text>
+    <!-- Node 3: PostgreSQL DB -->
+    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">PostgreSQL</text>
+    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">EHR &amp; Audit Logs</text>
 
-    <!-- Llama Worker Inside Container -->
-    <rect x="360" y="125" width="120" height="40" rx="4" fill="#0A0E1A" stroke="#EC4899" stroke-width="1.5"/>
-    <text x="420" y="149" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" text-anchor="middle">Billing Auditor</text>
+    <!-- Node 4: Hybrid Auditor -->
+    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Hybrid Auditor</text>
+    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Rule Verification</text>
 
-    <!-- Node 4: Groq API Inference -->
-    <rect x="550" y="80" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="615" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq API</text>
-    <text x="615" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Llama-3.3-70B</text>
+    <!-- Node 5: Groq Inference Core -->
+    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Inference</text>
+    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3.3 Suggester</text>
 
-    <!-- Connective Arrows -->
-    <!-- Client <-> FastAPI -->
-    <path d="M120 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <!-- FastAPI <-> Docker -->
-    <path d="M290 115 H340" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <!-- Docker <-> Groq LLM -->
-    <path d="M500 115 H550" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+    <!-- Node 6: ReportLab PDF Engine -->
+    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">ReportLab PDF</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">11 Indic Handouts</text>
+
+    <!-- Connections -->
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
 
     <!-- Marker Definitions -->
     <defs>
@@ -1050,6 +1053,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </marker>
         <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
         </marker>
         <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
@@ -1069,50 +1078,56 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             dryRunResponses: {
                 '/rfm-score': `[SYSTEM] Processing transaction RFM behavioral matrices...
-- Recency Score: 5.0 (Last transaction 2h ago)
-- Frequency Score: 4.8 (Avg 12 txns/month)
+- Recency Score: 4.8 (Last txn 3.5h ago)
+- Frequency Score: 4.2 (Avg 9 txns/month)
 - Monetary Score: 4.9 (High-value segment)
-[SUCCESS] Customer segment evaluated: VIP Tier-1`,
-                '/what-if': `[SYSTEM] Simulating custom ROI rate shift (+5% index)...
-- Forecast Model Confidence: 91.2%
-- Projected Revenue Offset: +12.4% annually
-- Risk Profile: Minimal`
+[SUCCESS] Customer segment evaluated: VIP Tier-2`,
+                '/what-if': `[SYSTEM] Simulating custom ROI rate shift (+10% index)...
+- Forecast Model Confidence: 94.2%
+- Projected Revenue Offset: +15.8% annually
+- Risk Profile: Low (Validated by SHAP parameters)`
             },
             svg: `
 <svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Nodes -->
-    <!-- Node 1: Bank Transactions Data Source -->
-    <rect x="20" y="80" width="100" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="70" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">UPI / Banking</text>
-    <text x="70" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Transaction Logs</text>
+    <!-- Node 1: React UI Client -->
+    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Simulation Dashboard</text>
 
-    <!-- Node 2: React Dashboard -->
-    <rect x="180" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="235" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React App</text>
-    <text x="235" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Simulation UI</text>
+    <!-- Node 2: FastAPI Core -->
+    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Churn Analytics API</text>
 
-    <!-- Node 3: RFM Behavioral Engine -->
-    <rect x="350" y="30" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="420" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">RFM Engine</text>
-    <text x="420" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Calculates RAR</text>
+    <!-- Node 3: SQLite Cache -->
+    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Cache</text>
+    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Uploaded Txn Logs</text>
 
-    <!-- Node 4: Groq API LLM -->
-    <rect x="350" y="140" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="420" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq LLMs</text>
-    <text x="420" y="192" fill="#06B6D4" font-family="JetBrains Mono" font-size="9" text-anchor="middle">What-If Consensus</text>
+    <!-- Node 4: ML Ensemble Core -->
+    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">ML Ensemble</text>
+    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">XGBoost &amp; SHAP Explainer</text>
 
-    <!-- Node 5: Output ROI Visualizer -->
+    <!-- Node 5: Groq AI Planner -->
+    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Strategic</text>
+    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3.3 Hypotheses</text>
+
+    <!-- Node 6: ROI Dashboard -->
     <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
     <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">ROI Dashboard</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hypothesis Plots</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Plotly Simulation</text>
 
     <!-- Connections -->
-    <path d="M120 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M290 100 L350 65" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M290 130 L350 165" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M490 65 L560 100" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
-    <path d="M490 175 L560 130" stroke="#06B6D4" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
 
+    <!-- Marker Definitions -->
     <defs>
         <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
@@ -1125,6 +1140,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </marker>
         <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
         </marker>
     </defs>
 </svg>
@@ -1145,7 +1163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 - Google Maps API Gateway: ACTIVE (HTTP 200)
 - Fact-Checking Cache: Loaded (5,200 records)
 [SUCCESS] All civic tools operational.`,
-                '/booth-lookup': `[SYSTEM] Mock routing query resolved:
+                '/booth-lookup': `[SYSTEM] Geolocation lookup resolved:
 - Found nearest booth: Municipal School Hall, Ward 4
 - Route distance: 1.2 km | ETA: 4 mins
 - Compliance check: Verified & safe.`
@@ -1153,38 +1171,44 @@ document.addEventListener('DOMContentLoaded', () => {
             svg: `
 <svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Nodes -->
-    <!-- Node 1: Citizen Query -->
-    <rect x="20" y="80" width="100" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="70" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Citizen UI</text>
-    <text x="70" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Multi-lingual Input</text>
+    <!-- Node 1: Citizen UI Client -->
+    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Citizen UI</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">PWA Interface</text>
 
-    <!-- Node 2: Gemini 2.0 Agent -->
+    <!-- Node 2: FastAPI Core -->
     <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Gemini 2.0 Flash</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Reasoning Core</text>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Civic Portal API</text>
 
-    <!-- Node 3: Google Maps API -->
-    <rect x="360" y="30" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Google Maps API</text>
-    <text x="430" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Localized Routing</text>
+    <!-- Node 3: SQLite Cache -->
+    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Cache</text>
+    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">ECI Data Local Cache</text>
 
-    <!-- Node 4: Fact-Check Cache -->
-    <rect x="360" y="140" width="140" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Fact-Check DB</text>
-    <text x="430" y="192" fill="#06B6D4" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Real-time Verify</text>
+    <!-- Node 4: Gemini 2.0 Flash -->
+    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Gemini 2.0 Flash</text>
+    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Zero-Hallucination Core</text>
 
-    <!-- Node 5: Structured Civic Output -->
+    <!-- Node 5: Google Maps API -->
+    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Google Maps API</text>
+    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Booth Geocoding</text>
+
+    <!-- Node 6: Civic Roadmap -->
     <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
     <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Civic Roadmap</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Actionable output</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Multilingual Output</text>
 
     <!-- Connections -->
-    <path d="M120 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M300 100 L360 65" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M300 130 L360 165" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M500 65 L560 100" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
-    <path d="M500 175 L560 130" stroke="#06B6D4" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
 
+    <!-- Marker Definitions -->
     <defs>
         <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
@@ -1197,6 +1221,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </marker>
         <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
         </marker>
     </defs>
 </svg>
@@ -1224,38 +1251,44 @@ document.addEventListener('DOMContentLoaded', () => {
             svg: `
 <svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Nodes -->
-    <!-- Node 1: Examinee Browser -->
+    <!-- Node 1: Examinee UI Client -->
     <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
     <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Examinee UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Vanilla HTML/JS</text>
- 
-    <!-- Node 2: Client Proctor (MediaPipe) -->
-    <rect x="180" y="30" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">MediaPipe Edge</text>
-    <text x="240" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">WebGL Face Mesh</text>
- 
-    <!-- Node 3: FastAPI Backend -->
-    <rect x="360" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="420" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="420" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">REST &amp; WebSockets</text>
- 
-    <!-- Node 4: Groq Llama 3 -->
-    <rect x="540" y="30" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="605" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq Llama-3</text>
-    <text x="605" y="82" fill="#06B6D4" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Dynamic Question Gen</text>
- 
-    <!-- Node 5: SQLite Database -->
-    <rect x="540" y="140" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="605" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">SQLite Storage</text>
-    <text x="605" y="192" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Exam Logs &amp; Alerts</text>
- 
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Exam Client</text>
+
+    <!-- Node 2: FastAPI Core -->
+    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">REST &amp; WebSockets API</text>
+
+    <!-- Node 3: SQLite Storage -->
+    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Storage</text>
+    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Proctor Logs &amp; Marks</text>
+
+    <!-- Node 4: MediaPipe Edge -->
+    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">MediaPipe Edge</text>
+    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Local WebGL Proctoring</text>
+
+    <!-- Node 5: Groq Inference Core -->
+    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Inference</text>
+    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3 Question Gen</text>
+
+    <!-- Node 6: Auto-Graded Panel -->
+    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Auto Grading</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Qualitative Marks</text>
+
     <!-- Connections -->
-    <path d="M130 100 L180 65" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M130 120 H360" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M300 65 L360 100" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M480 100 L540 65" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
-    <path d="M480 120 L540 165" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
- 
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+    <!-- Marker Definitions -->
     <defs>
         <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
@@ -1268,6 +1301,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </marker>
         <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
         </marker>
     </defs>
 </svg>
@@ -1277,59 +1313,71 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'CommAI System Architecture',
             desc: 'AI-driven multilingual public notices & campaign generator leveraging Llama 3.3 on Groq high-throughput hardware, real-time multi-device rendering, and client-side compliance audits.',
             specs: [
-                { label: 'Languages Supported', val: '22 Indian' },
-                { label: 'Turnaround Reduction', val: '70%' },
-                { label: 'Inference Backend', val: 'Groq API' },
-                { label: 'Translation Model', val: 'Llama 3.3 70B' }
+                { label: 'Voice Assistant', val: 'Hey Jarvis' },
+                { label: 'Indic Languages', val: '23 Supported' },
+                { label: 'Omnichannel APIs', val: 'Email, WA, TG, SMS' },
+                { label: 'Core Stack', val: 'React & FastAPI' }
             ],
             dryRunResponses: {
-                '/diagnostics': `[SYSTEM] Verifying system integrity...
-- Translation engine (Groq Llama 3.3): ONLINE
-- Offline Compliance Auditor: ACTIVE
-- Live Preview Rendering Node: OK
-[SUCCESS] All systems functional. Ready for broadcast.`,
-                '/audit': `[SYSTEM] Analyzing text pattern content...
-- Shouting pattern check: PASSED (No excessive caps)
-- Duplicate phrasing index: 0.05 (Excellent variety)
-- Sensitive terms screening: PASSED (Clean compliance profile)
-[SUCCESS] Campaign text is 100% compliant.`
+                '/diagnostics': `[SYSTEM] Running system diagnostic scans...
+- API Gateway (FastAPI): 100% ONLINE (HTTP 200)
+- SQLite Database connection: Connected (32 records)
+- Groq Llama Inference Node: Active (Latency: 92ms)
+- Edge-TTS Voice Generator: Active (Zero-downtime gTTS fallback)
+- Visual Poster Canvas Studio: OK
+[SUCCESS] All systems operational. Campaign ready for dispatch.`,
+                '/audit': `[SYSTEM] Initiating campaign content safety audit check...
+- Shouting pattern screener: PASSED (Zero anomalies)
+- Duplicate phrasing threshold: 0.04 (Passed)
+- Four-Eye Maker-Checker clearance: APPROVED (Manager verified)
+[SUCCESS] Compliance audit verification successful.`,
+                '/voice-test': `[SYSTEM] Generating neural speech synthesis test clip...
+- Wake-word listener: ACTIVE ("Hey Jarvis")
+- Synthesis Language: Marathi (edge-tts)
+- Audio synthesis status: Completed (Latency: 280ms)
+[SUCCESS] Audio chimes operational. Link: static/voice_test.mp3`
             },
             svg: `
 <svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Nodes -->
-    <!-- Node 1: Campaign Creator React UI -->
+    <!-- Node 1: React UI Client -->
     <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
     <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Creator Hub</text>
+    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Jarvis Voice &amp; Hub</text>
 
-    <!-- Node 2: Compliance Auditor (Client-side) -->
-    <rect x="180" y="30" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="245" y="65" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Compliance Audit</text>
-    <text x="245" y="82" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Offline Screener</text>
+    <!-- Node 2: FastAPI Core -->
+    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
+    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Backend Services</text>
 
-    <!-- Node 3: Device Preview Node -->
-    <rect x="180" y="140" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="245" y="175" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Device Preview</text>
-    <text x="245" y="192" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Responsive Emulator</text>
+    <!-- Node 3: SQLite DB -->
+    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite DB</text>
+    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Templates &amp; Audit Logs</text>
 
-    <!-- Node 4: Groq API Gateway -->
-    <rect x="370" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Groq Gateway</text>
-    <text x="430" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Token Router</text>
+    <!-- Node 4: Voice & Poster Studio -->
+    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
+    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Voice &amp; Poster Studio</text>
+    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Edge-TTS &amp; Canvas</text>
 
-    <!-- Node 5: Translation Engine (Llama 3.3) -->
-    <rect x="550" y="80" width="130" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="615" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Llama 3.3 70B</text>
-    <text x="615" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">22 Languages</text>
+    <!-- Node 5: Groq LLM Engine -->
+    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq LLM Engine</text>
+    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama-3.3-70B &amp; RAG</text>
+
+    <!-- Node 6: Omnichannel API -->
+    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Omnichannel API</text>
+    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Email, WA, TG, SMS</text>
 
     <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="none"/>
-    <path d="M130 100 L180 65" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M130 130 L180 175" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M310 65 L370 100" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrow-violet)"/>
-    <path d="M310 175 L370 130" stroke="#EC4899" stroke-width="2" marker-end="url(#arrow-rose)"/>
-    <path d="M490 115 H550" stroke="#06B6D4" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
+    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
 
+    <!-- Marker Definitions -->
     <defs>
         <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
@@ -1343,11 +1391,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
         </marker>
+        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
     </defs>
 </svg>
 `
         }
     };
+
 
     function resetModalTabs() {
         modalTabBtns.forEach(btn => btn.classList.remove('active'));
@@ -1494,6 +1546,12 @@ document.addEventListener('DOMContentLoaded', () => {
 - /generate-exam : Generates dynamic questionnaire on-demand
 - /grading       : Evaluates essay responses
 - /help          : Displays commands menu`;
+                    } else if (currentProjectKey === 'commai') {
+                        responseText = `Available queries:
+- /diagnostics : Runs diagnostic checks on Groq connection
+- /audit       : Initiates campaign safety compliance audit
+- /voice-test  : Simulates dynamic text-to-speech audio synthesis
+- /help        : Displays commands menu`;
                     } else {
                         responseText = `Available queries:
 - /rfm-score   : Runs RFM transaction valuation calculations
