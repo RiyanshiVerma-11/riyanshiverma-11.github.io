@@ -987,8 +987,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectArchitectures = {
         hospisyn: {
             title: 'HospiSynAI System Architecture',
-            desc: 'A decoupled multi-agent AI ecosystem leveraging Docker containerization, neon PostgreSQL databases, and Groq-powered high-throughput Llama models.',
+            desc: 'Ranked 4th / 4.2k+ in HackDevengers 1.0 global hackathon. A decoupled multi-agent AI ecosystem leveraging Docker containerization, neon PostgreSQL databases, and Groq-powered high-throughput Llama models.',
             specs: [
+                { label: 'Hackathon Rank', val: 'Rank 4 / 4.2k+' },
                 { label: 'Inference Latency', val: '124ms' },
                 { label: 'Token Throughput', val: '4,500 t/s' },
                 { label: 'Foundation Model', val: 'Llama-3.3-70B' },
