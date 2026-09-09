@@ -1,80 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="100%" height="100%">
-  <!-- Definitions for gradients and shadows -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#07090e" />
-      <stop offset="50%" stop-color="#0c101b" />
-      <stop offset="100%" stop-color="#111627" />
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070a14"/>
+      <stop offset="50%" stop-color="#0c1226"/>
+      <stop offset="100%" stop-color="#050810"/>
     </linearGradient>
-    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00F2FE" />
-      <stop offset="100%" stop-color="#4FACFE" />
+
+    <!-- Accent Glow Gradient -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="50%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#7000ff"/>
     </linearGradient>
-    <linearGradient id="sub-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#F355DA" />
-      <stop offset="100%" stop-color="#7000FF" />
+
+    <!-- Border Gradient -->
+    <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#4facfe" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7000ff" stop-opacity="0.7"/>
     </linearGradient>
-    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="8" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="300" fill="url(#bg-grad)" />
+  <!-- Card Background -->
+  <rect x="5" y="5" width="1190" height="350" rx="20" fill="url(#bgGradient)" stroke="url(#borderGradient)" stroke-width="2"/>
 
-  <!-- Grid Pattern Overlay -->
-  <g opacity="0.06">
-    <path d="M 0 50 L 1200 50 M 0 100 L 1200 100 M 0 150 L 1200 150 M 0 200 L 1200 200 M 0 250 L 1200 250" stroke="#4FACFE" stroke-width="1" />
-    <path d="M 100 0 L 100 300 M 200 0 L 200 300 M 300 0 L 300 300 M 400 0 L 400 300 M 500 0 L 500 300 M 600 0 L 600 300 M 700 0 L 700 300 M 800 0 L 800 300 M 900 0 L 900 300 M 1000 0 L 1000 300 M 1100 0 L 1100 300" stroke="#4FACFE" stroke-width="1" />
+  <!-- Decorative Tech Grid -->
+  <g opacity="0.07">
+    <path d="M0 60 H1200 M0 120 H1200 M0 180 H1200 M0 240 H1200 M0 300 H1200" stroke="#00f2fe" stroke-width="1"/>
+    <path d="M150 0 V360 M300 0 V360 M450 0 V360 M600 0 V360 M750 0 V360 M900 0 V360 M1050 0 V360" stroke="#00f2fe" stroke-width="1"/>
   </g>
 
-  <!-- Animated-like Neural Connections (SVG paths) -->
-  <g opacity="0.45">
-    <!-- Main network lines -->
-    <path d="M 850 70 L 950 120 L 1050 90 L 1120 180 L 1000 220 L 900 190 L 850 70 Z" fill="none" stroke="#00F2FE" stroke-width="1.5" filter="url(#glow-cyan)" />
-    <path d="M 950 120 L 1000 220 M 1050 90 L 900 190 M 850 70 L 1050 90 M 950 120 L 1120 180" stroke="#7000FF" stroke-width="1" filter="url(#glow-purple)" />
-    
-    <!-- Secondary network nodes -->
-    <circle cx="850" cy="70" r="5" fill="#00F2FE" />
-    <circle cx="950" cy="120" r="6" fill="#4FACFE" />
-    <circle cx="1050" cy="90" r="5" fill="#7000FF" />
-    <circle cx="1120" cy="180" r="7" fill="#F355DA" />
-    <circle cx="1000" cy="220" r="6" fill="#00F2FE" />
-    <circle cx="900" cy="190" r="5" fill="#7000FF" />
-    
-    <!-- Minor background nodes -->
-    <circle cx="800" cy="150" r="2" fill="#4FACFE" opacity="0.5" />
-    <circle cx="980" cy="50" r="3" fill="#F355DA" opacity="0.5" />
-    <circle cx="1080" cy="240" r="2" fill="#00F2FE" opacity="0.5" />
-    <line x1="800" y1="150" x2="850" y2="70" stroke="#4FACFE" stroke-width="0.5" />
-    <line x1="980" y1="50" x2="950" y2="120" stroke="#F355DA" stroke-width="0.5" />
-    <line x1="1080" y1="240" x2="1000" y2="220" stroke="#00F2FE" stroke-width="0.5" />
+  <!-- Glowing Background Spheres -->
+  <circle cx="140" cy="80" r="110" fill="#00f2fe" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="1060" cy="270" r="130" fill="#7000ff" opacity="0.1" filter="url(#glow)"/>
+
+  <!-- Top Pill / Role Badge -->
+  <g transform="translate(80, 48)">
+    <rect x="0" y="0" width="375" height="32" rx="16" fill="#00f2fe" fill-opacity="0.1" stroke="#00f2fe" stroke-opacity="0.4" stroke-width="1"/>
+    <circle cx="18" cy="16" r="4.5" fill="#00f2fe"/>
+    <text x="32" y="21" font-family="'Fira Code', 'Courier New', monospace" font-size="12" font-weight="700" fill="#00f2fe" letter-spacing="1">AI INTERN @ INFOSYS SPRINGBOARD 7.0</text>
   </g>
 
-  <!-- Title and Text -->
-  <g transform="translate(80, 0)">
-    <!-- Tech Tag -->
-    <rect x="0" y="65" width="160" height="24" rx="12" fill="#121D33" stroke="#00F2FE" stroke-width="1" opacity="0.8" />
-    <text x="80" y="81" fill="#00F2FE" font-family="'Fira Code', 'Courier New', monospace" font-size="10" font-weight="bold" text-anchor="middle" letter-spacing="1.5">INITIALIZING_AGENT...</text>
-    
-    <!-- Name -->
-    <text x="0" y="150" fill="#FFFFFF" font-family="'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="58" font-weight="900" letter-spacing="2">
-      RIYANSHI VERMA
-    </text>
-    
-    <!-- Subtitle / Role -->
-    <text x="0" y="195" fill="url(#text-grad)" font-family="'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="4">
-      AI DEVELOPER &amp; DATA SCIENCE STUDENT
-    </text>
+  <!-- Name -->
+  <text x="80" y="142" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="54" font-weight="800" fill="url(#accentGradient)" letter-spacing="-1">
+    Riyanshi Verma
+  </text>
 
-    <!-- Bio bullet line -->
-    <text x="0" y="235" fill="#8F9CAE" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" letter-spacing="1">
-      ⚡ Designing multi-agent frameworks, custom RAG pipelines, and intelligent neural systems.
-    </text>
+  <!-- Subtitle -->
+  <text x="80" y="185" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="20" font-weight="500" fill="#e2e8f0" letter-spacing="0.3">
+    B.Tech CSE (Data Science) • AI &amp; Software Engineering • Rank 4 HackDevengers '26 • Top 0.2% PromptWars
+  </text>
+
+  <!-- Highlight Pills -->
+  <g transform="translate(80, 226)">
+    <!-- Pill 1 -->
+    <rect x="0" y="0" width="220" height="38" rx="8" fill="#121a2e" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="14" y="24" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🤖 <tspan fill="#00f2fe">Agentic Systems &amp; LLMs</tspan></text>
+
+    <!-- Pill 2 -->
+    <rect x="235" y="0" width="275" height="38" rx="8" fill="#121a2e" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="250" y="24" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🏆 <tspan fill="#38bdf8">Rank 4 / 4.2k+ (HackDevengers 1.0)</tspan></text>
+
+    <!-- Pill 3 -->
+    <rect x="525" y="0" width="270" height="38" rx="8" fill="#121a2e" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="540" y="24" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🏆 <tspan fill="#a855f7">Rank 1 Women Dev (PromptWars)</tspan></text>
   </g>
+
+  <!-- Right Decorative Icon Graphic -->
+  <g transform="translate(980, 95)" opacity="0.9">
+    <polygon points="60,0 120,25 120,95 60,120 0,95 0,25" fill="none" stroke="url(#accentGradient)" stroke-width="2.5" />
+    <polygon points="60,15 105,33 105,87 60,105 15,87 15,33" fill="#00f2fe" fill-opacity="0.06" stroke="#4facfe" stroke-width="1" stroke-dasharray="4,4"/>
+    <circle cx="60" cy="60" r="18" fill="url(#accentGradient)"/>
+    <line x1="60" y1="0" x2="60" y2="42" stroke="#00f2fe" stroke-width="2"/>
+    <line x1="60" y1="78" x2="60" y2="120" stroke="#00f2fe" stroke-width="2"/>
+    <line x1="0" y1="60" x2="42" y2="60" stroke="#00f2fe" stroke-width="2"/>
+    <line x1="78" y1="60" x2="120" y2="60" stroke="#00f2fe" stroke-width="2"/>
+    <circle cx="60" cy="0" r="4" fill="#00f2fe"/>
+    <circle cx="60" cy="120" r="4" fill="#00f2fe"/>
+    <circle cx="0" cy="60" r="4" fill="#00f2fe"/>
+    <circle cx="120" cy="60" r="4" fill="#00f2fe"/>
+  </g>
+
+  <!-- Bottom Accent Gradient Line -->
+  <rect x="80" y="300" width="1040" height="2" fill="url(#accentGradient)" opacity="0.8"/>
 </svg>
