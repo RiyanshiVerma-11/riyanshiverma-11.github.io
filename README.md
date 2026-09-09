@@ -10,6 +10,7 @@
   <h3>
     <a href="https://RiyanshiVerma-11.github.io">Portfolio Webpage</a> •
     <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2">LinkedIn</a> •
+    <a href="https://youtube.com/@stylishspins?si=3i0liF0d0qOHx9Z4">YouTube</a> •
     <a href="https://www.instagram.com/builds.by.riyanshi?igsh=MTFpcGpwOTlsYmtldQ==">Instagram</a> •
     <a href="mailto:riyanshiverma46@gmail.com">Email</a>
   </h3>
