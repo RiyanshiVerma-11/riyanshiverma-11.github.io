@@ -5372,6 +5372,7 @@ html[data-theme="light"] .btn-sim-text span {
     letter-spacing: -0.01em;
     background: linear-gradient(135deg, var(--gold) 0%, #FFFFFF 65%, var(--rose) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
     padding: 0 0.1em;
