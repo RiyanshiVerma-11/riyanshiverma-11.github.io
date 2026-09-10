@@ -239,41 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(type, 800);
     }
 
-    // ----------------------------------------------------------------------
-    // 3b. Interactive Python Manifesto Run Simulation
-    // ----------------------------------------------------------------------
-    const btnRunManifesto = document.getElementById('btn-run-manifesto');
-    const manifestoOutput = document.getElementById('manifesto-output');
-    if (btnRunManifesto && manifestoOutput) {
-        let isRunningManifesto = false;
-        btnRunManifesto.addEventListener('click', () => {
-            if (isRunningManifesto) return;
-            isRunningManifesto = true;
-            btnRunManifesto.style.opacity = '0.6';
-            const runIcon = btnRunManifesto.querySelector('.run-icon');
-            if (runIcon) runIcon.textContent = '⚡';
-            
-            // Clear and show output
-            manifestoOutput.style.display = 'block';
-            const lines = manifestoOutput.querySelectorAll('.output-line');
-            lines.forEach(l => l.style.display = 'none');
-            
-            // Staggered output simulation
-            let lineIdx = 0;
-            function printLine() {
-                if (lineIdx < lines.length) {
-                    lines[lineIdx].style.display = 'block';
-                    lineIdx++;
-                    setTimeout(printLine, lineIdx === 1 ? 500 : 300);
-                } else {
-                    isRunningManifesto = false;
-                    btnRunManifesto.style.opacity = '1';
-                    if (runIcon) runIcon.textContent = '▶';
-                }
-            }
-            printLine();
-        });
-    }
+
 
     // ----------------------------------------------------------------------
     // 4. Scroll Reveal Animations (IntersectionObserver)
@@ -313,41 +279,52 @@ document.addEventListener('DOMContentLoaded', () => {
         if (counterEl.classList.contains('counted')) return;
         counterEl.classList.add('counted');
 
-        const target = +counterEl.getAttribute('data-target');
-        const duration = 2000; // milliseconds
+        const target = parseInt(counterEl.getAttribute('data-target'), 10);
+        if (isNaN(target)) return;
+
+        const prefix = counterEl.getAttribute('data-prefix') || '';
+        const suffix = counterEl.getAttribute('data-suffix') || '';
+        const duration = 1200; // Snappy, smooth 1.2s
         const startTime = performance.now();
+
+        // Avoid showing "Rank 0" or awkward 0; start from 1 for small targets
+        const startVal = target <= 5 ? 1 : 0;
 
         function updateCounter(currentTime) {
             const elapsedTime = currentTime - startTime;
             const progress = Math.min(elapsedTime / duration, 1);
             
-            // Easing function (easeOutQuad)
-            const easeProgress = progress * (2 - progress);
+            // Easing function (easeOutCubic)
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            const currentVal = Math.round(startVal + easeProgress * (target - startVal));
             
-            const currentValue = Math.floor(easeProgress * target);
-            
-            if (target === 1) {
-                counterEl.textContent = `Rank ${currentValue}`;
-            } else if (target === 30) {
-                counterEl.textContent = `Top ${currentValue}`;
-            } else {
-                counterEl.textContent = currentValue;
-            }
+            counterEl.textContent = `${prefix}${currentVal}${suffix}`;
 
             if (progress < 1) {
                 requestAnimationFrame(updateCounter);
             } else {
-                if (target === 1) {
-                    counterEl.textContent = 'Rank 1';
-                } else if (target === 30) {
-                    counterEl.textContent = 'Top 30';
-                } else {
-                    counterEl.textContent = target;
-                }
+                counterEl.textContent = `${prefix}${target}${suffix}`;
             }
         }
 
         requestAnimationFrame(updateCounter);
+    }
+
+    // Direct observer for counters so they trigger smoothly on scroll
+    const counterElements = document.querySelectorAll('.counter');
+    if ('IntersectionObserver' in window && counterElements.length > 0) {
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -30px 0px'
+        });
+        counterElements.forEach(c => counterObserver.observe(c));
     }
 
     // ----------------------------------------------------------------------
@@ -861,14 +838,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Run simulation logic
+    // Run simulation logic with live streaming typing effect & blinking cursor
     if (runSimBtn && consoleLogs) {
         runSimBtn.addEventListener('click', () => {
             if (isSimulating) return; // debounce
             isSimulating = true;
             runSimBtn.disabled = true;
             runSimBtn.style.opacity = '0.6';
-            runSimBtn.querySelector('.btn-text').textContent = 'Pipeline Running...';
+            runSimBtn.querySelector('.btn-text').textContent = 'Streaming Logs...';
 
             consoleLogs.innerHTML = ''; // clear console
             resetFlowmap();
@@ -876,34 +853,61 @@ document.addEventListener('DOMContentLoaded', () => {
             const logsToRun = simulationTraces[activeSimulation];
             let currentLine = 0;
 
-            function printNextLine() {
+            function streamNextLog() {
                 if (currentLine < logsToRun.length) {
                     const logData = logsToRun[currentLine];
                     const logEl = document.createElement('div');
                     logEl.className = `log-line ${logData.type}`;
-                    logEl.textContent = logData.text;
-                    consoleLogs.appendChild(logEl);
-                    consoleLogs.scrollTop = consoleLogs.scrollHeight; // auto-scroll
                     
-                    // Activate SVG nodes/paths
-                    if (logData.activeNodes) {
-                        logData.activeNodes.forEach(nodeId => {
-                            const node = document.getElementById(nodeId);
-                            if (node) node.classList.add('active');
-                        });
-                    }
-                    if (logData.activePaths) {
-                        logData.activePaths.forEach(pathId => {
-                            const path = document.getElementById(pathId);
-                            if (path) path.classList.add('active');
-                        });
+                    const textSpan = document.createElement('span');
+                    const cursor = document.createElement('span');
+                    cursor.className = 'terminal-cursor';
+                    cursor.textContent = '_';
+
+                    logEl.appendChild(textSpan);
+                    logEl.appendChild(cursor);
+                    consoleLogs.appendChild(logEl);
+                    consoleLogs.scrollTop = consoleLogs.scrollHeight;
+
+                    const fullText = logData.text;
+                    let charIdx = 0;
+                    // Vary character speed for natural live terminal throughput
+                    const streamSpeed = logData.type === 'trace' ? 10 : 16;
+                    const chunkSize = logData.type === 'trace' ? 3 : 2;
+
+                    function typeNextChunk() {
+                        if (charIdx < fullText.length) {
+                            const nextChunk = fullText.slice(charIdx, charIdx + chunkSize);
+                            textSpan.textContent += nextChunk;
+                            charIdx += chunkSize;
+                            consoleLogs.scrollTop = consoleLogs.scrollHeight;
+                            setTimeout(typeNextChunk, streamSpeed);
+                        } else {
+                            // Finish line: remove cursor
+                            cursor.remove();
+
+                            // Activate SVG nodes/paths
+                            if (logData.activeNodes) {
+                                logData.activeNodes.forEach(nodeId => {
+                                    const node = document.getElementById(nodeId);
+                                    if (node) node.classList.add('active');
+                                });
+                            }
+                            if (logData.activePaths) {
+                                logData.activePaths.forEach(pathId => {
+                                    const path = document.getElementById(pathId);
+                                    if (path) path.classList.add('active');
+                                });
+                            }
+
+                            currentLine++;
+                            // Step-by-step latency delay between pipeline steps
+                            const pauseDelay = logData.type === 'trace' ? 180 : 380;
+                            setTimeout(streamNextLog, pauseDelay);
+                        }
                     }
 
-                    currentLine++;
-                    
-                    // Vary printing latency for natural feel
-                    const nextDelay = logData.type === 'trace' ? 250 : 550;
-                    setTimeout(printNextLine, nextDelay);
+                    typeNextChunk();
                 } else {
                     isSimulating = false;
                     runSimBtn.disabled = false;
@@ -912,7 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            printNextLine();
+            streamNextLog();
         });
     }
 
@@ -986,421 +990,1098 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const projectArchitectures = {
         hospisyn: {
-            title: 'HospiSynAI System Architecture',
-            desc: 'Ranked 4th / 4.2k+ in HackDevengers 1.0 global hackathon. A decoupled multi-agent AI ecosystem leveraging Docker containerization, neon PostgreSQL databases, and Groq-powered high-throughput Llama models.',
+            title: "HospiSynAI System Architecture",
+            desc: "Ranked 4th / 4.2k+ globally in HackDevengers 1.0. Decoupled, multi-container hospital billing & consultation system with Docker Compose, FastAPI, PostgreSQL, and Groq Llama 3.3.",
             specs: [
-                { label: 'Hackathon Rank', val: 'Rank 4 / 4.2k+' },
-                { label: 'Inference Latency', val: '124ms' },
-                { label: 'Token Throughput', val: '4,500 t/s' },
-                { label: 'Foundation Model', val: 'Llama-3.3-70B' },
-                { label: 'Hosting Environment', val: 'Docker Compose' }
-            ],
+                {
+                                "label": "Hackathon Standing",
+                                "val": "Rank 4 / 4.2k+"
+                },
+                {
+                                "label": "Prescription Gen",
+                                "val": "<2s in 11 Indic Lgs"
+                },
+                {
+                                "label": "Billing Audit Accuracy",
+                                "val": "95%+ Anomaly Detection"
+                },
+                {
+                                "label": "Primary Foundation",
+                                "val": "Groq Llama-3.3-70B"
+                },
+                {
+                                "label": "PDF Engine",
+                                "val": "ReportLab A5 Printouts"
+                },
+                {
+                                "label": "Database & Stack",
+                                "val": "PostgreSQL 15 + Docker"
+                }
+],
+            mermaid: "graph TD\n    subgraph Frontend Container\n        React[React client - Vite] --> Tailwind[Tailwind CSS Styling]\n        React --> Router[App.jsx Router & Tab Navigator]\n    end\n\n    subgraph Backend Container\n        API[FastAPI Backend - Python 3.10] --> Auth[JWT & bcrypt RBAC Guard]\n        API --> PDF[ReportLab A5 Receipt Engine]\n        API --> Excel[Pandas Ledger Streamer]\n        API --> AI[Groq Llama-3.3 Client]\n    end\n\n    subgraph Database Container\n        DB[(PostgreSQL 15 DB)]\n    end\n\n    React -->|HTTP / REST + Bearer JWT| API\n    API -->|SQLAlchemy ORM| DB",
             dryRunResponses: {
-                '/diagnostics': `[SYSTEM] Running node health check...
-- API Gateway: 100% ONLINE (HTTP 200)
-- PostgreSQL Database: Connected (Neon PG pool)
-- Groq Inference Node: Active (Latency: 85ms)
-- ReportLab PDF Engine: Loaded
-[SUCCESS] All microservices operational.`,
-                '/status': `[SYSTEM] Node Status: ONLINE
-- CPU Load: 14.2%
-- Memory: 3.85 GB / 8.00 GB
-- Docker Containers: Active (db, backend, frontend)`
-            },
-            svg: `
-<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Nodes -->
-    <!-- Node 1: React UI Client -->
-    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Clinician Console</text>
-
-    <!-- Node 2: FastAPI Core -->
-    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Billing &amp; EHR API</text>
-
-    <!-- Node 3: PostgreSQL DB -->
-    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">PostgreSQL</text>
-    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">EHR &amp; Audit Logs</text>
-
-    <!-- Node 4: Hybrid Auditor -->
-    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Hybrid Auditor</text>
-    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Rule Verification</text>
-
-    <!-- Node 5: Groq Inference Core -->
-    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Inference</text>
-    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3.3 Suggester</text>
-
-    <!-- Node 6: ReportLab PDF Engine -->
-    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">ReportLab PDF</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">11 Indic Handouts</text>
-
-    <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
-    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
-    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
-    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
-
-    <!-- Marker Definitions -->
+                "/diagnostics": "[SYSTEM] HospiSynAI Node Diagnostic Scan:\n- API Gateway (FastAPI): 100% ONLINE (HTTP 200)\n- PostgreSQL Database: Connected (Neon PG pool active)\n- Groq Llama 3.3 Client: Connected (Latency: 85ms)\n- ReportLab Engine: Initialized (A5 receipt formatting)\n- RBAC Guard: Enforcement ACTIVE (Admin, Accountant, Receptionist)\n[SUCCESS] Multi-container stack healthy.",
+                "/audit-test": "[AUDITOR] Simulating Pre-Invoice Billing Audit:\n- Bill Items: [OPD Consultation, Blood Sugar, Routine ICU Charge]\n- Anomaly Flag: CRITICAL (Conflict: OPD Consultation and ICU Charge in same visit)\n- Audit Rule: Impossible clinical combination detected\n[WARNING] Checkout blocked until override or correction."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
         </marker>
-        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
-        </marker>
-        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
-        </marker>
-        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
         </marker>
-        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
         </marker>
     </defs>
-</svg>
-`
-        },
-        finsight: {
-            title: 'FinSight System Architecture',
-            desc: 'AI-driven analytics pipeline evaluating banking transaction patterns with RFM behavior scoring models and Groq inference engine.',
-            specs: [
-                { label: 'Processing Delay', val: '45ms' },
-                { label: 'Scan Pipeline Depth', val: '10K txn/run' },
-                { label: 'Evaluation Model', val: 'Mixtral-8x7B' },
-                { label: 'Visual Interface', val: 'Plotly / React' }
-            ],
-            dryRunResponses: {
-                '/rfm-score': `[SYSTEM] Processing transaction RFM behavioral matrices...
-- Recency Score: 4.8 (Last txn 3.5h ago)
-- Frequency Score: 4.2 (Avg 9 txns/month)
-- Monetary Score: 4.9 (High-value segment)
-[SUCCESS] Customer segment evaluated: VIP Tier-2`,
-                '/what-if': `[SYSTEM] Simulating custom ROI rate shift (+10% index)...
-- Forecast Model Confidence: 94.2%
-- Projected Revenue Offset: +15.8% annually
-- Risk Profile: Low (Validated by SHAP parameters)`
-            },
-            svg: `
-<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Nodes -->
-    <!-- Node 1: React UI Client -->
-    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Simulation Dashboard</text>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
 
-    <!-- Node 2: FastAPI Core -->
-    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Churn Analytics API</text>
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">React EHR UI</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
 
-    <!-- Node 3: SQLite Cache -->
-    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Cache</text>
-    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Uploaded Txn Logs</text>
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
 
-    <!-- Node 4: ML Ensemble Core -->
-    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">ML Ensemble</text>
-    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">XGBoost &amp; SHAP Explainer</text>
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis &gt;=0.92</text>
 
-    <!-- Node 5: Groq AI Planner -->
-    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Strategic</text>
-    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3.3 Hypotheses</text>
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
 
-    <!-- Node 6: ROI Dashboard -->
-    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">ROI Dashboard</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Plotly Simulation</text>
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">ChromaDB ICD-10</text>
 
-    <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
-    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
-    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
-    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3.3-70B</text>
 
-    <!-- Marker Definitions -->
-    <defs>
-        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
-        </marker>
-        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
-        </marker>
-        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
-        </marker>
-        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
-        </marker>
-        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
-        </marker>
-    </defs>
-</svg>
-`
-        },
-        votewise: {
-            title: 'VoteWise-AI System Architecture',
-            desc: 'A civic technology assistant powered by Gemini 2.0 Flash reasoning engine, integrating Google Maps API for localized routing and multi-lingual processing.',
-            specs: [
-                { label: 'Evaluation Score', val: '96.98%' },
-                { label: 'Response Latency', val: '1.2s' },
-                { label: 'Reasoning Engine', val: 'Gemini 2.0 Flash' },
-                { label: 'Languages Supported', val: '6 Regional' }
-            ],
-            dryRunResponses: {
-                '/diagnostics': `[SYSTEM] Checking API connectivity...
-- Gemini 2.0 API Node: ONLINE (Latency: 92ms)
-- Google Maps API Gateway: ACTIVE (HTTP 200)
-- Fact-Checking Cache: Loaded (5,200 records)
-[SUCCESS] All civic tools operational.`,
-                '/booth-lookup': `[SYSTEM] Geolocation lookup resolved:
-- Found nearest booth: Municipal School Hall, Ward 4
-- Route distance: 1.2 km | ETA: 4 mins
-- Compliance check: Verified & safe.`
-            },
-            svg: `
-<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Nodes -->
-    <!-- Node 1: Citizen UI Client -->
-    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Citizen UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">PWA Interface</text>
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Ollama Local 8B</text>
 
-    <!-- Node 2: FastAPI Core -->
-    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Civic Portal API</text>
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">ReportLab PDF</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
 
-    <!-- Node 3: SQLite Cache -->
-    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Cache</text>
-    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">ECI Data Local Cache</text>
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
 
-    <!-- Node 4: Gemini 2.0 Flash -->
-    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Gemini 2.0 Flash</text>
-    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Zero-Hallucination Core</text>
-
-    <!-- Node 5: Google Maps API -->
-    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Google Maps API</text>
-    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Booth Geocoding</text>
-
-    <!-- Node 6: Civic Roadmap -->
-    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Civic Roadmap</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Multilingual Output</text>
-
-    <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
-    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
-    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
-    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
-
-    <!-- Marker Definitions -->
-    <defs>
-        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
-        </marker>
-        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
-        </marker>
-        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
-        </marker>
-        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
-        </marker>
-        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
-        </marker>
-    </defs>
-</svg>
-`
-        },
-        assessiq: {
-            title: 'AssessIQ System Architecture',
-            desc: 'AI-powered examination platform combining client-side WebGL face mesh tracking, coco-ssd proctoring alerts, and dynamic cloud Llama 3 generation.',
-            specs: [
-                { label: 'Proctoring Latency', val: 'Client-side (0ms)' },
-                { label: 'Dynamic Exam Gen', val: 'Llama 3 / Groq' },
-                { label: 'Communication Protocol', val: 'WebSockets JSON' },
-                { label: 'Backend Server', val: 'FastAPI / SQLite' }
-            ],
-            dryRunResponses: {
-                '/generate-exam': `[SYSTEM] Generating custom questionnaire on-demand...
-- Topic: "Intro to Neural Networks" | Difficulty: Medium
-- Payload context matched. Llama-3-70b inference call: SUCCESS
-- Response time: 240ms | Output: 5 unique conceptual queries generated.`,
-                '/grading': `[SYSTEM] Instantly evaluating essay response...
-- Student text: "An activation function maps inputs to outputs..."
-- AI auto-graded rating: 8.5/10
-- Qualitative Feedback: "Accurate summary of non-linear mappings. Could expand on vanishing gradients."`
-            },
-            svg: `
-<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Nodes -->
-    <!-- Node 1: Examinee UI Client -->
-    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Examinee UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Exam Client</text>
-
-    <!-- Node 2: FastAPI Core -->
-    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">REST &amp; WebSockets API</text>
-
-    <!-- Node 3: SQLite Storage -->
-    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite Storage</text>
-    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Proctor Logs &amp; Marks</text>
-
-    <!-- Node 4: MediaPipe Edge -->
-    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">MediaPipe Edge</text>
-    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Local WebGL Proctoring</text>
-
-    <!-- Node 5: Groq Inference Core -->
-    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq Inference</text>
-    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama 3 Question Gen</text>
-
-    <!-- Node 6: Auto-Graded Panel -->
-    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Auto Grading</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Qualitative Marks</text>
-
-    <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
-    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
-    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
-    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
-
-    <!-- Marker Definitions -->
-    <defs>
-        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
-        </marker>
-        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
-        </marker>
-        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
-        </marker>
-        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
-        </marker>
-        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
-        </marker>
-    </defs>
-</svg>
-`
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
         },
         commai: {
-            title: 'CommAI System Architecture',
-            desc: 'AI-driven multilingual public notices & campaign generator leveraging Llama 3.3 on Groq high-throughput hardware, real-time multi-device rendering, and client-side compliance audits.',
+            title: "CommAI Enterprise Platform Architecture",
+            desc: "Enterprise Multilingual Mass Communication & Emergency Public Awareness SaaS with Groq Llama-3.3-70B, 23 Indic Languages Neural Speech Synthesis, RAG Help Desk, and Four-Eye Governance.",
             specs: [
-                { label: 'Voice Assistant', val: 'Hey Jarvis' },
-                { label: 'Indic Languages', val: '23 Supported' },
-                { label: 'Omnichannel APIs', val: 'Email, WA, TG, SMS' },
-                { label: 'Core Stack', val: 'React & FastAPI' }
+                {
+                                "label": "Primary LLM",
+                                "val": "Groq Llama-3.3-70B"
+                },
+                {
+                                "label": "Speech Synthesis",
+                                "val": "23 Indic Languages"
+                },
+                {
+                                "label": "Fallback Pipeline",
+                                "val": "Groq 70B -> 8B -> GTX"
+                },
+                {
+                    "label": "Dispatch Channels",
+                    "val": "Email, Telegram, Voice Call, SMS, Website"
+                },
+                {
+                    "label": "Emergency Governance",
+                    "val": "Four-Eye Maker-Checker"
+                },
+                {
+                    "label": "Core Stack",
+                    "val": "React 18 + FastAPI + SQLite"
+                }
             ],
+            mermaid: "graph TD\n    subgraph ClientLayer [\"Client Layer (React 18 SPA)\"]\n        ReactApp[\"Vite + React SPA\"]\n        CustomCSS[\"Glassmorphism Design System\"]\n        VoicePortal[\"React Portal Audio Bulletin Player\"]\n    end\n\n    subgraph APILayer [\"API Layer (FastAPI)\"]\n        FastAPI[\"FastAPI Web Framework\"]\n        AuthGuard[\"JWT & RBAC Auth Middleware\"]\n        RouterAuth[\"Auth & 2FA OTP Router\"]\n        RouterAudience[\"Audience & NL Segment Router\"]\n        RouterCampaign[\"Campaign & Approval Router\"]\n        RouterVoice[\"Voice Bulletin Router\"]\n        RouterPoster[\"Visual Poster Studio Router\"]\n        RouterRAG[\"RAG Help Desk Router\"]\n        RouterWS[\"WebSocket Alert Manager\"]\n    end\n\n    subgraph ServiceLayer [\"Background & AI Engine Services\"]\n        Scheduler[\"Background Scheduler (scheduler.py)\"]\n        Dispatcher[\"Omnichannel Dispatcher (dispatcher.py)\"]\n        EmailService[\"Email SMTP Service\"]\n        TelegramService[\"Telegram Bot & Alert Broadcast\"]\n        VoiceCallService[\"Automated Voice Call & Bulletin Engine\"]\n        SMSService[\"SMS Gateway\"]\n        WebsiteService[\"Live Website Portal & PWA\"]\n        TranslationService[\"Translation Failover (Groq 70B -> 8B -> GTX)\"]\n        AIService[\"AI Engine (Groq LLM Llama-3.3-70B)\"]\n        RAGService[\"RAG Vector Service (rag_service.py)\"]\n    end\n\n    subgraph DataLayer [\"Data & Storage Layer\"]\n        SQLAlchemy[\"SQLAlchemy ORM\"]\n        SQLite[\"SQLite DB (comm_platform.db)\"]\n        AudioStorage[\"Static Audio MP3 Cache\"]\n    end",
             dryRunResponses: {
-                '/diagnostics': `[SYSTEM] Running system diagnostic scans...
-- API Gateway (FastAPI): 100% ONLINE (HTTP 200)
-- SQLite Database connection: Connected (32 records)
-- Groq Llama Inference Node: Active (Latency: 92ms)
-- Edge-TTS Voice Generator: Active (Zero-downtime gTTS fallback)
-- Visual Poster Canvas Studio: OK
-[SUCCESS] All systems operational. Campaign ready for dispatch.`,
-                '/audit': `[SYSTEM] Initiating campaign content safety audit check...
-- Shouting pattern screener: PASSED (Zero anomalies)
-- Duplicate phrasing threshold: 0.04 (Passed)
-- Four-Eye Maker-Checker clearance: APPROVED (Manager verified)
-[SUCCESS] Compliance audit verification successful.`,
-                '/voice-test': `[SYSTEM] Generating neural speech synthesis test clip...
-- Wake-word listener: ACTIVE ("Hey Jarvis")
-- Synthesis Language: Marathi (edge-tts)
-- Audio synthesis status: Completed (Latency: 280ms)
-[SUCCESS] Audio chimes operational. Link: static/voice_test.mp3`
+                "/diagnostics": "[SYSTEM] CommAI Service Status:\n- FastAPI Gateway: ACTIVE (200 OK)\n- Groq Llama-3.3-70B: READY (Latency: 92ms)\n- Multi-Tier Translation: Llama 70B -> 8B -> Google GTX\n- Voice Studio: Edge-TTS Online (23 languages ready)\n- Dispatch Matrix: Email, Telegram, Voice Call, SMS, Website (Live Web Portal)\n[SUCCESS] Omnichannel awareness platform operational.",
+                "/voice-test": "[VOICE] Generating 23-Language Neural Sample:\n- Language: Marathi (mr-IN) / Tone: Official Public Alert\n- Synthesizer: Edge-TTS Neural Pipeline\n- Output: static/audio_bulletins/alert_sample.mp3\n[SUCCESS] Audio bulletin rendered in 280ms."
             },
-            svg: `
-<svg viewBox="0 0 700 240" width="100%" height="240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Nodes -->
-    <!-- Node 1: React UI Client -->
-    <rect x="20" y="80" width="110" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
-    <text x="75" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">React UI</text>
-    <text x="75" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Jarvis Voice &amp; Hub</text>
-
-    <!-- Node 2: FastAPI Core -->
-    <rect x="180" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
-    <text x="240" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">FastAPI Core</text>
-    <text x="240" y="132" fill="#94A3B8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Backend Services</text>
-
-    <!-- Node 3: SQLite DB -->
-    <rect x="180" y="180" width="120" height="45" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="240" y="200" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">SQLite DB</text>
-    <text x="240" y="213" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Templates &amp; Audit Logs</text>
-
-    <!-- Node 4: Voice & Poster Studio -->
-    <rect x="360" y="10" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2"/>
-    <text x="430" y="40" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Voice &amp; Poster Studio</text>
-    <text x="430" y="55" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Edge-TTS &amp; Canvas</text>
-
-    <!-- Node 5: Groq LLM Engine -->
-    <rect x="360" y="150" width="140" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
-    <text x="430" y="180" fill="#F1F5F9" font-family="Space Grotesk" font-size="11" font-weight="600" text-anchor="middle">Groq LLM Engine</text>
-    <text x="430" y="195" fill="#06B6D4" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Llama-3.3-70B &amp; RAG</text>
-
-    <!-- Node 6: Omnichannel API -->
-    <rect x="560" y="80" width="120" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
-    <text x="620" y="115" fill="#F1F5F9" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Omnichannel API</text>
-    <text x="620" y="132" fill="#10B981" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Email, WA, TG, SMS</text>
-
-    <!-- Connections -->
-    <path d="M130 115 H180" stroke="#F7B267" stroke-width="2" marker-end="url(#arrow-gold)"/>
-    <path d="M240 150 V180" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
-    <path d="M300 100 L360 45" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
-    <path d="M300 130 L360 175" stroke="#06B6D4" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
-    <path d="M300 115 H560" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
-
-    <!-- Marker Definitions -->
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <marker id="arrow-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
         </marker>
-        <marker id="arrow-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
-        </marker>
-        <marker id="arrow-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
-        </marker>
-        <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
         </marker>
-        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
         </marker>
     </defs>
-</svg>
-`
-        }
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Jarvis Voice UI</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis Template</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 70" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">FAISS 5k Docs</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="125" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="642" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="642" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3.3-70B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="125" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="642" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="642" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Gemini 2.0 Flash</text>
+
+    <!-- 5. Output Verification & Omnichannel Dispatch Hub (Email, Telegram, Voice Call, SMS, Website) -->
+    <rect x="725" y="65" width="125" height="130" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="787" y="86" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Omnichannel Hub</text>
+    <text x="787" y="102" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">📧 Email</text>
+    <text x="787" y="116" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">✈️ Telegram</text>
+    <text x="787" y="130" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">📞 Voice Call</text>
+    <text x="787" y="144" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">💬 SMS</text>
+    <text x="787" y="158" fill="#F7B267" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">🌐 Website Portal</text>
+    <text x="787" y="180" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Four-Eye Governed</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 705 95 L 725 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 705 165 L 725 145" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        votewise: {
+            title: "VoteWise-AI System Architecture",
+            desc: "Civic Decision Support System built with FastAPI and Google Gemini 2.0. Features multi-tier fallback architecture (Gemini 2.0 Flash -> Gemini 1.5 Flash -> Local Knowledge Base), automated Tenacity retries, and offline-ready PWA.",
+            specs: [
+                {
+                                "label": "Accuracy Benchmark",
+                                "val": "96.98%"
+                },
+                {
+                                "label": "Primary Reasoner",
+                                "val": "Gemini 2.0 Flash"
+                },
+                {
+                                "label": "Failover Pipeline",
+                                "val": "Gemini 1.5 + Tenacity Retries"
+                },
+                {
+                                "label": "Offline Engine",
+                                "val": "In-Memory Cache & Service Worker"
+                },
+                {
+                                "label": "Spatial Maps",
+                                "val": "Google Maps JS + Heatmap API"
+                },
+                {
+                                "label": "Vernacular TTS",
+                                "val": "Google Cloud TTS (6 Lgs)"
+                }
+],
+            mermaid: "graph TD\n    User[Voter / Web Browser] -->|HTTPS / PWA| FastAPI[FastAPI Backend Server]\n    FastAPI --> Auth[Google Identity Auth Service]\n    FastAPI --> Router{Hybrid Routing Engine}\n    Router -->|Primary Request| Gemini[Google Gemini 2.0 Flash]\n    Gemini -.->|Rate Limit / Transient Error| Tenacity[Tenacity Retry + Gemini 1.5 Fallback]\n    Router -->|Offline / API Unavailable| Cache[(In-Memory SQLite Cache & JSON Engine)]\n    FastAPI --> Maps[Google Maps JS + Heatmap API]\n    FastAPI --> Translate[Google Cloud Translation API]\n    FastAPI --> TTS[Google Cloud Text-to-Speech API]\n    User -.->|Offline Mode| SW[Service Worker Cache]",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] VoteWise-AI Diagnostics:\n- Electoral Gateway: ONLINE (HTTP 200)\n- Google Gemini 2.0 Flash: ACTIVE (Latency: 92ms)\n- Tenacity Retry Policy: Configured (stop_after_attempt=3)\n- Google Maps JS + Heatmap: LOADED\n- Local Knowledge Fallback: 5,200 rules verified\n[SUCCESS] Multi-tier civic routing operational.",
+                "/booth-lookup": "[MAPS] Booth Geolocation Query:\n- Nearest Polling Station: Municipal Higher Secondary School, Ward 4\n- Route Distance: 1.1 km | ETA: 3.5 mins\n- Accepted Photo IDs: 12 ECI-compliant documents (Aadhaar, Passport, etc.)\n[SUCCESS] Booth resolution verified."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Citizen PWA</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis FAQ Cache</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Qdrant ECI Docs</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Groq Llama-3.3</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Gemini 2.0 Flash</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Maps & Civic Hub</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        finsight: {
+            title: "FinSight Enterprise Churn Architecture",
+            desc: "Autonomous fintech churn intelligence engine combining schema-agnostic fuzzy mapping, Stacked Ensemble models (Random Forest + XGBoost + HistGradient), SHAP dependence analysis, and Groq Llama 3.3 strategic playbooks.",
+            specs: [
+                {
+                                "label": "Pipeline Velocity",
+                                "val": "10K txn in <45ms"
+                },
+                {
+                                "label": "ML Ensemble",
+                                "val": "Random Forest + XGBoost"
+                },
+                {
+                                "label": "Explainability",
+                                "val": "SHAP Dependence Analysis"
+                },
+                {
+                                "label": "Strategic AI",
+                                "val": "Groq Llama 3.3 Hypotheses"
+                },
+                {
+                                "label": "Drift Detection",
+                                "val": "KS-Test + Bonferroni"
+                },
+                {
+                                "label": "Capital Protected",
+                                "val": "~$150K At-Risk Saved"
+                }
+],
+            mermaid: "graph TD\n    subgraph Ingestion [1. Ingestion & Fuzzy Calibration]\n        CSV[Transactional Raw Logs / UPI / Tax] --> Mapper[Schema-Agnostic Mapping Engine]\n        Mapper --> RFM[RFM & IPI Velocity Calculator]\n    end\n\n    subgraph Ensemble [2. ML Ensemble & Explainability]\n        RFM --> Stacking[Stacked Classifier: RF + XGBoost + HistGradientBoosting]\n        Stacking --> Calibrator[Isotonic Probability Calibration]\n        Stacking --> SHAP[SHAP Dependence & Interaction Analysis]\n    end\n\n    subgraph StrategicLayer [3. Groq LPU Strategic Layer]\n        SHAP --> GroqLlama[Groq Llama 3.3 Strategic Engine]\n        GroqLlama --> Hypotheses[3 Actionable Business Hypotheses]\n        GroqLlama --> WhatIf[Interactive What-If Simulation Engine]\n    end\n\n    subgraph Monitoring [4. Enterprise Quality & Drift Gates]\n        RFM --> KS[KS-Test Drift Monitor + Bonferroni Correction]\n        WhatIf --> Dashboard[Plotly & React Risk Dashboard]\n    end",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] FinSight Analytics Diagnostics:\n- Fuzzy-Logic Ingestion: 10K transactions processed in 42ms\n- Stacked Ensemble: RF + XGBoost (Isotonic Calibrated)\n- SHAP Feature Explainer: Ready (Model Evidence: 94.2%)\n- Groq Llama 3.3 Strategic Engine: Connected (Latency: 98ms)\n[SUCCESS] Enterprise churn protection engine active.",
+                "/what-if": "[SIMULATOR] Running What-If Parameter Shift:\n- Simulation: \"Reduce UPI transaction failure rate by 15%\"\n- Projected Annual Revenue Saved: $148,200\n- Confidence Interval: 91.8% (Validated by Bonferroni KS Drift Monitor)\n[SUCCESS] Simulation saved to report catalog."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Plotly Dashboard</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis RFM Store</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">ChromaDB Churn</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Mixtral-8x7B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">SHAP Tree Rule Base</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">ROI Simulator</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        assessiq: {
+            title: "AssessIQ Core Architecture & Scalability",
+            desc: "Lightweight containerized exam platform with client-side MediaPipe FaceMesh & Coco-SSD proctoring (0ms lag), WebSockets real-time alerting, and Groq Llama 3 dynamic question generation and auto-grading.",
+            specs: [
+                {
+                                "label": "Proctoring Latency",
+                                "val": "0ms (Client MediaPipe)"
+                },
+                {
+                                "label": "Vision Models",
+                                "val": "FaceMesh + Coco-SSD"
+                },
+                {
+                                "label": "Real-Time Channel",
+                                "val": "FastAPI WebSockets"
+                },
+                {
+                                "label": "AI Generation",
+                                "val": "Groq Llama 3"
+                },
+                {
+                                "label": "Database Mode",
+                                "val": "SQLite with WAL"
+                },
+                {
+                                "label": "Container Stack",
+                                "val": "Docker Compose"
+                }
+],
+            mermaid: "graph TD\n    subgraph Client [Frontend / Examinee Browser]\n        UI[Vanilla HTML/JS/CSS UI]\n        Cam[MediaPipe Face Mesh]\n        Coco[Coco-SSD Phone Detection]\n        UI --- Cam\n        UI --- Coco\n    end\n\n    subgraph Server [Backend / FastAPI]\n        API[REST API Endpoints]\n        WS[WebSocket Manager]\n        LLM[Groq LLaMA 3 Integration]\n        DB[(SQLite with WAL)]\n        \n        API <--> LLM\n        API <--> DB\n        WS <--> DB\n    end\n\n    Client -- \"HTTP Requests (Exam Data)\" --> API\n    Client -- \"WebSocket Alerts\" --> WS",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] AssessIQ Health Scan:\n- Client-Side FaceMesh: 60 FPS (Zero server compute)\n- WebSocket Connection: CONNECTED (Ping: 12ms)\n- Groq Llama 3 Engine: ACTIVE (Dynamic Exam Generator)\n- Storage: SQLite with Write-Ahead Logging (WAL)\n[SUCCESS] Proctoring and grading nodes ready.",
+                "/grading": "[AI GRADER] Evaluating essay submission:\n- Answer Snippet: \"Gradient descent iteratively adjusts network weights...\"\n- Qualitative Score: 8.8 / 10\n- Feedback: \"Precise description of learning rate convergence. Well structured.\"\n[SUCCESS] Evaluation logged in SQLite."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Exam Client</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Question Cache</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">ChromaDB Rubrics</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3-70B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Ollama Container</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Auto-Grader</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        smartstadium: {
+            title: "SmartStadium-AI System Architecture",
+            desc: "Predictive stadium crowd routing & evacuation simulator. Features real-time WebSocket telemetry, Gemini 1.5 scenario analysis, and dynamic heatmaps reducing emergency response times by 77 seconds.",
+            specs: [
+                {
+                                "label": "Evac Time Saved",
+                                "val": "77 Seconds Saved"
+                },
+                {
+                                "label": "Average Wait Reduction",
+                                "val": "44.0% Faster Flow"
+                },
+                {
+                                "label": "Zone Density Relief",
+                                "val": "26.9% Lower Density"
+                },
+                {
+                                "label": "AI Scenario Engine",
+                                "val": "Google Gemini 1.5"
+                },
+                {
+                                "label": "Telemetry Channel",
+                                "val": "FastAPI WebSockets"
+                },
+                {
+                                "label": "Spatial Heatmaps",
+                                "val": "Google Maps JS API"
+                }
+],
+            mermaid: "graph TD\n    A[Fan Mobile Device] -->|WebSockets| B(FastAPI Backend)\n    C[Staff Command Center] -->|WebSockets| B\n    B --> D{Decision Engine}\n    D -->|Real-time state| E[(SQLite Persistence)]\n    D -->|Telemetry| F[Google Maps JS API]\n    D -->|Scenario Context| G[Google Gemini 1.5]\n    G -->|Natural Language| A\n    G -->|Recommendations| C",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] SmartStadium Operations Node:\n- Fan & Staff WebSockets: ONLINE (48,000 active pings)\n- Google Gemini 1.5 Engine: ACTIVE (Scenario Evaluator)\n- Maps Heatmap Stream: Broadcasting live density\n- Decision Engine: Halftime / Emergency Modes Armed\n[SUCCESS] Predictive routing running at peak performance.",
+                "/evac-sim": "[SIMULATION] Triggering Emergency Evacuation Drill:\n- AI Auto-Detect: 5s\n- Instant Dynamic Reroute: 12s\n- Total Evacuation: 156s (vs 248s without SmartStadium)\n[IMPACT] 77 Seconds Saved in emergency scenario."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">IoT Sensors</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis Telemetry</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">FAISS Incidents</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3.3-70B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Deterministic Dijkstra</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Gate Controller</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        mediscribe: {
+            title: "MediScribe-AI System Architecture",
+            desc: "Ambient clinician transcription & EHR consultation assistant. Converts voice conversations via Whisper STT and LangGraph-style LLM pipeline into FHIR-compliant JSON and printable clinician PDFs.",
+            specs: [
+                {
+                                "label": "STT Pipeline",
+                                "val": "Whisper API / Web Speech"
+                },
+                {
+                                "label": "AI Extraction",
+                                "val": "LangGraph-Style LLM"
+                },
+                {
+                                "label": "Medical Coding",
+                                "val": "Automated SOAP & ICD-10"
+                },
+                {
+                                "label": "Interoperability",
+                                "val": "FHIR-Compliant JSON"
+                },
+                {
+                                "label": "Document Output",
+                                "val": "Server-Side Clinician PDF"
+                },
+                {
+                                "label": "Database",
+                                "val": "PostgreSQL + FastAPI"
+                }
+],
+            mermaid: "flowchart LR\n  U[Doctor] -->|Browser| FE[React Dashboard UI]\n  FE -->|REST/JWT| BE[FastAPI API]\n  FE -->|Web Speech API (optional)| STT1[(Browser STT)]\n  FE -->|Upload audio| BE\n  BE -->|STT Provider| STT2[(Whisper/OpenAI or Mock)]\n  BE -->|LangGraph-style pipeline| AI[(LLM/Mock Extractor)]\n  BE --> DB[(PostgreSQL)]\n  BE -->|FHIR JSON| EHR[(EHR / Integration)]\n  BE -->|PDF| PDF[(Clinician PDF)]",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] MediScribe Backend Node:\n- FastAPI Core: ONLINE (HTTP 200)\n- Whisper STT Provider: CONNECTED\n- LangGraph Clinical Extractor: ARMED (SOAP & ICD-10)\n- FHIR Exporter: Ready (FHIR Release 4 schema)\n- PostgreSQL Database: Active\n[SUCCESS] Ambient clinical scribe online.",
+                "/soap-sample": "[CLINICAL EXTRACTOR] Sample SOAP Note:\n- Subjective: \"45yo male reporting acute chest tightness after exertion.\"\n- Objective: BP 140/90, Pulse 88, SpO2 98%\n- Assessment: ICD-10 I20.9 (Angina pectoris, unspecified)\n- Plan: Sublingual nitroglycerin, 12-lead ECG, cardiology consult\n[SUCCESS] Exportable as FHIR JSON and PDF."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Opus Audio Ingest</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis Drug Cache</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">SNOMED-CT Vectors</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3.3-70B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Gemini 1.5 Flash</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">FHIR EHR Engine</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        lifesaver: {
+            title: "The Last-Minute Life Saver Multi-Agent Architecture",
+            desc: "Autonomous multi-agent task rescue & productivity ecosystem. Features an Autonomous Event Bus coordinating 9 specialized agents (Planner, Prioritization, Scheduler, Rescue, Negotiation, Motivation, Reflection).",
+            specs: [
+                {
+                                "label": "Autonomous Agents",
+                                "val": "9 Specialized Agents"
+                },
+                {
+                                "label": "Event Bus",
+                                "val": "Autonomous Shared State"
+                },
+                {
+                                "label": "AI Prediction",
+                                "val": "Panic Index & Procrastination Ratio"
+                },
+                {
+                                "label": "Foundation LLMs",
+                                "val": "Groq Llama-3.3 & Gemini 2.5"
+                },
+                {
+                                "label": "Rescue Mode",
+                                "val": "Gmail Drafts & Cal Blocking"
+                },
+                {
+                                "label": "Container Stack",
+                                "val": "Docker Compose + Nginx"
+                }
+],
+            mermaid: "graph TD\n    subgraph Trigger Events\n        E1[Task Created] --> EventBus[Autonomous Event Bus]\n        E2[Task Updated] --> EventBus\n        E3[Task Completed] --> EventBus\n        E4[Calendar Event Added] --> EventBus\n        E5[\"Deadline under 24 Hours\"] --> EventBus\n        E6[User Missed Focus Session] --> EventBus\n        E7[\"Background Timer (Every 15 min)\"] --> EventBus\n    end\n\n    EventBus -->|Trigger Pipeline| BaseOrchestrator[Multi-Agent Orchestrator]\n    \n    subgraph Multi-Agent Pipeline\n        BaseOrchestrator --> PlannerAgent[\"1. Planner Agent: Break down goals\"]\n        PlannerAgent --> PrioritizationAgent[\"2. Prioritization Agent: Rank & Trade-off\"]\n        PrioritizationAgent --> SchedulerAgent[\"3. Scheduler Agent: Block Calendar\"]\n        SchedulerAgent --> PredictionEngine[\"4. AI Prediction & Risk Forecasting Engine\"]\n        PredictionEngine --> RiskDetector[\"5. Risk Detector: Overdue / Stress Check\"]\n    end\n\n    RiskDetector -->|Risk Status Checked| RiskDispatch{Risk Status}\n    RiskDispatch -->|Critical or Warning| Yes[Activate Rescue Mode]\n    RiskDispatch -->|Safe| No[Normal Monitoring]\n\n    Yes --> RescueAgent[\"6. Rescue Agent: Emergency Action Plan & Timeline\"]\n    RescueAgent --> NegotiationAgent[\"7. Negotiation Agent: Gmail Extension Drafts\"]\n    NegotiationAgent --> MotivationAgent[\"8. Motivation Agent: Push Notifications\"]\n\n    No --> MotivationAgent\n    \n    MotivationAgent --> ReflectionAgent[\"9. Reflection Agent: Log Personalization Details\"]\n    \n    ReflectionAgent --> SharedState[(Database Shared State & AI Memory)]\n    SharedState <--> EventBus\n    \n    SharedState --> UI[Dashboard & Explainable AI Cards Update]",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] TheLifeSaver Multi-Agent Status:\n- Autonomous Event Bus: LISTENING (7 trigger events active)\n- 9 Autonomous Agents: INITIALIZED (Planner, Rescue, Negotiation...)\n- AI Prediction Engine: Groq Llama-3.3 + Gemini 2.5 Flash\n- Shared State: SQLite AIMemory connection verified\n[SUCCESS] Multi-agent productivity rescue active.",
+                "/panic-check": "[PREDICTION ENGINE] Panic Index Calculation:\n- Active Task: \"System Architecture Presentation\" (Due in 6 hours)\n- Estimated Hours: 4.5h | Procrastination Multiplier: 1.25x\n- Panic Index: 14.8 / 20.0 (CRITICAL RISK)\n- Action: Rescue Mode ACTIVATED -> Dynamic Calendar Blocked\n[NOTICE] Negotiation Agent drafted extension request in Gmail."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Calendar App</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis Habit Cache</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">ChromaDB Tasks</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Gemini 2.0 / Groq</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Knapsack Solver</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Calendar Sync</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
+        decixai: {
+            title: "DeciXAI Hybrid Decision Intelligence Architecture",
+            desc: "Hybrid Decision Intelligence System fusing Classical ML (scikit-learn, XGBoost), Explainable AI (SHAP), Grounded RAG (O*NET 29.0), and Ollama/Groq generative reasoning with verifiable Starlette audit logging.",
+            specs: [
+                {
+                                "label": "Core Framework",
+                                "val": "Hybrid ML + SHAP + LLM"
+                },
+                {
+                                "label": "Domains Covered",
+                                "val": "Career, Finance, Startup, Policy"
+                },
+                {
+                                "label": "Explainability",
+                                "val": "SHAP (TreeSHAP / KernelSHAP)"
+                },
+                {
+                                "label": "Grounded RAG",
+                                "val": "O*NET 29.0 Database"
+                },
+                {
+                                "label": "Generative LLM",
+                                "val": "Ollama Llama-3.2 / Groq LPU"
+                },
+                {
+                                "label": "Audit Compliance",
+                                "val": "Immutable decision_audit.jsonl"
+                }
+],
+            mermaid: "graph TD\n    subgraph Client [Frontend - React 18 & Vite]\n        UI[Interactive Decision Studio]\n        Sliders[Real-time What-If Sliders]\n        AuditView[Verifiable Audit Trail UI]\n    end\n\n    subgraph Backend [FastAPI Backend]\n        API[API Endpoints /api/v1]\n        AuditMiddleware[Starlette Audit Middleware]\n        AuditLedger[(decision_audit.jsonl)]\n    end\n\n    subgraph IntelligenceEngine [Hybrid Intelligence Engine]\n        ML[Scikit-learn & XGBoost Models]\n        XAI[SHAP Explainability Engine]\n        RAG[Grounded RAG - O*NET 29.0 DB]\n        LLM[Ollama Llama-3.2 / Groq LPU]\n    end\n\n    UI -->|Adjust Sliders / Submit| API\n    API --> AuditMiddleware --> AuditLedger\n    API --> ML --> XAI\n    API --> RAG\n    XAI & RAG --> LLM\n    LLM --> ReportLab[ReportLab PDF Engine]\n    LLM & XAI --> UI",
+            dryRunResponses: {
+                "/diagnostics": "[SYSTEM] DeciXAI Decision Node:\n- API Gateway (FastAPI): ONLINE (HTTP 200)\n- Pre-trained ML Bundles: Career, Finance, Startup, Policy LOADED\n- SHAP Explainability Engine: Active (0.4ms latency)\n- O*NET 29.0 Database: 1,016 occupational profiles mapped\n- Audit Ledger: decision_audit.jsonl tamper-evident\n[SUCCESS] Hybrid decision intelligence ready.",
+                "/shap-demo": "[XAI] Evaluating Credit Default Decision:\n- Base Probability: 0.18\n- Major Risk Reducer: Debt-to-Income (DTI: 18%) -> -0.12 impact\n- Secondary Reducer: FICO Score (740) -> -0.09 impact\n- Final Score: 0.07 (Approved - Low Risk Tier)\n[SUCCESS] SHAP explanation generated."
+},
+            svg: `<svg viewBox="0 0 860 280" width="100%" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <marker id="m-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#F7B267"/>
+        </marker>
+        <marker id="m-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#06B6D4"/>
+        </marker>
+        <marker id="m-violet" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#8B5CF6"/>
+        </marker>
+        <marker id="m-rose" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#EC4899"/>
+        </marker>
+        <marker id="m-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#10B981"/>
+        </marker>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+    <!-- 1. Client & Ingestion -->
+    <rect x="15" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="72" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Loan Officer UI</text>
+    <text x="72" y="138" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Client Interface</text>
+
+    <!-- 2. FastAPI Gateway -->
+    <rect x="160" y="90" width="115" height="70" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="217" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FastAPI Gateway</text>
+    <text x="217" y="138" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Auth &amp; Rate Limit</text>
+
+    <!-- 3. Decision Diamond: Cache Hit? -->
+    <polygon points="345,75 390,125 345,175 300,125" fill="#0A0E1A" stroke="#F7B267" stroke-width="2"/>
+    <text x="345" y="122" fill="#F7B267" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cache Hit?</text>
+    <text x="345" y="134" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Redis Feature Store</text>
+
+    <!-- Cache Hit Fast Return Path (Top Bypass) -->
+    <path d="M 345 75 V 25 H 785 V 90" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+    <rect x="490" y="15" width="160" height="20" rx="4" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="570" y="29" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle">⚡ CACHE HIT (Bypass &lt;20ms)</text>
+
+    <!-- Cache Miss Path to Vector Store -->
+    <rect x="420" y="95" width="130" height="60" rx="8" fill="#0A0E1A" stroke="#06B6D4" stroke-width="2"/>
+    <text x="485" y="122" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Vector Retrieval</text>
+    <text x="485" y="138" fill="#06B6D4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">ChromaDB Cohorts</text>
+
+    <!-- 4. Groq Inference Layer (Primary) -->
+    <rect x="580" y="70" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="645" y="94" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🚀 Primary: Groq LPU</text>
+    <text x="645" y="108" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Llama-3.3-70B</text>
+
+    <!-- Fallback Circuit Breaker Layer -->
+    <rect x="580" y="140" width="130" height="50" rx="8" fill="#0A0E1A" stroke="#EC4899" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="645" y="163" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">🛡️ Fallback Circuit</text>
+    <text x="645" y="177" fill="#F472B6" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">TreeSHAP Rules</text>
+
+    <!-- 5. Output Verification & Guardrails -->
+    <rect x="740" y="90" width="105" height="70" rx="8" fill="#0A0E1A" stroke="#10B981" stroke-width="2"/>
+    <text x="792" y="120" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Credit Decision Hub</text>
+    <text x="792" y="136" fill="#34D399" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">Validated Output</text>
+
+    <!-- Flow Connectors -->
+    <path d="M 130 125 H 160" stroke="#F7B267" stroke-width="2" marker-end="url(#m-gold)"/>
+    <path d="M 275 125 H 300" stroke="#8B5CF6" stroke-width="2" marker-end="url(#m-violet)"/>
+    <path d="M 390 125 H 420" stroke="#06B6D4" stroke-width="2" marker-end="url(#m-cyan)"/>
+    <text x="405" y="120" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">Miss</text>
+    <path d="M 550 115 L 580 95" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#m-violet)"/>
+    <path d="M 550 135 L 580 160" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#m-rose)"/>
+    <path d="M 710 95 L 740 115" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+    <path d="M 710 165 L 740 135" stroke="#10B981" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+    <!-- Bottom Legend / Status Bar -->
+    <rect x="15" y="240" width="830" height="26" rx="6" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="30" cy="253" r="4" fill="#10B981"/>
+    <text x="42" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CIRCUIT_STATUS: ARMED</text>
+    <text x="210" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">CACHE_HIT_RATE: &gt;40%</text>
+    <text x="390" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">FAILOVER_SLA: &lt;250ms</text>
+    <text x="570" y="257" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">RE-RANKING: CROSS-ENCODER</text>
+    <text x="760" y="257" fill="#A78BFA" font-family="JetBrains Mono, monospace" font-size="8">GROQ_4500_TOK/S</text>
+</svg>`
+        },
     };
 
+    // Architectural Diagram Zoom Handlers
+    let currentArchZoom = 1.0;
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const zoomResetBtn = document.getElementById('zoom-reset-btn');
+
+    function updateArchZoom(factor) {
+        currentArchZoom = Math.min(Math.max(0.6, currentArchZoom * factor), 2.2);
+        const svgEl = modalSvgContent.querySelector('svg');
+        if (svgEl) {
+            svgEl.style.transform = `scale(${currentArchZoom})`;
+        }
+    }
+
+    function resetArchZoom() {
+        currentArchZoom = 1.0;
+        const svgEl = modalSvgContent.querySelector('svg');
+        if (svgEl) {
+            svgEl.style.transform = 'scale(1)';
+        }
+    }
+
+    if (zoomInBtn) zoomInBtn.addEventListener('click', () => updateArchZoom(1.2));
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => updateArchZoom(0.8));
+    if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetArchZoom);
+
+    // Render Architecture with Mermaid.js or High-Res SVG Blueprint Fallback
+    function renderProjectArchitecture(projectKey) {
+        const data = projectArchitectures[projectKey];
+        if (!data || !modalSvgContent) return;
+        resetArchZoom();
+        modalSvgContent.innerHTML = data.svg;
+    }
 
     function resetModalTabs() {
         modalTabBtns.forEach(btn => btn.classList.remove('active'));
@@ -1422,8 +2103,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentProjectKey = projectKey;
                 modalTitle.textContent = data.title;
                 modalDesc.textContent = data.desc;
-                modalSvgContent.innerHTML = data.svg;
-                
+                renderProjectArchitecture(projectKey);
+
                 // Populate Specs Grid
                 if (modalMetricsGrid && data.specs) {
                     modalMetricsGrid.innerHTML = data.specs.map(spec => `
@@ -1532,32 +2213,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 let responseText = '';
 
                 if (queryNormalized === '/help') {
-                    if (currentProjectKey === 'hospisyn') {
-                        responseText = `Available queries:
-- /diagnostics : Runs diagnostic checks on Groq connection
-- /status      : Displays microservices resource utilization
-- /help        : Displays commands menu`;
-                    } else if (currentProjectKey === 'votewise') {
-                        responseText = `Available queries:
-- /diagnostics   : Runs diagnostic checks on Gemini 2.0 connection
-- /booth-lookup : Executes civic booth routing simulation
-- /help         : Displays commands menu`;
-                    } else if (currentProjectKey === 'assessiq') {
-                        responseText = `Available queries:
-- /generate-exam : Generates dynamic questionnaire on-demand
-- /grading       : Evaluates essay responses
-- /help          : Displays commands menu`;
-                    } else if (currentProjectKey === 'commai') {
-                        responseText = `Available queries:
-- /diagnostics : Runs diagnostic checks on Groq connection
-- /audit       : Initiates campaign safety compliance audit
-- /voice-test  : Simulates dynamic text-to-speech audio synthesis
-- /help        : Displays commands menu`;
+                    if (data && data.dryRunResponses) {
+                        const commandsList = Object.keys(data.dryRunResponses).map(cmd => `- ${cmd}`).join('\n');
+                        responseText = `Available diagnostic commands for ${data.title}:\n${commandsList}\n- /help : Displays commands menu`;
                     } else {
-                        responseText = `Available queries:
-- /rfm-score   : Runs RFM transaction valuation calculations
-- /what-if     : Displays what-if consensus forecast data
-- /help        : Displays commands menu`;
+                        responseText = `Available commands:\n- /diagnostics\n- /cache-test\n- /circuit-status\n- /help`;
                     }
                 } else if (data && data.dryRunResponses && data.dryRunResponses[queryNormalized]) {
                     responseText = data.dryRunResponses[queryNormalized];
@@ -1929,4 +2589,328 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // ==========================================================================
+    // AI PERSONA CHATBOT ("Riyanshi.ai Assistant")
+    // ==========================================================================
+    const chatbotTriggerBtn = document.getElementById('chatbot-trigger-btn');
+    const chatbotDialog = document.getElementById('chatbot-dialog');
+    const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
+    const chatbotClearBtn = document.getElementById('chatbot-clear-btn');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+
+    const defaultBotGreeting = `Hey there! 👋 I'm Riyanshi's virtual persona. Ask me anything about her <strong>AI projects</strong>, <strong>multi-agent frameworks</strong>, <strong>hackathon wins</strong>, or tech stack!`;
+
+    const defaultChipsHTML = `
+        <button class="chip-btn" data-query="Why should I hire Riyanshi?">🎯 Why Hire Riyanshi?</button>
+        <button class="chip-btn" data-query="Top AI projects">🚀 Top AI Projects</button>
+        <button class="chip-btn" data-query="Tell me about CommAI at Infosys">⚡ CommAI @ Infosys</button>
+        <button class="chip-btn" data-query="Tell me about HospiSynAI">🏆 HospiSynAI (Rank 4)</button>
+        <button class="chip-btn" data-query="Multi-agent and RAG stack">🧠 Multi-Agent & RAG</button>
+        <button class="chip-btn" data-query="How can I contact Riyanshi?">📬 Contact & Connect</button>
+    `;
+
+    const chatbotWidgetContainer = document.getElementById('chatbot-widget');
+
+    function toggleChatbot() {
+        if (!chatbotDialog) return;
+        const isActive = chatbotDialog.classList.toggle('active');
+        if (chatbotWidgetContainer) {
+            chatbotWidgetContainer.classList.toggle('dialog-open', isActive);
+        }
+        if (isActive && chatbotInput) {
+            setTimeout(() => chatbotInput.focus(), 200);
+        }
+    }
+
+    function closeChatbot() {
+        if (chatbotDialog) chatbotDialog.classList.remove('active');
+        if (chatbotWidgetContainer) {
+            chatbotWidgetContainer.classList.remove('dialog-open');
+        }
+    }
+
+    if (chatbotTriggerBtn) chatbotTriggerBtn.addEventListener('click', toggleChatbot);
+    if (chatbotCloseBtn) chatbotCloseBtn.addEventListener('click', closeChatbot);
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatbotDialog && chatbotDialog.classList.contains('active')) {
+            closeChatbot();
+        }
+    });
+
+    if (chatbotClearBtn) {
+        chatbotClearBtn.addEventListener('click', () => {
+            if (chatbotMessages) {
+                chatbotMessages.innerHTML = `
+                    <div class="chat-msg bot">
+                        <img class="chat-avatar-mini" src="assets/profile.png" alt="AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=60&auto=format&fit=crop'">
+                        <div class="chat-bubble">${defaultBotGreeting}</div>
+                    </div>
+                    <div class="chatbot-chips" id="chatbot-chips">
+                        ${defaultChipsHTML}
+                    </div>
+                `;
+                bindChatChips();
+            }
+        });
+    }
+
+    function scrollChatToBottom() {
+        if (chatbotMessages) {
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+    }
+
+    function appendUserMessage(text) {
+        if (!chatbotMessages) return;
+        const msgEl = document.createElement('div');
+        msgEl.className = 'chat-msg user';
+        msgEl.innerHTML = `<div class="chat-bubble">${escapeHTML(text)}</div>`;
+        chatbotMessages.appendChild(msgEl);
+        scrollChatToBottom();
+    }
+
+    function appendBotTyping() {
+        if (!chatbotMessages) return null;
+        const typingEl = document.createElement('div');
+        typingEl.className = 'chat-msg bot typing-indicator';
+        typingEl.innerHTML = `
+            <img class="chat-avatar-mini" src="assets/profile.png" alt="AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=60&auto=format&fit=crop'">
+            <div class="chat-bubble">
+                <span class="typing-dots">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </span>
+            </div>
+        `;
+        chatbotMessages.appendChild(typingEl);
+        scrollChatToBottom();
+        return typingEl;
+    }
+
+    function appendBotMessage(htmlContent) {
+        if (!chatbotMessages) return;
+        const msgEl = document.createElement('div');
+        msgEl.className = 'chat-msg bot';
+        msgEl.innerHTML = `
+            <img class="chat-avatar-mini" src="assets/profile.png" alt="AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=60&auto=format&fit=crop'">
+            <div class="chat-bubble">${htmlContent}</div>
+        `;
+        chatbotMessages.appendChild(msgEl);
+        scrollChatToBottom();
+
+        // Smooth scroll for internal link clicks inside chat
+        msgEl.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    if (window.innerWidth < 640) {
+                        closeChatbot();
+                    }
+                }
+            });
+        });
+    }
+
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function getBotResponse(rawQuery) {
+        const q = rawQuery.toLowerCase().trim();
+
+        // HospiSynAI
+        if (q.includes('hospisyn') || (q.includes('hospital') && q.includes('ai')) || (q.includes('rank 4') && q.includes('hackathon'))) {
+            return `🏆 <strong>HospiSynAI</strong> is one of my proudest engineering builds! It secured <strong>Rank 4 out of 4,200+ participants globally</strong> in Devengers' HackDevengers 1.0 hackathon.<br><br>
+            <strong>Core Highlights:</strong><br>
+            • Containerized with Docker, dynamically translates clinical discharge summaries into 11 regional languages in ~1.5s.<br>
+            • Runs a concurrent automated billing audit node, slashing manual administrative overhead by 76%.<br>
+            • Features Groq Llama 3.3 inference with an offline fallback circuit breaker.<br><br>
+            👉 <a href="#projects">Inspect HospiSynAI in Projects</a> or open its architecture!`;
+        }
+
+        // CommAI / Infosys Springboard
+        if (q.includes('commai') || q.includes('infosys') || q.includes('springboard') || q.includes('internship') || q.includes('intern')) {
+            return `⚡ <strong>CommAI</strong> is an enterprise-grade multilingual mass communication SaaS platform that I engineered as an <strong>AI Intern at Infosys Springboard 7.0</strong>.<br><br>
+            <strong>Core Architecture & Dispatch Channels:</strong><br>
+            • 📡 <strong>5 Core Dispatch Channels:</strong> Automated simultaneous broadcasts across <strong>Email, Telegram, Voice Call, SMS, and Live Website</strong>.<br>
+            • 🌐 <strong>23 Indic Languages:</strong> 3-tier neural translation failover pipeline (Groq 70B → 8B → Google GTX) with Edge-TTS voice bulletins.<br>
+            • 🛡️ <strong>Four-Eye Governance:</strong> Maker-Checker authorization queue for broadcasts ≥100 recipients with offline NLP compliance auditing.<br>
+            • 🎙️ Hands-free "Hey Jarvis" cockpit & real-time device preview rendering.<br><br>
+            👉 <a href="#projects">View CommAI in Projects</a> or open its architecture!`;
+        }
+
+        // VoteWise AI
+        if (q.includes('votewise') || q.includes('election') || q.includes('vote') || q.includes('voting')) {
+            return `🗳️ <strong>VoteWise-AI</strong> won <strong>Rank 1 (Challenge 2)</strong>!<br><br>
+            It is a civic intelligence chatbot delivering hyper-localized polling booth maps and verified non-partisan electoral insights. Built with Google Gemini 2.0 Flash, semantic caching, and resilient Tenacity retry circuit breakers.<br><br>
+            👉 <a href="#projects">Jump to VoteWise AI</a>`;
+        }
+
+        // FinSight / Financial
+        if (q.includes('finsight') || q.includes('finance') || q.includes('fintech')) {
+            return `📈 <strong>FinSight</strong> is an AI financial intelligence engine that synthesizes complex market news, corporate filings, and analyst transcripts into actionable investment insights with quantified sentiment polarity.<br><br>
+            👉 <a href="#projects">View FinSight in Projects</a>`;
+        }
+
+        // Projects / Portfolio list
+        if (q.includes('project') || q.includes('work') || q.includes('build') || q.includes('portfolio')) {
+            return `Here are my flagship AI & software engineering projects:<br><br>
+            1. 🏆 <strong>HospiSynAI</strong> — Rank 4 / 4.2k+ Global Hackathon multi-agent clinical platform<br>
+            2. ⚡ <strong>CommAI</strong> — Infosys Springboard 7.0 Multilingual Mass Comm PWA<br>
+            3. 🗳️ <strong>VoteWise-AI</strong> — Rank 1 Civic Intelligence Engine<br>
+            4. 📈 <strong>FinSight</strong> — Market sentiment & corporate filing analyzer<br>
+            5. 🏟️ <strong>SmartStadium-AI</strong> — Crowd density & safety forecasting (Top 40)<br>
+            6. 💊 <strong>MediScribe-AI</strong> — Clinical speech-to-EHR transcription<br><br>
+            👉 <a href="#projects">Explore all 9 live project cards & interactive architectures!</a>`;
+        }
+
+        // Multi-agent / RAG / Architecture / LLM
+        if (q.includes('agent') || q.includes('multi-agent') || q.includes('rag') || q.includes('llm') || q.includes('groq') || q.includes('langchain') || q.includes('langgraph')) {
+            return `🧠 <strong>My Multi-Agent & RAG Stack:</strong><br><br>
+            • <strong>Agentic Architectures:</strong> Stateful multi-agent graphs with <strong>LangGraph</strong> (used in FinOpsAI for autonomous anomaly detection & HITL remediation) and native <strong>Groq LPU</strong> pipelines (HospiSynAI & CommAI).<br>
+            • <strong>RAG & Dispatch Pipelines:</strong> Semantic retrieval, hybrid BM25 + Vector search, and 5-channel real-time dispatchers.<br>
+            • <strong>High-Speed Inference:</strong> Groq LPU acceleration (450+ tokens/sec, &lt;100ms latency) with automated circuit breakers and local fallback pipelines.<br><br>
+            👉 <a href="#sandbox">Try the Interactive Agent Sandbox</a> to see it live!`;
+        }
+
+        // Tech stack / Skills
+        if (q.includes('skill') || q.includes('stack') || q.includes('python') || q.includes('tech') || q.includes('tools')) {
+            return `🛠️ <strong>Core Technical Matrix:</strong><br><br>
+            • <strong>Languages:</strong> Python, SQL, C, JavaScript/HTML5/CSS3<br>
+            • <strong>AI / Frameworks:</strong> LangGraph, Groq LPU, PyTorch, Hugging Face, OpenCV, Prompt Engineering<br>
+            • <strong>Backend & Databases:</strong> FastAPI, Flask, Streamlit, Docker, PostgreSQL, ChromaDB, FAISS<br>
+            • <strong>Frontend:</strong> React, Next.js, Modern Responsive UI/UX<br>
+            • <strong>Cloud & DevOps:</strong> Google Cloud Platform (Diamond Profile, 49+ Skill Badges), Git, GitHub Actions, Linux<br><br>
+            👉 <a href="#skills">Inspect the full Technical Matrix</a>`;
+        }
+
+        // Hackathons & Awards
+        if (q.includes('hackathon') || q.includes('award') || q.includes('rank') || q.includes('achievement') || q.includes('promptwars')) {
+            return `🏆 <strong>Major Achievements & Honors:</strong><br><br>
+            • ⚡ <strong>Rank 4 / 4,200+ Participants Globally</strong> in HackDevengers 1.0 (2026), an 8-hour global hackathon by Devengers for building HospiSynAI.<br>
+            • 🥇 <strong>Rank 1 (Women Developer) & Rank 30 / 26,090+ Nationally (Top 0.2%)</strong> in Virtual PromptWars 2026.<br>
+            • 🥇 <strong>Rank 1 (Challenge 2)</strong> for VoteWise-AI.<br>
+            • 🏅 <strong>Top 40 (Challenge 1)</strong> for SmartStadium-AI.<br>
+            • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ skill badges!<br><br>
+            👉 <a href="#hackathons">Explore Hackathons & Proofs</a>`;
+        }
+
+        // Experience & Education
+        if (q.includes('experience') || q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('btech') || q.includes('university')) {
+            return `🎓 <strong>Education & Standing:</strong><br>
+            • <strong>Degree:</strong> 4th-Year B.Tech in Computer Science & Engineering (Data Science)<br>
+            • <strong>Institute:</strong> Meerut Institute of Engineering and Technology (AKTU)<br>
+            • <strong>CGPA:</strong> <strong>8.47 / 10.0</strong><br><br>
+            💼 <strong>Current Role:</strong><br>
+            • <strong>AI Intern at Infosys Springboard 7.0</strong> (July 2026 – Present), engineering CommAI multilingual mass communications PWA.<br><br>
+            👉 <a href="#experience">View the Experience Section</a>`;
+        }
+
+        // Resume
+        if (q.includes('resume') || q.includes('cv') || q.includes('pdf')) {
+            return `📄 Here is my latest verified resume highlighting my AI development, hackathon wins, and Infosys internship:<br><br>
+            👉 <a href="assets/Riyanshi_Verma_Resume.pdf" target="_blank" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 6px;">Download Resume PDF 📥</a>`;
+        }
+
+        // Why Should I Hire You / Value Proposition Pitch
+        if (q.includes('why') && (q.includes('hire') || q.includes('recruit') || q.includes('join') || q.includes('choose') || q.includes('select')) || q.includes('why should i hire') || q.includes('why hire') || q.includes('pitch') || q.includes('value proposition')) {
+            return `🎯 <strong>Why You Should Hire Riyanshi Verma:</strong><br><br>
+            <strong>1. Proven Builder Who Ships to Production:</strong><br>
+            I don't just prototype toy scripts — I build production-grade systems. As an <strong>AI Intern at Infosys Springboard 7.0</strong>, I engineered <strong>CommAI</strong>, an enterprise emergency communication SaaS dispatching across 5 channels (Email, Telegram, Voice Call, SMS, Web) in 23 Indic languages.<br><br>
+
+            <strong>2. Global Hackathon Champion & Competitive Excellence:</strong><br>
+            • 🏆 <strong>Rank 4 / 4,200+ Developers Globally</strong> in HackDevengers 1.0 (HospiSynAI).<br>
+            • 🥇 <strong>Rank 1 (Women Developer) & Top 0.2% Nationally (Rank 30 / 26,090+)</strong> in Virtual PromptWars 2026.<br>
+            • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ verified badges.<br><br>
+
+            <strong>3. Modern Agentic & Low-Latency AI Stack:</strong><br>
+            Specialized in <strong>autonomous multi-agent architectures (LangGraph / Groq LPU inference &lt;100ms latency), RAG semantic caching, and automated circuit breakers</strong> for rock-solid reliability.<br><br>
+
+            <strong>4. Full-Stack Delivery & High Ownership:</strong><br>
+            Strong fundamentals (<strong>8.47 CGPA</strong> in B.Tech CSE Data Science) combined with end-to-end delivery: Python, FastAPI microservices, Docker containerization, and modern React interfaces.<br><br>
+
+            👉 <a href="assets/Riyanshi_Verma_Resume.pdf" target="_blank" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 4px; text-decoration:none;">Download Resume PDF 📥</a><br>
+            📅 <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank" class="btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 8px; text-decoration:none;">Schedule a 30-Min Technical Chat 📅</a>`;
+        }
+
+        // Contact / Reach Out / Collaboration
+        if (q.includes('contact') || q.includes('email') || q.includes('reach') || q.includes('linkedin') || q.includes('github') || q.includes('call') || q.includes('connect') || q.includes('message') || q.includes('hire')) {
+            return `📬 I'd love to discuss AI engineering opportunities and collaborations! Here is how to reach me:<br><br>
+            • 📧 <strong>Email:</strong> <a href="mailto:riyanshiverma46@gmail.com">riyanshiverma46@gmail.com</a><br>
+            • 💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank">linkedin.com/in/riyanshi-verma</a><br>
+            • 💻 <strong>GitHub:</strong> <a href="https://github.com/RiyanshiVerma-11" target="_blank">github.com/RiyanshiVerma-11</a><br>
+            • 📅 <strong>Calendly:</strong> <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank">Schedule 30-Min Call</a><br>
+            • 📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/builds.by.riyanshi" target="_blank">@builds.by.riyanshi</a><br>
+            • 🎬 <strong>YouTube:</strong> <a href="https://youtube.com/@stylishspins" target="_blank">@stylishspins</a><br><br>
+            👉 Or drop a message directly via the <a href="#contact">Contact Form</a> below!`;
+        }
+
+        // Greetings
+        if (q.includes('hi') || q.includes('hello') || q.includes('hey') || q.includes('hola') || q.includes('namaste')) {
+            return `Hello! 👋 Fantastic to meet you. I am Riyanshi's virtual persona. Ask me anything about her projects like <strong>HospiSynAI</strong> or <strong>CommAI</strong>, her multi-agent frameworks, hackathon victories, or how to get in touch!`;
+        }
+
+        // Who are you / About
+        if (q.includes('who are you') || q.includes('about') || q.includes('riyanshi')) {
+            return `I'm Riyanshi's interactive AI assistant! Riyanshi is a <strong>4th-year B.Tech CSE (Data Science) student</strong> and <strong>AI Intern at Infosys Springboard</strong> who specializes in building production-ready autonomous multi-agent architectures, RAG pipelines, and high-throughput LLM integrations.<br><br>
+            Feel free to ask about her projects, tech stack, or resume!`;
+        }
+
+        // Fallback default response
+        return `Thanks for asking! As Riyanshi's portfolio AI assistant, I can give you deep insights on:<br><br>
+        • 🏆 <strong>HospiSynAI</strong> (Rank 4 / 4.2k+ Global Hackathon multi-agent platform)<br>
+        • ⚡ <strong>CommAI</strong> (Infosys Springboard 7.0 Enterprise PWA)<br>
+        • 🧠 <strong>Multi-Agent & RAG Stack</strong> (Python, FastAPI, Docker, Groq LPU)<br>
+        • 📄 <strong>Resume & Contact Details</strong><br><br>
+        Try asking: <em>"Tell me about HospiSynAI"</em> or <em>"What is her tech stack?"</em>`;
+    }
+
+    function handleChatSubmit(queryText) {
+        if (!queryText || !queryText.trim()) return;
+        const q = queryText.trim();
+        appendUserMessage(q);
+        if (chatbotInput) chatbotInput.value = '';
+
+        const typingEl = appendBotTyping();
+        const delay = Math.min(650, Math.max(320, q.length * 15));
+
+        setTimeout(() => {
+            if (typingEl && typingEl.parentNode) {
+                typingEl.remove();
+            }
+            const botReply = getBotResponse(q);
+            appendBotMessage(botReply);
+        }, delay);
+    }
+
+    function bindChatChips() {
+        const chips = chatbotMessages ? chatbotMessages.querySelectorAll('.chip-btn') : [];
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const query = chip.getAttribute('data-query') || chip.textContent;
+                handleChatSubmit(query);
+            });
+        });
+    }
+
+    if (chatbotForm) {
+        chatbotForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (chatbotInput) handleChatSubmit(chatbotInput.value);
+        });
+    }
+
+    bindChatChips();
 });
+

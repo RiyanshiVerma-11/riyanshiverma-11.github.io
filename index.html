@@ -21,7 +21,10 @@
     <link rel="alternate icon" href="favicon.svg">
 
     <!-- Google Fonts & Main Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=2.6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.4">
 </head>
 
 <body>
@@ -155,10 +158,10 @@
                         <span class="hero-badge-dot"></span>
                         <span class="hero-badge-text">SYSTEM ACTIVE // AI DEVELOPER &amp; 4TH-YEAR B.TECH CSE(DS) STUDENT</span>
                     </div>
-                    <h4 class="hero-greeting">Hi, I am</h4>
+                    <h4 class="hero-greeting"><span class="handwritten-greeting">✨ Hello world,</span> I am</h4>
                     <h1 class="hero-name">Riyanshi Verma</h1>
                     <h2 class="hero-tagline">
-                        Engineering Intelligence. <br>
+                        Engineering <span class="cursive-word">Intelligence</span>. <br>
                         Optimizing <span class="gradient-text">Models</span>.
                     </h2>
                     <p class="hero-description">
@@ -186,7 +189,6 @@
                         <span class="floating-badge">FastAPI</span>
                         <span class="floating-badge">React</span>
                         <span class="floating-badge">RAG</span>
-                        <span class="floating-badge">Agentic AI</span>
                         <span class="floating-badge">Docker</span>
 
                         <!-- Rotating decorative rings -->
@@ -259,64 +261,14 @@
         <section id="about" class="section">
             <div class="container">
                 <div class="section-header reveal">
-                    <div class="section-tag">identity</div>
-                    <h2 class="section-title">Decentralizing Complexity</h2>
+                    <div class="section-tag">identity <span class="cursive-subheading">the journey so far ~</span></div>
+                    <h2 class="section-title">Decentralizing <span class="cursive-word">Complexity</span></h2>
                     <p class="section-subtitle">Translating advanced neural network research into robust,
                         deployment-ready software systems.</p>
                 </div>
 
                 <div class="bento-grid">
-                    <!-- Card 1: Apple-style Mission (Span 2) -->
-                    <div class="bento-card card-glass span-2 reveal">
-                        <div class="bento-card-label">
-                            <span class="label-dot"></span> Mission Statement
-                        </div>
-                        <h3>Bridging AI Research &amp; Enterprise Systems</h3>
-                        <p>
-                            <strong>AI Developer &amp; 4th-year B.Tech CSE(DS) Student</strong> specializing in
-                            multi-agent orchestration, context-aware RAG pipelines, and production-grade LLM
-                            deployments. I build modular, low-latency systems that translate research
-                            into real-world impact — with minimal hallucination and maximum reliability.
-                        </p>
-                    </div>
 
-                    <!-- Card 2: Interactive Manifesto / Code terminal -->
-                    <div class="bento-card card-glass bento-terminal reveal reveal-delay-2">
-                        <div class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                                <span class="terminal-title" style="margin-left: 0.5rem;">agent_manifesto.py</span>
-                            </div>
-                            <button class="btn-terminal-run" id="btn-run-manifesto" aria-label="Run Python manifesto script">
-                                <span class="run-icon">▶</span> Run
-                            </button>
-                        </div>
-                        <div class="terminal-body">
-                            <pre><code class="language-python"><span class="keyword">class</span> <span class="class-name">GenerativeDeveloper</span>:
-    <span class="keyword">def</span> <span class="function-name">__init__</span>(<span class="keyword">self</span>):
-        <span class="keyword">self</span>.name = <span class="string">"Riyanshi Verma"</span>
-        <span class="keyword">self</span>.role = <span class="string">"AI Developer &amp; 4th-year B.Tech CSE(DS) Student"</span>
- 
-    <span class="keyword">def</span> <span class="function-name">core_belief</span>(<span class="keyword">self</span>):
-        <span class="keyword">return</span> [
-            <span class="string">"RAG beats massive params"</span>,
-            <span class="string">"Strict agent checks"</span>,
-            <span class="string">"Quantized edge models"</span>
-        ]
-
-agent = GenerativeDeveloper()
-print(agent.core_belief())</code></pre>
-                            
-                            <div class="terminal-output" id="manifesto-output" style="display: none;">
-                                <div class="output-divider"></div>
-                                <div class="output-line command">&gt; python agent_manifesto.py</div>
-                                <div class="output-line system">[SYSTEM] Compiling runtime nodes...</div>
-                                <div class="output-line success">['RAG beats massive params', 'Strict agent checks', 'Quantized edge models']</div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Card 3: CGPA & Education details -->
                     <div class="bento-card card-glass reveal">
@@ -347,19 +299,19 @@ print(agent.core_belief())</code></pre>
 
                         <div class="bento-metrics">
                             <div class="metric">
-                                <span class="metric-value gradient-text counter" data-target="4">0</span>
-                                <span class="metric-label">Rank 4 / 4.2k+ (HackDevengers '26)</span>
+                                <span class="metric-value gradient-text counter" data-target="4" data-prefix="Rank ">Rank 4</span>
+                                <span class="metric-label">HackDevengers 1.0 (4.2k+ Devs)</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-value gradient-text counter" data-target="1">0</span>
-                                <span class="metric-label">Rank 1 Women Dev (PromptWars '26)</span>
+                                <span class="metric-value gradient-text counter" data-target="1" data-prefix="Rank ">Rank 1</span>
+                                <span class="metric-label">Women Dev (PromptWars '26)</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-value gradient-text counter" data-target="30">0</span>
-                                <span class="metric-label">Top 30 overall out of 21,090+</span>
+                                <span class="metric-value gradient-text counter" data-target="30" data-prefix="Top ">Top 30</span>
+                                <span class="metric-label">Nationally out of 21,090+</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-value gradient-text counter" data-target="9">0</span>
+                                <span class="metric-value gradient-text counter" data-target="9" data-suffix="+">9+</span>
                                 <span class="metric-label">AI Systems Deployed</span>
                             </div>
                         </div>
@@ -424,8 +376,8 @@ print(agent.core_belief())</code></pre>
         <section id="experience" class="section">
             <div class="container">
                 <div class="section-header reveal">
-                    <div class="section-tag">timeline</div>
-                    <h2 class="section-title">System Experience</h2>
+                    <div class="section-tag">timeline <span class="cursive-subheading">where ideas ship ~</span></div>
+                    <h2 class="section-title">System <span class="cursive-word">Experience</span></h2>
                     <p class="section-subtitle">Chronological footprint of enterprise AI implementations, collaborative
                         research, and credentials.</p>
                 </div>
@@ -446,9 +398,9 @@ print(agent.core_belief())</code></pre>
                                             class="badge-status">Active</span></h4>
                                 </div>
                                 <ul class="timeline-bullets">
-                                    <li>Engineered <strong>CommAI</strong>: an AI-driven multilingual campaign generator supporting <strong>22 Indian languages</strong> powered by Groq Llama 3.3, reducing drafting turnaround time by <strong>~70%</strong>.</li>
-                                    <li>Integrated <strong>Groq API (Llama 3.3 / 3.1)</strong> with real-time device previews to generate localized public notices with responsive multi-device rendering.</li>
-                                    <li>Developed an <strong>offline content compliance auditor</strong> that screens campaign drafts for shouting patterns, duplicate phrasing, and sensitive keywords prior to bulk broadcast.</li>
+                                    <li>Engineered <strong>CommAI</strong>: an enterprise-grade multilingual public awareness &amp; emergency broadcast SaaS platform supporting <strong>23 Indic languages</strong> with omnichannel dispatch across <strong>Email, Telegram, Voice Call, SMS, and Live Website</strong>.</li>
+                                    <li>Integrated <strong>Groq Llama 3.3 (70B)</strong> with a 3-tier translation failover pipeline (70B → 8B → Google GTX) and <strong>Edge-TTS neural voice synthesis</strong> for regional audio bulletins.</li>
+                                    <li>Built a <strong>Four-Eye Maker-Checker governance engine</strong> requiring administrative review for broadcasts exceeding 100 recipients, coupled with offline NLP compliance auditing.</li>
                                 </ul>
                                 <div class="timeline-links" style="margin-top: 1rem; display: flex; gap: 0.8rem;">
                                     <a href="https://comm-ai-nine.vercel.app/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
@@ -579,8 +531,8 @@ print(agent.core_belief())</code></pre>
         <section id="skills" class="section bg-alt">
             <div class="container">
                 <div class="section-header reveal">
-                    <div class="section-tag">capabilities</div>
-                    <h2 class="section-title">Technical Matrix</h2>
+                    <div class="section-tag">capabilities <span class="cursive-subheading">neural toolbelt &amp; stack ~</span></div>
+                    <h2 class="section-title">Technical <span class="cursive-word">Matrix</span></h2>
                     <p class="section-subtitle">Deep capability across the full vertical stack of model integration,
                         deep learning pipelines, and backend MLOps infrastructure.</p>
                 </div>
@@ -786,8 +738,8 @@ print(agent.core_belief())</code></pre>
         <section id="sandbox" class="section bg-alt">
             <div class="container">
                 <div class="section-header reveal">
-                    <div class="section-tag">interactive</div>
-                    <h2 class="section-title">Systems Sandbox</h2>
+                    <div class="section-tag">interactive <span class="cursive-subheading">live experimental lab ~</span></div>
+                    <h2 class="section-title">Systems <span class="cursive-word">Sandbox</span></h2>
                     <p class="section-subtitle">Run live simulation traces of advanced retrieval, multi-agent
                         coordination, and system guardrail pipelines.</p>
                 </div>
@@ -931,8 +883,8 @@ print(agent.core_belief())</code></pre>
         <section id="projects" class="section">
             <div class="container">
                 <div class="section-header reveal">
-                    <div class="section-tag">builds</div>
-                    <h2 class="section-title">Showcase Deployments</h2>
+                    <div class="section-tag">builds <span class="cursive-subheading">crafted with passion ~</span></div>
+                    <h2 class="section-title">Showcase <span class="cursive-word">Deployments</span></h2>
                     <p class="section-subtitle">A collection of custom architectures, agentic pipelines, and optimized
                         systems built for production benchmarks.</p>
                 </div>
@@ -952,42 +904,87 @@ print(agent.core_belief())</code></pre>
                         <div class="card-spotlight"></div>
                         <div class="project-body">
                             <div class="project-header">
-                                <span class="project-label">MULTILINGUAL AI // CAMPAIGN GENERATION</span>
+                                <span class="project-label">ENTERPRISE OMNICHANNEL AI // 23 INDIC LANGUAGES</span>
                                 <h3 class="project-title">CommAI</h3>
                             </div>
                             
                             <div class="project-problem-statement">
                                 <strong>Problem Statement</strong>
-                                <p>Drafting localized, culturally compliant mass campaigns across diverse Indian language regions is slow and prone to text alignment and phrasing errors.</p>
+                                <p>Emergency public notices across multilingual regions are slowed by channel fragmentation, phrasing discrepancies, and manual translation bottlenecks.</p>
+                            </div>
+
+                            <!-- Miniature Architecture Live Badges -->
+                            <div class="arch-badge-grid">
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">⚡</span>
+                                    <div class="badge-text">
+                                        <strong>Groq Llama 3.3 (70B)</strong>
+                                        <small>&lt;100ms LLM Inference</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🎙️</span>
+                                    <div class="badge-text">
+                                        <strong>Edge-TTS Neural</strong>
+                                        <small>Voice Bulletins (23 Langs)</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🚀</span>
+                                    <div class="badge-text">
+                                        <strong>FastAPI Async Matrix</strong>
+                                        <small>5 Parallel Dispatch Channels</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🛡️</span>
+                                    <div class="badge-text">
+                                        <strong>Four-Eye Governance</strong>
+                                        <small>3-Tier Failover (70B→8B→GTX)</small>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="project-what-i-built">
-                                <strong>What I Built</strong>
-                                <p>An AI-driven multilingual campaign generator supporting 22 Indian languages powered by Groq Llama 3.3, featuring real-time device preview rendering and compliance audits.</p>
-                            </div>
-
-                            <div class="project-engineering-highlight">
-                                <strong>Engineering Highlight</strong>
-                                <p>Integrated high-throughput Groq API with Llama 3.3/3.1 and designed a lightweight, client-side compliance auditor filtering shouting patterns and duplicate phrasing.</p>
+                                <strong>What I Built &amp; Engineering Highlight</strong>
+                                <p>Engineered an enterprise mass-communication SaaS broadcasting validated emergency alerts simultaneously across <strong>Email, Telegram, Voice Call, SMS, and Live Web</strong> in 23 Indic languages with neural voice synthesis.</p>
                             </div>
 
                             <div class="project-metrics-row">
-                                <span class="project-metric">🌐 22 Indian Languages Supported</span>
-                                <span class="project-metric">⏱️ ~70% turnaround reduction</span>
+                                <span class="project-metric">🌐 23 Indic Languages</span>
+                                <span class="project-metric">📡 5 Simultaneous Channels</span>
+                                <span class="project-metric">⚡ &lt;1.8s Full Dispatch</span>
                             </div>
                             
                             <div class="project-screenshots">
-                                <div class="project-screenshot-item">
-                                    <img src="assets/screenshot_commai.png" alt="CommAI Landing Page" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'" loading="lazy" />
+                                <div class="browser-mockup-frame">
+                                    <div class="browser-mockup-header">
+                                        <div class="browser-mockup-dots">
+                                            <span class="mockup-dot red"></span>
+                                            <span class="mockup-dot yellow"></span>
+                                            <span class="mockup-dot green"></span>
+                                        </div>
+                                        <div class="browser-mockup-address">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                            <span class="address-url">https://comm-ai-nine.vercel.app/dispatch</span>
+                                        </div>
+                                        <div class="browser-mockup-badge">
+                                            <span class="badge-indicator"></span> LIVE SAAS
+                                        </div>
+                                    </div>
+                                    <div class="browser-mockup-viewport">
+                                        <img src="assets/screenshot_commai.png" alt="CommAI Live Application" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'" loading="lazy" />
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="project-tags">
-                                <span class="tag">React</span>
+                                <span class="tag">React 18</span>
                                 <span class="tag">FastAPI</span>
-                                <span class="tag">Groq API</span>
-                                <span class="tag">Llama 3.3</span>
-                                <span class="tag">Vite</span>
+                                <span class="tag">Groq Llama 3.3</span>
+                                <span class="tag">Email &amp; Telegram</span>
+                                <span class="tag">Voice Call &amp; SMS</span>
+                                <span class="tag">Live Website</span>
                             </div>
 
                             <details class="project-case-study">
@@ -1065,28 +1062,71 @@ print(agent.core_belief())</code></pre>
                             
                             <div class="project-problem-statement">
                                 <strong>Problem Statement</strong>
-                                <p>Clinical notes are highly unstructured and manual billing audits lead to delayed patient handovers and leakage of hospital revenue.</p>
+                                <p>Unstructured clinical discharge notes delay patient handovers, while manual billing verification risks revenue leakage and compliance errors.</p>
+                            </div>
+
+                            <!-- Miniature Architecture Live Badges -->
+                            <div class="arch-badge-grid">
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🧠</span>
+                                    <div class="badge-text">
+                                        <strong>Dual-Agent Engine</strong>
+                                        <small>Clinical &amp; Audit Nodes</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">⚡</span>
+                                    <div class="badge-text">
+                                        <strong>Groq 70B Inference</strong>
+                                        <small>Sub-1.5s Handout (11 Langs)</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🐳</span>
+                                    <div class="badge-text">
+                                        <strong>Docker Microservices</strong>
+                                        <small>Isolated Container Stack</small>
+                                    </div>
+                                </div>
+                                <div class="arch-badge-pill">
+                                    <span class="badge-icon">🔍</span>
+                                    <div class="badge-text">
+                                        <strong>Automated Audit Node</strong>
+                                        <small>76% Billing Discrepancies Caught</small>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="project-what-i-built">
-                                <strong>What I Built</strong>
-                                <p>Ranked 4th among 4.2k+ participants in HackDevengers 1.0 (8-hour global hackathon) for building a multi-agent AI platform containerized with Docker that dynamically translates raw clinical summaries into 11 regional languages while running a concurrent automated billing audit node.</p>
-                            </div>
-
-                            <div class="project-engineering-highlight">
-                                <strong>Engineering Highlight</strong>
-                                <p>Designed a concurrent asynchronous auditing route in FastAPI using background tasks to flag financial discrepancies without blocking patient handout compilation.</p>
+                                <strong>What I Built &amp; Engineering Highlight</strong>
+                                <p>Awarded Rank 4 / 4.2k+ globally in HackDevengers 1.0. Built a concurrent multi-agent platform in FastAPI that compiles patient-friendly summaries in 11 languages while a background worker flags financial discrepancies.</p>
                             </div>
 
                             <div class="project-metrics-row">
-                                <span class="project-metric">🏆 Rank 4 / 4.2k+ Global Hackathon</span>
-                                <span class="project-metric">⏱️ Handout 1.5s (11 languages)</span>
-                                <span class="project-metric">🔍 76% manual billing reduction</span>
+                                <span class="project-metric">🏆 Rank 4 / 4.2k+ Hackathon</span>
+                                <span class="project-metric">⏱️ 1.5s Handout Generation</span>
+                                <span class="project-metric">🔍 76% Audit Efficiency</span>
                             </div>
                             
                             <div class="project-screenshots">
-                                <div class="project-screenshot-item">
-                                    <img src="assets/screenshot_hospisyn.png" alt="HospiSynAI Landing Page" loading="lazy" />
+                                <div class="browser-mockup-frame">
+                                    <div class="browser-mockup-header">
+                                        <div class="browser-mockup-dots">
+                                            <span class="mockup-dot red"></span>
+                                            <span class="mockup-dot yellow"></span>
+                                            <span class="mockup-dot green"></span>
+                                        </div>
+                                        <div class="browser-mockup-address">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                            <span class="address-url">https://hospisyn-ai.healthcare/discharge-summary</span>
+                                        </div>
+                                        <div class="browser-mockup-badge">
+                                            <span class="badge-indicator"></span> HACKDEVENGERS #4
+                                        </div>
+                                    </div>
+                                    <div class="browser-mockup-viewport">
+                                        <img src="assets/screenshot_hospisyn.png" alt="HospiSynAI Live Application" loading="lazy" />
+                                    </div>
                                 </div>
                             </div>
                             
@@ -1466,6 +1506,15 @@ print(agent.core_belief())</code></pre>
                                     </svg>
                                     Live Demo
                                 </a>
+                                <button class="project-link btn-inspect-arch" data-project="smartstadium"
+                                    style="background: transparent; border: none; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1562,6 +1611,15 @@ print(agent.core_belief())</code></pre>
                                     </svg>
                                     Live Demo
                                 </a>
+                                <button class="project-link btn-inspect-arch" data-project="mediscribe"
+                                    style="background: transparent; border: none; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1650,6 +1708,15 @@ print(agent.core_belief())</code></pre>
                                     </svg>
                                     Repository
                                 </a>
+                                <button class="project-link btn-inspect-arch" data-project="decixai"
+                                    style="background: transparent; border: none; cursor: pointer; margin-left: 1.2rem;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1847,6 +1914,15 @@ print(agent.core_belief())</code></pre>
                                     </svg>
                                     Live Demo
                                 </a>
+                                <button class="project-link btn-inspect-arch" data-project="lifesaver"
+                                    style="background: transparent; border: none; cursor: pointer; margin-left: 1.2rem;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2"
+                                        style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Architecture
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1870,8 +1946,8 @@ print(agent.core_belief())</code></pre>
             <div class="container">
                 <div class="contact-box card-glass reveal">
                     <div class="contact-header">
-                        <div class="section-tag">handshake</div>
-                        <h2 class="section-title">Initialize Connection</h2>
+                        <div class="section-tag">handshake <span class="cursive-subheading">let's build together ~</span></div>
+                        <h2 class="section-title">Initialize <span class="cursive-word">Connection</span></h2>
                         <p>Have an open role, an interesting project, or want to collaborate on generative AI
                             infrastructure? Shoot me a message below.</p>
                         <div class="contact-alternative">
@@ -1996,31 +2072,65 @@ print(agent.core_belief())</code></pre>
     <!-- Architecture Inspection Modals -->
     <!-- Architecture Inspection Modal (Multi-Tab) -->
     <div id="arch-modal" class="modal-overlay">
-        <div class="modal-card card-glass">
+        <div class="modal-card card-glass arch-modal-card">
             <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
             <div class="modal-body">
-                <span class="modal-badge">SYSTEM ARCHITECTURE MAP</span>
+                <div class="arch-header-top">
+                    <span class="modal-badge">DEEP SYSTEM ARCHITECTURE BLUEPRINT // INTERACTIVE DESIGN</span>
+                    <span class="arch-circuit-status"><span class="pulse-dot green"></span> CIRCUITS ARMED</span>
+                </div>
                 <h3 class="modal-title" id="modal-project-title">Project Name</h3>
                 <p class="modal-description" id="modal-project-desc">Description</p>
+
+                <!-- Architecture Feature Highlights Pills -->
+                <div class="arch-pills-row" id="modal-arch-pills">
+                    <span class="arch-pill"><span class="pill-dot gold"></span> <strong>Cache Layer:</strong> Semantic Hit &lt;20ms</span>
+                    <span class="arch-pill"><span class="pill-dot cyan"></span> <strong>Retrieval:</strong> Dense Vector Store</span>
+                    <span class="arch-pill"><span class="pill-dot violet"></span> <strong>Core Inference:</strong> Groq LPU Ultra-Throughput</span>
+                    <span class="arch-pill"><span class="pill-dot rose"></span> <strong>Resilience:</strong> Automated Fallback Circuit</span>
+                </div>
+
                 <!-- Modal Tabs -->
                 <div class="modal-tabs">
-                    <button class="modal-tab-btn active" data-modal-tab="system-map">System Map</button>
-                    <button class="modal-tab-btn" data-modal-tab="tech-specs">Tech Specs</button>
-                    <button class="modal-tab-btn" data-modal-tab="dry-run">Live Dry-Run</button>
+                    <button class="modal-tab-btn active" data-modal-tab="system-map">
+                        <span class="tab-icon">🗺️</span> Flowchart Diagram
+                    </button>
+                    <button class="modal-tab-btn" data-modal-tab="tech-specs">
+                        <span class="tab-icon">📊</span> Pipeline Specs
+                    </button>
+                    <button class="modal-tab-btn" data-modal-tab="dry-run">
+                        <span class="tab-icon">⚡</span> Live Dry-Run
+                    </button>
                 </div>
-                <!-- Tab 1: System Map -->
+
+                <!-- Tab 1: System Map (Interactive Flowchart) -->
                 <div class="modal-tab-content active" id="modal-tab-system-map">
+                    <div class="diagram-toolbar">
+                        <div class="diagram-legend">
+                            <span class="legend-item"><span class="legend-color gold"></span> Cache Hit / Miss</span>
+                            <span class="legend-item"><span class="legend-color cyan"></span> Vector Store Query</span>
+                            <span class="legend-item"><span class="legend-color violet"></span> Groq Primary LPU</span>
+                            <span class="legend-item"><span class="legend-color rose"></span> Circuit Breaker Fallback</span>
+                        </div>
+                        <div class="diagram-zoom-controls">
+                            <button class="zoom-btn" id="zoom-in-btn" title="Zoom In">🔍 +</button>
+                            <button class="zoom-btn" id="zoom-out-btn" title="Zoom Out">🔍 -</button>
+                            <button class="zoom-btn" id="zoom-reset-btn" title="Reset Zoom">↺ Reset</button>
+                        </div>
+                    </div>
                     <div class="modal-svg-container" id="modal-svg-content">
-                        <!-- SVG gets dynamically loaded here -->
+                        <!-- SVG / Mermaid Flowchart gets dynamically rendered here -->
                     </div>
                 </div>
-                <!-- Tab 2: Tech Specs -->
+
+                <!-- Tab 3: Tech Specs -->
                 <div class="modal-tab-content" id="modal-tab-tech-specs">
                     <div class="modal-metrics-grid" id="modal-metrics-grid">
                         <!-- Populated by JS -->
                     </div>
                 </div>
-                <!-- Tab 3: Live Dry-Run -->
+
+                <!-- Tab 4: Live Dry-Run -->
                 <div class="modal-tab-content" id="modal-tab-dry-run">
                     <div class="modal-dryrun">
                         <div class="dryrun-header">
@@ -2076,7 +2186,7 @@ print(agent.core_belief())</code></pre>
                             <span class="spec-icon">💼</span>
                             <div>
                                 <h4>AI Internship Impact</h4>
-                                <p>Infosys Springboard 7.0: Designed 22-language Groq Llama text translator &amp; compliance auditor.</p>
+                                <p>Infosys Springboard 7.0: Engineered CommAI omnichannel public awareness platform across Email, Telegram, Voice Call, SMS &amp; Web with 23 Indic languages.</p>
                                 <div style="margin-top: 0.5rem; display: flex; gap: 0.75rem;">
                                     <a href="https://comm-ai-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" style="font-size: 0.8rem; color: var(--gold); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px;">
                                         ⚡ Live Demo
@@ -2162,6 +2272,78 @@ print(agent.core_belief())</code></pre>
                     Skill description goes here.
                 </p>
             </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Persona Chatbot ("Riyanshi.ai Assistant") -->
+    <div class="chatbot-widget-container" id="chatbot-widget">
+        <!-- Floating Trigger Button -->
+        <button class="chatbot-trigger-btn" id="chatbot-trigger-btn" aria-label="Open Riyanshi AI Assistant">
+            <div class="chatbot-trigger-avatar">
+                <img src="assets/profile.png" alt="Riyanshi AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop'">
+                <span class="chatbot-avatar-pulse"></span>
+            </div>
+            <div class="chatbot-trigger-label">
+                <span class="chatbot-trigger-title">Ask Riyanshi AI <span class="chatbot-sparkle">✨</span></span>
+                <span class="chatbot-trigger-sub">VIRTUAL PERSONA // ONLINE</span>
+            </div>
+        </button>
+
+        <!-- Chatbot Dialog Window -->
+        <div class="chatbot-dialog" id="chatbot-dialog" role="dialog" aria-label="Riyanshi AI Assistant Window">
+            <!-- Header -->
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <div class="chatbot-header-avatar">
+                        <img src="assets/profile.png" alt="Riyanshi AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop'">
+                    </div>
+                    <div>
+                        <div class="chatbot-header-title">
+                            Riyanshi.ai <span class="chatbot-badge-tag">Persona</span>
+                        </div>
+                        <div class="chatbot-header-sub">
+                            <span class="chatbot-status-dot"></span> Ready to chat // Local Inference
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbot-header-actions">
+                    <button class="chatbot-btn-action" id="chatbot-clear-btn" title="Clear conversation" aria-label="Clear chat">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                    </button>
+                    <button class="chatbot-btn-action" id="chatbot-close-btn" title="Close chat" aria-label="Close chat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="chatbot-messages" id="chatbot-messages">
+                <!-- Initial Welcome message -->
+                <div class="chat-msg bot">
+                    <img class="chat-avatar-mini" src="assets/profile.png" alt="AI" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=60&auto=format&fit=crop'">
+                    <div class="chat-bubble">
+                        Hey there! 👋 I'm Riyanshi's virtual persona. Ask me anything about her <strong>AI projects</strong>, <strong>multi-agent frameworks</strong>, <strong>hackathon wins</strong>, or tech stack!
+                    </div>
+                </div>
+
+                <!-- Chips -->
+                <div class="chatbot-chips" id="chatbot-chips">
+                    <button class="chip-btn" data-query="Why should I hire Riyanshi?">🎯 Why Hire Riyanshi?</button>
+                    <button class="chip-btn" data-query="Top AI projects">🚀 Top AI Projects</button>
+                    <button class="chip-btn" data-query="Tell me about CommAI at Infosys">⚡ CommAI @ Infosys</button>
+                    <button class="chip-btn" data-query="Tell me about HospiSynAI">🏆 HospiSynAI (Rank 4)</button>
+                    <button class="chip-btn" data-query="Multi-agent and RAG stack">🧠 Multi-Agent &amp; RAG</button>
+                    <button class="chip-btn" data-query="How can I contact Riyanshi?">📬 Contact &amp; Connect</button>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <form class="chatbot-input-bar" id="chatbot-form">
+                <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask anything about Riyanshi's work..." autocomplete="off" />
+                <button type="submit" class="chatbot-send-btn" id="chatbot-send-btn" aria-label="Send message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+            </form>
         </div>
     </div>
 
