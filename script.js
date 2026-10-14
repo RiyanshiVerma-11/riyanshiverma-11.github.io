@@ -667,7 +667,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create the "Enter Portfolio" CTA button that appears after loading
         const enterBtn = document.createElement('button');
         enterBtn.className = 'preloader-enter-btn';
-        enterBtn.innerHTML = '▶ &nbsp;Enter Portfolio';
+        enterBtn.setAttribute('type', 'button');
+        enterBtn.setAttribute('tabindex', '0');
+        enterBtn.setAttribute('aria-label', 'Enter Portfolio (Press Enter)');
+        enterBtn.innerHTML = '▶ &nbsp;Enter Portfolio <span style="font-size:0.72rem;opacity:0.9;font-weight:600;margin-left:8px;padding:3px 9px;border-radius:12px;background:rgba(255,255,255,0.22);letter-spacing:1px;vertical-align:middle;display:inline-block;">↵ ENTER</span>';
         enterBtn.style.cssText = `
             display: none;
             margin-top: 28px;
@@ -700,6 +703,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 box-shadow: 0 0 50px rgba(124, 58, 237, 0.7), 0 0 100px rgba(124, 58, 237, 0.3) !important;
                 background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D8B4FE 100%) !important;
             }
+            .preloader-enter-btn:focus-visible {
+                outline: 2px solid #fff;
+                outline-offset: 4px;
+            }
         `;
         document.head.appendChild(pulseStyle);
 
@@ -710,13 +717,29 @@ document.addEventListener('DOMContentLoaded', () => {
             preloader.appendChild(enterBtn);
         }
 
-        // Dismiss handler — this click IS the user gesture that unlocks audio!
+        // Dismiss handler — this click/key IS the user gesture that unlocks audio!
+        let preloaderDismissed = false;
         const dismissPreloader = () => {
+            if (preloaderDismissed) return;
+            preloaderDismissed = true;
+            window.removeEventListener('keydown', handlePreloaderKey);
             preloader.classList.add('fade-out');
             window.dispatchEvent(new CustomEvent('sitePreloaderReady'));
             // Mark that we have a user gesture so the video code can play unmuted
             window.__userGestureUnlocked = true;
+            setTimeout(() => {
+                if (preloader) preloader.style.display = 'none';
+            }, 650);
         };
+
+        // Listen for keyboard Enter or Space on laptop/physical keyboard
+        const handlePreloaderKey = (e) => {
+            if (e.key === 'Enter' || e.code === 'Enter' || e.key === ' ' || e.code === 'Space') {
+                e.preventDefault();
+                dismissPreloader();
+            }
+        };
+        window.addEventListener('keydown', handlePreloaderKey);
 
         function simulateProgress() {
             if (currentProgress < 100) {
@@ -735,21 +758,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Call again with varying speeds
                 setTimeout(simulateProgress, Math.floor(Math.random() * 50) + 20);
             } else {
-                // Done loading — show the Enter button instead of auto-dismissing
+                // Done loading — show the Enter button and auto-focus for instant Enter keypress
                 loadingComplete = true;
-                statusText.textContent = 'SYSTEM READY // CLICK TO ENTER';
+                statusText.textContent = 'SYSTEM READY // PRESS ENTER OR CLICK';
                 enterBtn.style.display = 'inline-block';
+                enterBtn.focus();
                 // Hide the progress bar
                 const barEl = preloader.querySelector('.preloader-bar');
                 if (barEl) barEl.style.opacity = '0';
             }
         }
 
-        // "Enter Portfolio" button click — this is the PRIMARY path
+        // "Enter Portfolio" button click — primary path
         enterBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             dismissPreloader();
-        }, { once: true });
+        });
 
         // Also allow clicking anywhere on preloader to dismiss (after loading is done)
         preloader.addEventListener('click', () => {
@@ -760,8 +784,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentProgress = 100;
                 preloaderProgressBar.style.width = '100%';
                 loadingComplete = true;
-                statusText.textContent = 'SYSTEM READY // CLICK TO ENTER';
+                statusText.textContent = 'SYSTEM READY // PRESS ENTER OR CLICK';
                 enterBtn.style.display = 'inline-block';
+                enterBtn.focus();
                 const barEl = preloader.querySelector('.preloader-bar');
                 if (barEl) barEl.style.opacity = '0';
             }
