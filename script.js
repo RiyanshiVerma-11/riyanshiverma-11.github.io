@@ -662,6 +662,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let currentProgress = 0;
         let msgIndex = 0;
+        let loadingComplete = false;
+
+        // Create the "Enter Portfolio" CTA button that appears after loading
+        const enterBtn = document.createElement('button');
+        enterBtn.className = 'preloader-enter-btn';
+        enterBtn.innerHTML = '▶ &nbsp;Enter Portfolio';
+        enterBtn.style.cssText = `
+            display: none;
+            margin-top: 28px;
+            padding: 14px 44px;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #7C3AED 0%, #A855F7 50%, #C084FC 100%);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            border-radius: 60px;
+            cursor: pointer;
+            position: relative;
+            z-index: 100001;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.4), 0 0 60px rgba(124, 58, 237, 0.15);
+            animation: preloaderBtnPulse 2s ease-in-out infinite;
+        `;
+        // Add pulse animation style
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes preloaderBtnPulse {
+                0%, 100% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.4), 0 0 60px rgba(124, 58, 237, 0.15); transform: scale(1); }
+                50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.6), 0 0 80px rgba(124, 58, 237, 0.25); transform: scale(1.04); }
+            }
+            .preloader-enter-btn:hover {
+                transform: scale(1.08) !important;
+                box-shadow: 0 0 50px rgba(124, 58, 237, 0.7), 0 0 100px rgba(124, 58, 237, 0.3) !important;
+                background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D8B4FE 100%) !important;
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+
+        const preloaderContent = preloader.querySelector('.preloader-content');
+        if (preloaderContent) {
+            preloaderContent.appendChild(enterBtn);
+        } else {
+            preloader.appendChild(enterBtn);
+        }
+
+        // Dismiss handler — this click IS the user gesture that unlocks audio!
+        const dismissPreloader = () => {
+            preloader.classList.add('fade-out');
+            window.dispatchEvent(new CustomEvent('sitePreloaderReady'));
+            // Mark that we have a user gesture so the video code can play unmuted
+            window.__userGestureUnlocked = true;
+        };
 
         function simulateProgress() {
             if (currentProgress < 100) {
@@ -680,18 +735,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Call again with varying speeds
                 setTimeout(simulateProgress, Math.floor(Math.random() * 50) + 20);
             } else {
-                // Done loading
-                setTimeout(() => {
-                    preloader.classList.add('fade-out');
-                }, 400);
+                // Done loading — show the Enter button instead of auto-dismissing
+                loadingComplete = true;
+                statusText.textContent = 'SYSTEM READY // CLICK TO ENTER';
+                enterBtn.style.display = 'inline-block';
+                // Hide the progress bar
+                const barEl = preloader.querySelector('.preloader-bar');
+                if (barEl) barEl.style.opacity = '0';
             }
         }
+
+        // "Enter Portfolio" button click — this is the PRIMARY path
+        enterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dismissPreloader();
+        }, { once: true });
+
+        // Also allow clicking anywhere on preloader to dismiss (after loading is done)
+        preloader.addEventListener('click', () => {
+            if (loadingComplete) {
+                dismissPreloader();
+            } else {
+                // If clicked during loading, fast-forward
+                currentProgress = 100;
+                preloaderProgressBar.style.width = '100%';
+                loadingComplete = true;
+                statusText.textContent = 'SYSTEM READY // CLICK TO ENTER';
+                enterBtn.style.display = 'inline-block';
+                const barEl = preloader.querySelector('.preloader-bar');
+                if (barEl) barEl.style.opacity = '0';
+            }
+        });
 
         // Start preloader simulation
         simulateProgress();
     } else {
         // Fallback if elements not present
         if (preloader) preloader.style.display = 'none';
+        window.__userGestureUnlocked = true;
+        window.dispatchEvent(new CustomEvent('sitePreloaderReady'));
     }
 
 
@@ -2909,6 +2991,282 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             if (chatbotInput) handleChatSubmit(chatbotInput.value);
         });
+    }
+
+    // ----------------------------------------------------------------------
+    // Hero Introduction Video & Photo Transition Controller
+    // ----------------------------------------------------------------------
+    const heroVideo = document.getElementById('hero-intro-video');
+    const heroPhoto = document.getElementById('hero-profile-photo');
+    const photoWrapper = document.getElementById('photo-wrapper');
+    const soundToggleBtn = document.getElementById('video-sound-btn');
+
+    if (heroVideo && photoWrapper) {
+        const textSpan = soundToggleBtn ? soundToggleBtn.querySelector('.sound-text') : null;
+
+        // UI update helper for sound button state
+        const updateAudioUI = (isAudioPlaying) => {
+            if (!soundToggleBtn) return;
+            if (photoWrapper.classList.contains('show-photo') || heroVideo.ended) {
+                soundToggleBtn.classList.remove('unmuted');
+                if (textSpan) textSpan.textContent = 'Watch Intro';
+                soundToggleBtn.title = 'Click to replay introduction with sound';
+                return;
+            }
+
+            if (isAudioPlaying) {
+                soundToggleBtn.classList.add('unmuted');
+                if (textSpan) textSpan.textContent = 'Mute';
+                soundToggleBtn.title = 'Audio active - Click to mute';
+            } else {
+                soundToggleBtn.classList.remove('unmuted');
+                if (textSpan) textSpan.textContent = 'Unmute';
+                soundToggleBtn.title = 'Click to unmute introduction';
+            }
+        };
+
+        const showPhotoView = () => {
+            photoWrapper.classList.add('show-photo');
+            heroVideo.pause();
+            updateAudioUI(false);
+        };
+
+        const playVideoIntro = (withAudio = true) => {
+            photoWrapper.classList.remove('show-photo');
+            heroVideo.currentTime = 0;
+            heroVideo.volume = 1.0;
+            heroVideo.muted = !withAudio;
+            updateAudioUI(withAudio);
+
+            const playPromise = heroVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    if (withAudio) {
+                        heroVideo.muted = false;
+                        updateAudioUI(true);
+                    }
+                }).catch(() => {
+                    // Browser policy blocked unmuted play; fall back to muted and wait for interaction
+                    heroVideo.muted = true;
+                    updateAudioUI(false);
+                    heroVideo.play().catch(() => {});
+                    setupUniversalUnmuteTriggers();
+                });
+            }
+        };
+
+        // When the one-time introduction finishes, crossfade cleanly to profile photo
+        heroVideo.addEventListener('ended', () => {
+            showPhotoView();
+        });
+
+        // Recruiter clicks on the photo -> video restarts from 0 with audio IMMEDIATELY
+        if (heroPhoto) {
+            heroPhoto.addEventListener('click', (e) => {
+                e.stopPropagation();
+                playVideoIntro(true);
+            });
+        }
+
+        // Recruiter clicks on the photo wrapper when photo is shown -> restart video
+        photoWrapper.addEventListener('click', (e) => {
+            if (photoWrapper.classList.contains('show-photo')) {
+                playVideoIntro(true);
+            }
+        });
+
+        // Sound Toggle Button Pill (Recruiter can mute/unmute at will)
+        if (soundToggleBtn) {
+            soundToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // If photo is currently active or video ended, replay video with audio
+                if (photoWrapper.classList.contains('show-photo') || heroVideo.ended) {
+                    playVideoIntro(true);
+                    return;
+                }
+
+                // If video is playing: toggle mute / unmute
+                if (heroVideo.muted) {
+                    heroVideo.muted = false;
+                    heroVideo.volume = 1.0;
+                    heroVideo.play().catch(() => {});
+                    updateAudioUI(true);
+                    if (window.__removeUnmuteTriggers) window.__removeUnmuteTriggers();
+                } else {
+                    heroVideo.muted = true;
+                    updateAudioUI(false);
+                }
+            });
+        }
+
+        // Clicking on video itself when playing toggles sound
+        heroVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (soundToggleBtn) {
+                soundToggleBtn.click();
+            }
+        });
+
+        // ------------------------------------------------------------------
+        // Universal Instant Unmute Engine:
+        // On ANY user interaction anywhere on the screen (click, tap, keypress),
+        // instantly unmute the video. If the video was already playing silently,
+        // rewind to 0 (if < 3.5s) so the recruiter hears the entire introduction!
+        // ------------------------------------------------------------------
+        const setupUniversalUnmuteTriggers = () => {
+            if (window.__universalUnmuteActive) return;
+            window.__universalUnmuteActive = true;
+
+            const triggerEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'click', 'keydown'];
+
+            const triggerUnmute = (e) => {
+                if (!heroVideo || heroVideo.ended || photoWrapper.classList.contains('show-photo')) {
+                    if (window.__removeUnmuteTriggers) window.__removeUnmuteTriggers();
+                    return;
+                }
+
+                heroVideo.volume = 1.0;
+                heroVideo.muted = false;
+
+                // If it was playing silently in the beginning, rewind to 0 so they hear the full greeting
+                if (heroVideo.currentTime > 0 && heroVideo.currentTime < 3.5) {
+                    heroVideo.currentTime = 0;
+                }
+
+                const p = heroVideo.play();
+                if (p !== undefined) {
+                    p.then(() => {
+                        heroVideo.muted = false;
+                        updateAudioUI(true);
+                        if (window.__removeUnmuteTriggers) window.__removeUnmuteTriggers();
+                    }).catch(() => {
+                        // If this specific event wasn't recognized by browser as activation,
+                        // keep triggers active for the next real click!
+                    });
+                } else {
+                    if (!heroVideo.muted) {
+                        updateAudioUI(true);
+                        if (window.__removeUnmuteTriggers) window.__removeUnmuteTriggers();
+                    }
+                }
+            };
+
+            const removeTriggers = () => {
+                window.__universalUnmuteActive = false;
+                triggerEvents.forEach((evt) => {
+                    window.removeEventListener(evt, triggerUnmute, { capture: true });
+                    document.removeEventListener(evt, triggerUnmute, { capture: true });
+                });
+                const showcase = document.querySelector('.photo-showcase');
+                if (showcase) {
+                    showcase.removeEventListener('mouseenter', triggerUnmute);
+                }
+            };
+
+            window.__removeUnmuteTriggers = removeTriggers;
+
+            triggerEvents.forEach((evt) => {
+                window.addEventListener(evt, triggerUnmute, { capture: true, passive: true });
+                document.addEventListener(evt, triggerUnmute, { capture: true, passive: true });
+            });
+
+            // Also attempt instant unmute on any mouse movement or hover across the window
+            const onMotionAttempt = () => {
+                if (heroVideo && heroVideo.muted && !heroVideo.ended) {
+                    heroVideo.volume = 1.0;
+                    heroVideo.muted = false;
+                    const p = heroVideo.play();
+                    if (p !== undefined) {
+                        p.then(() => {
+                            updateAudioUI(true);
+                            removeTriggers();
+                        }).catch(() => {
+                            heroVideo.muted = true;
+                        });
+                    }
+                }
+            };
+            window.addEventListener('mousemove', onMotionAttempt, { passive: true, once: true });
+            window.addEventListener('pointermove', onMotionAttempt, { passive: true, once: true });
+
+            // Also attempt on mouseenter into the hero showcase
+            const showcase = document.querySelector('.photo-showcase');
+            if (showcase) {
+                showcase.addEventListener('mouseenter', triggerUnmute, { passive: true });
+            }
+        };
+
+        // Master start function: attempts full unmuted playback immediately!
+        let hasStartedHeroVideo = false;
+        const startHeroIntroduction = () => {
+            if (hasStartedHeroVideo) return;
+            hasStartedHeroVideo = true;
+
+            photoWrapper.classList.remove('show-photo');
+            heroVideo.currentTime = 0;
+            heroVideo.volume = 1.0;
+            heroVideo.muted = false;
+            heroVideo.defaultMuted = false;
+
+            const startPromise = heroVideo.play();
+            if (startPromise !== undefined) {
+                startPromise.then(() => {
+                    // Succeeded with audio! This works when called inside a user gesture chain.
+                    heroVideo.muted = false;
+                    updateAudioUI(true);
+                }).catch((err) => {
+                    // Browser security policy blocked unmuted autoplay.
+                    // Fall back to muted playback + arm unmute triggers for next interaction.
+                    heroVideo.muted = true;
+                    heroVideo.play().catch(() => {});
+                    updateAudioUI(false);
+                    setupUniversalUnmuteTriggers();
+                });
+            } else {
+                heroVideo.muted = false;
+                updateAudioUI(true);
+            }
+        };
+
+        // ---------------------------------------------------------------
+        // CRITICAL: Start the video from WITHIN the preloader dismiss flow.
+        // The 'sitePreloaderReady' event is dispatched inside a click handler,
+        // so the browser treats this entire call chain as user-activated,
+        // which allows unmuted video.play() to succeed!
+        // ---------------------------------------------------------------
+        const preloaderEl = document.getElementById('preloader');
+        if (preloaderEl && !preloaderEl.classList.contains('fade-out')) {
+            window.addEventListener('sitePreloaderReady', () => {
+                // This runs inside the user's click gesture chain — audio will work!
+                startHeroIntroduction();
+            }, { once: true });
+
+            // Also handle click directly on preloader as a secondary path
+            preloaderEl.addEventListener('click', () => {
+                preloaderEl.classList.add('fade-out');
+                if (heroVideo) {
+                    heroVideo.muted = false;
+                    heroVideo.volume = 1.0;
+                    heroVideo.currentTime = 0;
+                    const p = heroVideo.play();
+                    if (p !== undefined) {
+                        p.then(() => {
+                            hasStartedHeroVideo = true;
+                            heroVideo.muted = false;
+                            updateAudioUI(true);
+                        }).catch(() => {
+                            heroVideo.muted = true;
+                            heroVideo.play().catch(() => {});
+                            updateAudioUI(false);
+                            setupUniversalUnmuteTriggers();
+                        });
+                    }
+                }
+            }, { once: true });
+        } else {
+            // Preloader already gone or not present — try direct playback
+            startHeroIntroduction();
+        }
     }
 
     bindChatChips();
