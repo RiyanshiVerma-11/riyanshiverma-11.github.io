@@ -2702,6 +2702,15 @@ html[data-theme="light"] .contact-link-social:hover {
     color: var(--text-secondary);
 }
 
+.open-cert-modal {
+    transition: all var(--t-fast);
+}
+
+.open-cert-modal:hover {
+    color: var(--gold) !important;
+    transform: translateY(-1px);
+}
+
 .cert-list {
     list-style: none;
     display: flex;

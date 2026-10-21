@@ -2289,6 +2289,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Certificate Modal Handlers
+    const certModal = document.getElementById('certificate-modal');
+    const certModalCloseBtn = document.getElementById('cert-modal-close-btn');
+    const certOpenBtns = document.querySelectorAll('.open-cert-modal');
+
+    function openCertModal() {
+        if (certModal) {
+            certModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeCertModal() {
+        if (certModal) {
+            certModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (certModalCloseBtn) {
+        certModalCloseBtn.addEventListener('click', closeCertModal);
+    }
+
+    if (certModal) {
+        certModal.addEventListener('click', (e) => {
+            if (e.target === certModal) {
+                closeCertModal();
+            }
+        });
+    }
+
+    certOpenBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openCertModal();
+        });
+    });
+
+    // Global Escape Key to close active modals
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (certModal && certModal.classList.contains('active')) closeCertModal();
+            if (recruiterModal && recruiterModal.classList.contains('active')) closeRecruiterModal();
+        }
+    });
+
     // Modal tabs click handling
     modalTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2463,6 +2509,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const allCommands = [
         { name: '/help', desc: 'List all available commands', action: () => {} },
         { name: '/recruiter', desc: 'Inspect specialized candidate summary [HOT-PATH]', action: () => openRecruiterModal() },
+        { name: '/certificate', desc: 'Inspect Startupathon 2026 Certificate of Winning', action: () => openCertModal() },
         { name: '/about', desc: 'Scroll to About section', action: () => scrollToSection('#about') },
         { name: '/skills', desc: 'Open Technical Matrix', action: () => scrollToSection('#skills') },
         { name: '/experience', desc: 'View experience timeline', action: () => scrollToSection('#experience') },
@@ -2903,14 +2950,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Hackathons & Awards
-        if (q.includes('hackathon') || q.includes('award') || q.includes('rank') || q.includes('achievement') || q.includes('promptwars')) {
+        if (q.includes('hackathon') || q.includes('award') || q.includes('rank') || q.includes('achievement') || q.includes('promptwars') || q.includes('startupathon')) {
             return `🏆 <strong>Major Achievements & Honors:</strong><br><br>
+            • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in STARTUPATHON & IDEATHON 2026 organized by WAMPire Slayers on Unstop for exceptional innovation, product validation, and pitching excellence.<br>
             • ⚡ <strong>Rank 4 / 4,200+ Participants Globally</strong> in HackDevengers 1.0 (2026), an 8-hour global hackathon by Devengers for building HospiSynAI.<br>
             • 🥇 <strong>Rank 1 (Women Developer) & Rank 30 / 26,090+ Nationally (Top 0.2%)</strong> in Virtual PromptWars 2026.<br>
             • 🥇 <strong>Rank 1 (Challenge 2)</strong> for VoteWise-AI.<br>
             • 🏅 <strong>Top 40 (Challenge 1)</strong> for SmartStadium-AI.<br>
             • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ skill badges!<br><br>
-            👉 <a href="#hackathons">Explore Hackathons & Proofs</a>`;
+            👉 <a href="#experience">Explore Honors, Awards & Verified Credentials</a>`;
         }
 
         // Experience & Education
@@ -2937,6 +2985,7 @@ document.addEventListener('DOMContentLoaded', () => {
             I don't just prototype toy scripts — I build production-grade systems. As an <strong>AI Intern at Infosys Springboard 7.0</strong>, I engineered <strong>CommAI</strong>, an enterprise emergency communication SaaS dispatching across 5 channels (Email, Telegram, Voice Call, SMS, Web) in 23 Indic languages.<br><br>
 
             <strong>2. Global Hackathon Champion & Competitive Excellence:</strong><br>
+            • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in Startupathon & Ideathon 2026 (WAMPire Slayers / Unstop).<br>
             • 🏆 <strong>Rank 4 / 4,200+ Developers Globally</strong> in HackDevengers 1.0 (HospiSynAI).<br>
             • 🥇 <strong>Rank 1 (Women Developer) & Top 0.2% Nationally (Rank 30 / 26,090+)</strong> in Virtual PromptWars 2026.<br>
             • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ verified badges.<br><br>

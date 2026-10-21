@@ -29,7 +29,7 @@
 I am an **AI Developer & Data Science Student** dedicated to building high-performance intelligent systems. My focus lies at the intersection of large language models (LLMs), semantic search, and autonomous multi-agent architectures. I design workflows that enable AI to reason, plan, and execute complex workflows securely and efficiently.
 
 *   🔭 **Current Focus:** Developing production-grade Retrieval-Augmented Generation (RAG) frameworks and agentic reasoning systems.
-*   🏆 **Key Achievements:** **Rank 1 (Women Dev)** & Top 30 overall in Google PromptWars Virtual 2026 | **Rank 4 / 4.2k+ Participants** in HackDevengers 1.0 (2026).
+*   🏆 **Key Achievements:** **2nd Place Winner** in Startupathon & Ideathon 2026 (Unstop) | **Rank 1 (Women Dev)** & Top 30 overall in Google PromptWars Virtual 2026 | **Rank 4 / 4.2k+ Participants** in HackDevengers 1.0 (2026).
 *   🧠 **R&D Interests:** Low-latency vector indexing, agent memory orchestration, fine-tuning techniques (LoRA/QLoRA), and deep learning model optimizations.
 *   🚀 **Core Mission:** Bridging the gap between raw foundation models and robust, reliable enterprise software solutions.
 *   💼 **Target Roles:** AI Developer / Generative AI Intern | Python Backend Engineer | Data Scientist / ML Associate | Full-Stack Developer (AI Apps) | Prompt Engineer & Agentic Workflows
@@ -108,6 +108,21 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 > *   Developed a smart assessment platform incorporating browser-side edge AI proctoring via MediaPipe Face Mesh and Coco-SSD object detection to flag suspicious behaviors (like mobile phone usage) directly on the client's GPU, minimizing backend streaming load.
 > *   Designed real-time alert dispatch pipelines over WebSockets to sync browser proctoring warnings to a FastAPI backend instantly.
 > *   Integrated Groq Llama 3 models to enable fully dynamic, topic-specific exam generation and instant qualitative auto-grading for subjective questions.
+
+---
+
+### 🏆 Achievements & Honors
+
+*   **🥈 2nd Place Winner (Rank 2) — STARTUPATHON & IDEATHON 2026**
+    *   Organized by **WAMPire Slayers** (Powered by **Unstop**, Oct 17–18, 2026).
+    *   Awarded for demonstrating exceptional innovation, product validation, and pitching excellence.
+    *   [Verify on Unstop](https://unstop.com/p/startupathon-2026-wampire-slayers-1761321)
+*   **🏆 Rank 4 / 4,200+ Participants — HackDevengers 1.0 (2026)**
+    *   Organized by **Devengers** (8-Hour Global Hackathon).
+    *   Ranked **4th among 4.2k+ participants** globally for building **HospiSynAI**, an AI-powered hospital management and billing platform featuring Groq Llama 3.3 70B clinical note processing, 11-language prescription generation, and hybrid AI billing auditing.
+*   **🏆 Rank 1 (Women Developer) & Overall Rank 30 / 26,090+ (Virtual PromptWars 2026)**
+    *   Organized by **Google for Developers** & **Hack2Skills**.
+    *   Ranked in the **top 0.2% nationally** out of 26,090+ participants. Developed *VoteWise AI* achieving a **96.98% AI-verified score** in code quality, security, efficiency, Google services, and accessibility.
 
 ---
 
