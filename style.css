@@ -2368,9 +2368,13 @@ html[data-theme="light"] .contact-link-social:hover {
     transition: opacity 0.6s var(--ease-out), visibility 0.6s var(--ease-out);
 }
 
-.preloader.fade-out {
-    opacity: 0;
-    visibility: hidden;
+.preloader.fade-out,
+html.skip-preloader .preloader,
+html.skip-preloader #preloader {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
 }
 
 .preloader-content {

@@ -25,6 +25,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=3.5">
+
+    <!-- Direct link / hash bypass check for job boards and resume cross-checks -->
+    <script>
+        (function() {
+            var s = window.location.search;
+            var h = window.location.hash;
+            if (h.length > 1 || s.indexOf('skipIntro=true') !== -1 || s.indexOf('direct=true') !== -1 || s.indexOf('intro=false') !== -1) {
+                document.documentElement.classList.add('skip-preloader');
+            }
+        })();
+    </script>
 </head>
 
 <body>
