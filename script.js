@@ -2333,12 +2333,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const certModalCloseBtn = document.getElementById('cert-modal-close-btn');
     const certOpenBtns = document.querySelectorAll('.open-cert-modal');
 
-    function openCertModal() {
+    const certData = {
+        startupathon: {
+            badge: 'VERIFIED CREDENTIAL // STARTUPATHON 2026',
+            badgeColor: 'var(--gold)',
+            badgeBorder: 'rgba(var(--gold-rgb), 0.35)',
+            title: '2nd Place Winner — STARTUPATHON & IDEATHON',
+            desc: 'Organized by WAMPire Slayers • Powered by Unstop • Oct 17–18, 2026',
+            imgSrc: 'assets/certificate_startupathon_2026.png',
+            imgAlt: 'Startupathon 2026 Certificate of Winning - Riyanshi Verma',
+            downloadName: 'Riyanshi_Verma_Startupathon_2026_Certificate.png',
+            verifyUrl: null
+        },
+        infosys: {
+            badge: 'OFFICIAL INTERNSHIP CERTIFICATE // INFOSYS SPRINGBOARD',
+            badgeColor: 'var(--emerald)',
+            badgeBorder: 'rgba(16, 185, 129, 0.35)',
+            title: 'Certificate of Completion — Internship 7.0 (B1)',
+            desc: 'AI-Powered Multilingual Public Awareness & Mass Communication Platform • June 29, 2026 – August 31, 2026 • Infosys Limited',
+            imgSrc: 'assets/certificate_infosys_springboard.png',
+            imgAlt: 'Infosys Springboard 7.0 Internship Certificate of Completion - Riyanshi Verma',
+            downloadName: 'Riyanshi_Verma_Infosys_Springboard_7.0_Certificate.png',
+            verifyUrl: 'https://verify.onwingspan.com'
+        }
+    };
+
+    function openCertModal(type = 'startupathon') {
+        const cert = certData[type] || certData.startupathon;
+        const badgeEl = document.getElementById('cert-modal-badge');
+        const titleEl = document.getElementById('cert-modal-title');
+        const descEl = document.getElementById('cert-modal-desc');
+        const imgEl = document.getElementById('cert-modal-img');
+        const downloadEl = document.getElementById('cert-modal-download');
+        const verifyEl = document.getElementById('cert-modal-verify');
+
+        if (badgeEl) {
+            badgeEl.textContent = cert.badge;
+            badgeEl.style.color = cert.badgeColor;
+            badgeEl.style.borderColor = cert.badgeBorder;
+        }
+        if (titleEl) titleEl.textContent = cert.title;
+        if (descEl) descEl.textContent = cert.desc;
+        if (imgEl) {
+            imgEl.src = cert.imgSrc;
+            imgEl.alt = cert.imgAlt;
+        }
+        if (downloadEl) {
+            downloadEl.href = cert.imgSrc;
+            downloadEl.download = cert.downloadName;
+        }
+        if (verifyEl) {
+            if (cert.verifyUrl) {
+                verifyEl.href = cert.verifyUrl;
+                verifyEl.style.display = 'inline-flex';
+            } else {
+                verifyEl.style.display = 'none';
+            }
+        }
+
         if (certModal) {
             certModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
     }
+
+    // Expose openCertModal globally for dynamic buttons and chatbot links
+    window.openCertModal = openCertModal;
 
     function closeCertModal() {
         if (certModal) {
@@ -2359,11 +2419,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    certOpenBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    // Delegated click handler for any open-cert-modal button
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.open-cert-modal');
+        if (btn) {
             e.preventDefault();
-            openCertModal();
-        });
+            const certType = btn.getAttribute('data-cert') || 'startupathon';
+            openCertModal(certType);
+        }
     });
 
     // Global Escape Key to close active modals
@@ -2548,7 +2611,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const allCommands = [
         { name: '/help', desc: 'List all available commands', action: () => {} },
         { name: '/recruiter', desc: 'Inspect specialized candidate summary [HOT-PATH]', action: () => openRecruiterModal() },
-        { name: '/certificate', desc: 'Inspect Startupathon 2026 Certificate of Winning', action: () => openCertModal() },
+        { name: '/certificate', desc: 'Inspect Startupathon 2026 Certificate of Winning', action: () => openCertModal('startupathon') },
+        { name: '/infosys-cert', desc: 'Inspect Infosys Springboard 7.0 Internship Certificate', action: () => openCertModal('infosys') },
         { name: '/about', desc: 'Scroll to About section', action: () => scrollToSection('#about') },
         { name: '/skills', desc: 'Open Technical Matrix', action: () => scrollToSection('#skills') },
         { name: '/experience', desc: 'View experience timeline', action: () => scrollToSection('#experience') },
@@ -2934,13 +2998,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // CommAI / Infosys Springboard
         if (q.includes('commai') || q.includes('infosys') || q.includes('springboard') || q.includes('internship') || q.includes('intern')) {
-            return `⚡ <strong>CommAI</strong> is an enterprise-grade multilingual mass communication SaaS platform that I engineered as an <strong>AI Intern at Infosys Springboard 7.0</strong>.<br><br>
+            return `⚡ <strong>CommAI</strong> is an enterprise-grade multilingual mass communication SaaS platform that I engineered as an <strong>AI Intern at Infosys Springboard 7.0</strong> (June 29, 2026 – August 31, 2026 • Completed).<br><br>
             <strong>Core Architecture & Dispatch Channels:</strong><br>
             • 📡 <strong>5 Core Dispatch Channels:</strong> Automated simultaneous broadcasts across <strong>Email, Telegram, Voice Call, SMS, and Live Website</strong>.<br>
             • 🌐 <strong>23 Indic Languages:</strong> 3-tier neural translation failover pipeline (Groq 70B → 8B → Google GTX) with Edge-TTS voice bulletins.<br>
             • 🛡️ <strong>Four-Eye Governance:</strong> Maker-Checker authorization queue for broadcasts ≥100 recipients with offline NLP compliance auditing.<br>
             • 🎙️ Hands-free "Hey Jarvis" cockpit & real-time device preview rendering.<br><br>
-            👉 <a href="#projects">View CommAI in Projects</a> or open its architecture!`;
+            📜 <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin-right:8px;">View Internship Certificate 📜</button>
+            👉 <a href="#projects">View CommAI in Projects</a>`;
         }
 
         // VoteWise AI
@@ -3000,14 +3065,26 @@ document.addEventListener('DOMContentLoaded', () => {
             👉 <a href="#experience">Explore Honors, Awards & Verified Credentials</a>`;
         }
 
+        // Certificates & Credentials
+        if (q.includes('certificate') || q.includes('credential') || q.includes('certification') || q.includes('wingspan')) {
+            return `📜 <strong>Verified Certificates & Credentials:</strong><br><br>
+            1. ⚡ <strong>Infosys Springboard 7.0 Internship</strong> — AI-Powered Multilingual Mass Communication Platform (June 29 – Aug 31, 2026 • Completed)<br>
+            <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Infosys Certificate 📜</button><br>
+            2. 🥈 <strong>Startupathon & Ideathon 2026</strong> — 2nd Place Winner Rank 2 (WAMPire Slayers / Unstop)<br>
+            <button onclick="openCertModal('startupathon')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Startupathon Certificate 📜</button><br>
+            3. 💎 <strong>Google Cloud Profile</strong> — Diamond League (Top Global Tier, 15+ Skill Badges)<br><br>
+            👉 <a href="#experience">Inspect Credentials in Experience Section</a>`;
+        }
+
         // Experience & Education
         if (q.includes('experience') || q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('btech') || q.includes('university')) {
             return `🎓 <strong>Education & Standing:</strong><br>
             • <strong>Degree:</strong> 4th-Year B.Tech in Computer Science & Engineering (Data Science)<br>
             • <strong>Institute:</strong> Meerut Institute of Engineering and Technology (AKTU)<br>
             • <strong>CGPA:</strong> <strong>8.47 / 10.0</strong><br><br>
-            💼 <strong>Current Role:</strong><br>
-            • <strong>AI Intern at Infosys Springboard 7.0</strong> (July 2026 – Present), engineering CommAI multilingual mass communications PWA.<br><br>
+            💼 <strong>Completed AI Internship:</strong><br>
+            • <strong>AI Intern at Infosys Springboard 7.0</strong> (June 29, 2026 – August 31, 2026 • Completed), engineered CommAI multilingual mass communications PWA.<br><br>
+            📜 <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none;">Inspect Infosys Certificate 📜</button><br><br>
             👉 <a href="#experience">View the Experience Section</a>`;
         }
 
@@ -3021,7 +3098,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (q.includes('why') && (q.includes('hire') || q.includes('recruit') || q.includes('join') || q.includes('choose') || q.includes('select')) || q.includes('why should i hire') || q.includes('why hire') || q.includes('pitch') || q.includes('value proposition')) {
             return `🎯 <strong>Why You Should Hire Riyanshi Verma:</strong><br><br>
             <strong>1. Proven Builder Who Ships to Production:</strong><br>
-            I don't just prototype toy scripts — I build production-grade systems. As an <strong>AI Intern at Infosys Springboard 7.0</strong>, I engineered <strong>CommAI</strong>, an enterprise emergency communication SaaS dispatching across 5 channels (Email, Telegram, Voice Call, SMS, Web) in 23 Indic languages.<br><br>
+            I don't just prototype toy scripts — I build production-grade systems. As an <strong>AI Intern at Infosys Springboard 7.0</strong> (June 29 – Aug 31, 2026), I engineered <strong>CommAI</strong>, an enterprise emergency communication SaaS dispatching across 5 channels (Email, Telegram, Voice Call, SMS, Web) in 23 Indic languages.<br><br>
 
             <strong>2. Global Hackathon Champion & Competitive Excellence:</strong><br>
             • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in Startupathon & Ideathon 2026 (WAMPire Slayers / Unstop).<br>
@@ -3058,7 +3135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Who are you / About
         if (q.includes('who are you') || q.includes('about') || q.includes('riyanshi')) {
-            return `I'm Riyanshi's interactive AI assistant! Riyanshi is a <strong>4th-year B.Tech CSE (Data Science) student</strong> and <strong>AI Intern at Infosys Springboard</strong> who specializes in building production-ready autonomous multi-agent architectures, RAG pipelines, and high-throughput LLM integrations.<br><br>
+            return `I'm Riyanshi's interactive AI assistant! Riyanshi is a <strong>4th-year B.Tech CSE (Data Science) student</strong> and former <strong>AI Intern at Infosys Springboard</strong> who specializes in building production-ready autonomous multi-agent architectures, RAG pipelines, and high-throughput LLM integrations.<br><br>
             Feel free to ask about her projects, tech stack, or resume!`;
         }
 
