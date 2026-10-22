@@ -114,9 +114,8 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 ### 🏆 Achievements & Honors
 
 *   **🥈 2nd Place Winner (Rank 2) — STARTUPATHON & IDEATHON 2026**
-    *   Organized by **WAMPire Slayers** (Powered by **Unstop**, Oct 17–18, 2026).
+    *   Organized by **WAMPire Slayers** (Oct 17–18, 2026).
     *   Awarded for demonstrating exceptional innovation, product validation, and pitching excellence.
-    *   [Verify on Unstop](https://unstop.com/p/startupathon-2026-wampire-slayers-1761321)
 *   **🏆 Rank 4 / 4,200+ Participants — HackDevengers 1.0 (2026)**
     *   Organized by **Devengers** (8-Hour Global Hackathon).
     *   Ranked **4th among 4.2k+ participants** globally for building **HospiSynAI**, an AI-powered hospital management and billing platform featuring Groq Llama 3.3 70B clinical note processing, 11-language prescription generation, and hybrid AI billing auditing.
