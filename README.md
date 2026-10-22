@@ -125,6 +125,15 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 
 ---
 
+### 📜 Verified Certifications & Credentials
+
+*   🎓 **Infosys Springboard 7.0 Internship** — AI-Powered Multilingual Public Awareness & Mass Communication Platform
+*   🧠 **Infosys Springboard** – Prompt Engineering (Course Completion • Issued Nov 29, 2025) — [View Certificate](assets/certificate_prompt_engineering.png)
+*   💎 **Google Skills Profile – Diamond League** *(21,635 points)* — [View Profile](https://www.cloudskillsboost.google/public_profiles/6d9c6c4c-43f1-49fa-986c-843a9f0e1fec)
+*   ⚙️ **Infosys Springboard** – Pragati: Path to Future (Cohort 6)
+
+---
+
 ### 📊 Github Diagnostics & Stats
 
 <div align="center">

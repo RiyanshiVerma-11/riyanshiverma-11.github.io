@@ -2355,6 +2355,28 @@ document.addEventListener('DOMContentLoaded', () => {
             imgAlt: 'Infosys Springboard 7.0 Internship Certificate of Completion - Riyanshi Verma',
             downloadName: 'Riyanshi_Verma_Infosys_Springboard_7.0_Certificate.png',
             verifyUrl: 'https://verify.onwingspan.com'
+        },
+        prompt_engineering: {
+            badge: 'COURSE COMPLETION CERTIFICATE // INFOSYS SPRINGBOARD',
+            badgeColor: 'var(--accent-cyan)',
+            badgeBorder: 'rgba(56, 189, 248, 0.35)',
+            title: 'Course Completion Certificate — Prompt Engineering',
+            desc: 'Successfully completed the Prompt Engineering course • Awarded by Infosys Springboard • Issued Nov 29, 2025',
+            imgSrc: 'assets/certificate_prompt_engineering.png',
+            imgAlt: 'Infosys Springboard Prompt Engineering Certificate of Completion - Riyanshi Verma',
+            downloadName: 'Riyanshi_Verma_Prompt_Engineering_Certificate.png',
+            verifyUrl: 'https://verify.onwingspan.com'
+        },
+        prompt: {
+            badge: 'COURSE COMPLETION CERTIFICATE // INFOSYS SPRINGBOARD',
+            badgeColor: 'var(--accent-cyan)',
+            badgeBorder: 'rgba(56, 189, 248, 0.35)',
+            title: 'Course Completion Certificate — Prompt Engineering',
+            desc: 'Successfully completed the Prompt Engineering course • Awarded by Infosys Springboard • Issued Nov 29, 2025',
+            imgSrc: 'assets/certificate_prompt_engineering.png',
+            imgAlt: 'Infosys Springboard Prompt Engineering Certificate of Completion - Riyanshi Verma',
+            downloadName: 'Riyanshi_Verma_Prompt_Engineering_Certificate.png',
+            verifyUrl: 'https://verify.onwingspan.com'
         }
     };
 
@@ -2428,6 +2450,65 @@ document.addEventListener('DOMContentLoaded', () => {
             openCertModal(certType);
         }
     });
+
+    // =========================================================================
+    // Vertical Chronological Experience Timeline & Spine Synchronization
+    // =========================================================================
+    const expCards = document.querySelectorAll('.exp-bento-card');
+    const expSpineNodes = document.querySelectorAll('.exp-spine-node');
+
+    function setActiveExpRole(roleId) {
+        expCards.forEach(card => {
+            if (card.id === roleId) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+
+        expSpineNodes.forEach(node => {
+            if (node.getAttribute('data-target') === roleId) {
+                node.classList.add('active');
+            } else {
+                node.classList.remove('active');
+            }
+        });
+    }
+
+    // Spine Node Click Handler -> Smooth Scroll to Card
+    expSpineNodes.forEach(node => {
+        node.addEventListener('click', () => {
+            const targetId = node.getAttribute('data-target');
+            const targetCard = document.getElementById(targetId);
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setActiveExpRole(targetId);
+            }
+        });
+    });
+
+    // Hover Synchronization between Cards and Spine Nodes
+    expCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            setActiveExpRole(card.id);
+        });
+    });
+
+    // IntersectionObserver to auto-sync spine markers on scroll
+    if ('IntersectionObserver' in window && expCards.length > 0) {
+        const expObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+                    setActiveExpRole(entry.target.id);
+                }
+            });
+        }, {
+            threshold: [0.4, 0.7],
+            rootMargin: '-50px 0px -100px 0px'
+        });
+
+        expCards.forEach(card => expObserver.observe(card));
+    }
 
     // Global Escape Key to close active modals
     document.addEventListener('keydown', (e) => {
@@ -2613,6 +2694,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: '/recruiter', desc: 'Inspect specialized candidate summary [HOT-PATH]', action: () => openRecruiterModal() },
         { name: '/certificate', desc: 'Inspect Startupathon 2026 Certificate of Winning', action: () => openCertModal('startupathon') },
         { name: '/infosys-cert', desc: 'Inspect Infosys Springboard 7.0 Internship Certificate', action: () => openCertModal('infosys') },
+        { name: '/prompt-cert', desc: 'Inspect Infosys Prompt Engineering Certificate', action: () => openCertModal('prompt_engineering') },
         { name: '/about', desc: 'Scroll to About section', action: () => scrollToSection('#about') },
         { name: '/skills', desc: 'Open Technical Matrix', action: () => scrollToSection('#skills') },
         { name: '/experience', desc: 'View experience timeline', action: () => scrollToSection('#experience') },
@@ -3065,14 +3147,26 @@ document.addEventListener('DOMContentLoaded', () => {
             👉 <a href="#experience">Explore Honors, Awards & Verified Credentials</a>`;
         }
 
+        // Prompt Engineering Certificate
+        if ((q.includes('prompt') && (q.includes('cert') || q.includes('engineering') || q.includes('course') || q.includes('credential') || q.includes('infosys'))) || q === 'prompt' || q === 'prompt engineering') {
+            return `🎯 <strong>Prompt Engineering Certification:</strong><br><br>
+            I have earned the official <strong>Prompt Engineering Course Completion Certificate</strong> awarded by <strong>Infosys | Springboard</strong> (Issued Nov 29, 2025).<br><br>
+            • <strong>Core Competencies:</strong> Advanced system prompt architecture, few-shot conditioning, chain-of-thought orchestration, structured JSON output validation, and LLM-as-a-judge evaluation.<br>
+            • <strong>Validation:</strong> Verified via Wingspan QR verification.<br><br>
+            <button onclick="openCertModal('prompt_engineering')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:5px 14px; font-size:0.8rem; cursor:pointer; border:none; margin-bottom:8px;">Inspect Certificate 📜</button><br><br>
+            👉 <a href="#experience">Explore in Experience &amp; Credentials</a>`;
+        }
+
         // Certificates & Credentials
         if (q.includes('certificate') || q.includes('credential') || q.includes('certification') || q.includes('wingspan')) {
             return `📜 <strong>Verified Certificates & Credentials:</strong><br><br>
             1. ⚡ <strong>Infosys Springboard 7.0 Internship</strong> — AI-Powered Multilingual Mass Communication Platform (June 29 – Aug 31, 2026 • Completed)<br>
-            <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Infosys Certificate 📜</button><br>
+            <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Infosys Internship Certificate 📜</button><br>
             2. 🥈 <strong>Startupathon & Ideathon 2026</strong> — 2nd Place Winner Rank 2 (WAMPire Slayers / Unstop)<br>
             <button onclick="openCertModal('startupathon')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Startupathon Certificate 📜</button><br>
-            3. 💎 <strong>Google Cloud Profile</strong> — Diamond League (Top Global Tier, 15+ Skill Badges)<br><br>
+            3. 🎯 <strong>Prompt Engineering Certification</strong> — Course Completion (Infosys Springboard • Nov 29, 2025)<br>
+            <button onclick="openCertModal('prompt_engineering')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none; margin: 4px 0 10px 0;">View Prompt Engineering Certificate 📜</button><br>
+            4. 💎 <strong>Google Cloud Profile</strong> — Diamond League (Top Global Tier, 15+ Skill Badges)<br><br>
             👉 <a href="#experience">Inspect Credentials in Experience Section</a>`;
         }
 

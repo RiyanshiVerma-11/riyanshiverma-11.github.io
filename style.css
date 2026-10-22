@@ -114,46 +114,48 @@ html[data-theme="mono"] {
     --border-violet: rgba(100, 116, 139, 0.30);
 }
 
-html[data-theme="light"] {
-    --bg-deep: #F8FAFC;
+html[data-theme="light"],
+html[data-theme="classic-light"],
+[data-theme="light"],
+[data-theme="classic-light"],
+.light-theme {
+    /* ── Ceramic/Porcelain Base Canvas & Surfaces ── */
+    --bg-deep: #F6F8FB;
     --bg-dark: #FFFFFF;
-    --bg-surface: #E2E8F0;
-    --bg-card: rgba(255, 255, 255, 0.85);
-    --bg-card-hover: rgba(255, 255, 255, 0.98);
+    --bg-surface: #EEF2F6;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #FFFFFF;
 
-    --border: rgba(15, 23, 42, 0.18);
-    --border-warm: rgba(180, 83, 9, 0.28);
-    --border-violet: rgba(67, 56, 202, 0.30);
+    /* ── Ink & Contrast Hierarchy ── */
+    --text-primary: #090D16;   /* Deep Midnight Ink */
+    --text-secondary: #334155; /* Refined Slate Ink */
+    --text-tertiary: #475569;  /* Crisp Graphite Ink */
 
-    --gold: #B45309;
-    /* Deep Amber */
-    --gold-rgb: 180, 83, 9;
-    --violet: #4338CA;
-    /* Deep Indigo */
-    --violet-rgb: 67, 56, 202;
+    /* ── Vibrant Accents ── */
+    --gold: #D97706;
+    --gold-rgb: 217, 119, 6;
+    --violet: #7E22CE;
+    --violet-rgb: 126, 34, 206;
     --rose: #BE185D;
-    /* Deep Pink */
     --rose-rgb: 190, 24, 93;
-    --cyan: #0369A1;
-    /* Deep Sky Blue */
-    --cyan-rgb: 3, 105, 161;
-    --emerald: #047857;
+    --cyan: #0284C7;
+    --cyan-rgb: 2, 132, 199;
+    --emerald: #059669;
 
-    --text-primary: #020617;
-    /* slate-955 */
-    --text-secondary: #0F172A;
-    /* slate-900 */
-    --text-tertiary: #334155;
-    /* slate-700 */
+    /* ── Colored Ambient Shadows & Glass ── */
+    --border: rgba(15, 23, 42, 0.08);
+    --border-warm: rgba(217, 119, 6, 0.25);
+    --border-violet: rgba(126, 34, 206, 0.25);
+    --border-cyan: rgba(14, 165, 233, 0.25);
 
-    --shadow-card: 0 4px 20px rgba(15, 23, 42, 0.05);
-    --shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.15);
-    --glow-gold: 0 0 30px rgba(180, 83, 9, 0.12);
-    --glow-violet: 0 0 30px rgba(67, 56, 202, 0.12);
-    --glow-rose: 0 0 30px rgba(190, 24, 93, 0.12);
+    --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    --shadow-hover: 0 14px 34px -4px rgba(15, 23, 42, 0.10), 0 6px 12px -2px rgba(15, 23, 42, 0.04);
+    --glow-gold: 0 0 24px rgba(217, 119, 6, 0.15);
+    --glow-violet: 0 0 24px rgba(126, 34, 206, 0.15);
+    --glow-rose: 0 0 24px rgba(190, 24, 93, 0.15);
 
     /* ── Light Theme Custom Input Variables ── */
-    --input-bg: rgba(15, 23, 42, 0.04);
+    --input-bg: rgba(15, 23, 42, 0.03);
     --input-bg-focus: #FFFFFF;
     --input-border: rgba(15, 23, 42, 0.12);
     --label-bg: #FFFFFF;
@@ -650,7 +652,7 @@ a {
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 3rem;
     align-items: center;
     min-height: calc(100vh - var(--nav-h));
     padding: 2rem 0;
@@ -801,15 +803,15 @@ a {
     font-weight: 600;
 }
 
-/* ── Hero Right — Photo Showcase ── */
+/* ── Hero Right — Photo Showcase & Stats Dock ── */
 .hero-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    gap: 2.5rem;
-    margin-top: 0;
+    gap: 1.4rem;
+    margin-top: -2rem;
 }
 
 .photo-showcase {
@@ -2506,6 +2508,1498 @@ html.skip-preloader #preloader {
     margin-top: 2rem;
 }
 
+/* ==========================================================================
+   POLISHED SYSTEM EXPERIENCE & HONORS SHOWCASE
+   ========================================================================== */
+.experience-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.exp-subhead {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    margin-bottom: 1.25rem;
+}
+
+.exp-subhead .label-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px rgba(var(--gold-rgb), 0.6);
+}
+
+/* ==========================================================================
+   VERTICAL CHRONOLOGICAL EXPERIENCE TIMELINE & MULTI-COLORED SPINE
+   ========================================================================== */
+:root {
+    --spine-cyan: #06B6D4;
+    --spine-cyan-rgb: 6, 182, 212;
+    --spine-cyan-glow: rgba(6, 182, 212, 0.45);
+    --spine-cyan-border: rgba(6, 182, 212, 0.35);
+    --spine-cyan-bg: rgba(6, 182, 212, 0.08);
+
+    --spine-violet: #8B5CF6;
+    --spine-violet-rgb: 139, 92, 246;
+    --spine-violet-glow: rgba(139, 92, 246, 0.45);
+    --spine-violet-border: rgba(139, 92, 246, 0.35);
+    --spine-violet-bg: rgba(139, 92, 246, 0.08);
+}
+
+.exp-timeline-layout {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 2.2rem;
+    align-items: start;
+    position: relative;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .exp-timeline-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* Cards Stack */
+.exp-cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    position: relative;
+}
+
+/* Bento Card Glass */
+.exp-bento-card {
+    position: relative;
+    padding: 2.2rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card, rgba(11, 15, 28, 0.75));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
+    scroll-margin-top: 100px;
+}
+
+.exp-bento-card:hover,
+.exp-bento-card.active {
+    transform: translateY(-4px);
+}
+
+.exp-bento-card[data-theme="cyan"]:hover,
+.exp-bento-card[data-theme="cyan"].active {
+    border-color: rgba(var(--spine-cyan-rgb), 0.35);
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8),
+                0 0 30px -5px rgba(var(--spine-cyan-rgb), 0.2);
+}
+
+.exp-bento-card[data-theme="violet"]:hover,
+.exp-bento-card[data-theme="violet"].active {
+    border-color: rgba(var(--spine-violet-rgb), 0.35);
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8),
+                0 0 30px -5px rgba(var(--spine-violet-rgb), 0.2);
+}
+
+/* Top Neon Lightbars */
+.exp-card-lightbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 5;
+}
+
+.lightbar-cyan {
+    background: linear-gradient(90deg, #06B6D4 0%, #38BDF8 60%, transparent 100%);
+    box-shadow: 0 0 14px rgba(6, 182, 212, 0.7);
+}
+
+.lightbar-violet {
+    background: linear-gradient(90deg, #8B5CF6 0%, #A855F7 60%, transparent 100%);
+    box-shadow: 0 0 14px rgba(139, 92, 246, 0.7);
+}
+
+/* Card Header */
+.exp-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.exp-header-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.exp-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.exp-role-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.badge-cyan {
+    background: rgba(var(--spine-cyan-rgb), 0.12);
+    color: var(--spine-cyan);
+    border: 1px solid var(--spine-cyan-border);
+}
+
+.badge-violet {
+    background: rgba(var(--spine-violet-rgb), 0.12);
+    color: var(--spine-violet);
+    border: 1px solid var(--spine-violet-border);
+}
+
+.exp-status-pill {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pill-cyan {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.pill-violet {
+    background: rgba(66, 133, 244, 0.1);
+    color: #60A5FA;
+    border: 1px solid rgba(66, 133, 244, 0.25);
+}
+
+.pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 6px currentColor;
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.exp-role-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.exp-flagship-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.tag-cyan {
+    color: var(--spine-cyan);
+}
+
+.tag-violet {
+    color: #A78BFA;
+}
+
+.exp-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+@media (max-width: 640px) {
+    .exp-date-box {
+        align-items: flex-start;
+    }
+}
+
+.exp-date-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+}
+
+.exp-date-val {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* High-Impact Bento Metrics Grid */
+.exp-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.9rem;
+    margin-bottom: 1.4rem;
+}
+
+@media (max-width: 900px) {
+    .exp-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .exp-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.exp-metric-cell {
+    padding: 0.95rem 1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: all 0.3s ease;
+}
+
+.exp-metric-cell:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+}
+
+.exp-metric-cell.cell-cyan:hover {
+    border-color: rgba(var(--spine-cyan-rgb), 0.3);
+    box-shadow: 0 4px 16px rgba(var(--spine-cyan-rgb), 0.15);
+}
+
+.exp-metric-cell.cell-violet:hover {
+    border-color: rgba(var(--spine-violet-rgb), 0.3);
+    box-shadow: 0 4px 16px rgba(var(--spine-violet-rgb), 0.15);
+}
+
+.metric-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metric-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+}
+
+.metric-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+}
+
+.metric-value {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+.metric-sub {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    line-height: 1.35;
+}
+
+/* Engineering Impact Specs */
+.exp-spec-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.4rem;
+}
+
+.exp-summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 0.95rem;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-sm);
+}
+
+.summary-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+}
+
+.bullet-cyan {
+    background: var(--spine-cyan);
+    box-shadow: 0 0 8px var(--spine-cyan-glow);
+}
+
+.bullet-violet {
+    background: var(--spine-violet);
+    box-shadow: 0 0 8px var(--spine-violet-glow);
+}
+
+.exp-summary-item p {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.exp-summary-item strong {
+    color: var(--text-primary);
+}
+
+/* Direct Action CTAs Bar */
+.exp-actions-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-cyan-glow {
+    background: linear-gradient(135deg, #06B6D4 0%, #0284C7 100%) !important;
+    border-color: #06B6D4 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 18px rgba(6, 182, 212, 0.35) !important;
+}
+
+.btn-cyan-glow:hover {
+    box-shadow: 0 6px 24px rgba(6, 182, 212, 0.55) !important;
+    transform: translateY(-2px);
+}
+
+.btn-cyan-outline {
+    border-color: rgba(var(--spine-cyan-rgb), 0.35) !important;
+    color: var(--spine-cyan) !important;
+}
+
+.btn-cyan-outline:hover {
+    background: rgba(var(--spine-cyan-rgb), 0.12) !important;
+    border-color: var(--spine-cyan) !important;
+    transform: translateY(-2px);
+}
+
+.btn-violet-glow {
+    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%) !important;
+    border-color: #8B5CF6 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 18px rgba(139, 92, 246, 0.35) !important;
+}
+
+.btn-violet-glow:hover {
+    box-shadow: 0 6px 24px rgba(139, 92, 246, 0.55) !important;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   RIGHT-SIDE MULTI-COLORED SPINE / RAILS PATTERN
+   ========================================================================== */
+.exp-spine-rail {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 1.3rem 1.1rem;
+    background: var(--bg-card, rgba(11, 15, 28, 0.65));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.07));
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+@media (max-width: 992px) {
+    .exp-spine-rail {
+        position: static;
+        order: -1;
+    }
+}
+
+.exp-spine-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.spine-live-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--spine-cyan);
+    box-shadow: 0 0 10px var(--spine-cyan);
+    animation: pulseGlow 1.8s infinite;
+}
+
+.spine-header-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+}
+
+.exp-spine-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (max-width: 992px) {
+    .exp-spine-track {
+        flex-direction: row;
+        align-items: stretch;
+    }
+}
+
+/* Continuous Vertical Neon Line */
+.spine-line {
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 17px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    z-index: 1;
+}
+
+@media (max-width: 992px) {
+    .spine-line {
+        display: none;
+    }
+}
+
+.spine-line-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--spine-cyan) 0%, #38BDF8 40%, var(--spine-violet) 80%, #A855F7 100%);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    opacity: 0.7;
+}
+
+/* Spine Nodes */
+.exp-spine-node {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .exp-spine-node {
+        flex: 1;
+    }
+}
+
+.exp-spine-node:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(3px);
+}
+
+@media (max-width: 992px) {
+    .exp-spine-node:hover {
+        transform: translateY(-2px);
+    }
+}
+
+/* Node Markers with Neon Glows */
+.spine-node-marker {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.node-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.node-core {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #64748B;
+    transition: all 0.3s ease;
+}
+
+/* Cyan Node Active / Hover */
+.node-cyan .node-core {
+    background: var(--spine-cyan);
+    box-shadow: 0 0 10px var(--spine-cyan);
+}
+
+.node-cyan .node-ring {
+    border-color: rgba(var(--spine-cyan-rgb), 0.5);
+}
+
+.exp-spine-node:hover .node-cyan .node-ring,
+.exp-spine-node.active .node-cyan .node-ring {
+    inset: -5px;
+    border-style: solid;
+    border-color: var(--spine-cyan);
+    box-shadow: 0 0 14px var(--spine-cyan-glow);
+    animation: rotateRing 6s linear infinite;
+}
+
+/* Violet Node Active / Hover */
+.node-violet .node-core {
+    background: var(--spine-violet);
+    box-shadow: 0 0 10px var(--spine-violet);
+}
+
+.node-violet .node-ring {
+    border-color: rgba(var(--spine-violet-rgb), 0.5);
+}
+
+.exp-spine-node:hover .node-violet .node-ring,
+.exp-spine-node.active .node-violet .node-ring {
+    inset: -5px;
+    border-style: solid;
+    border-color: var(--spine-violet);
+    box-shadow: 0 0 14px var(--spine-violet-glow);
+    animation: rotateRing 6s linear infinite;
+}
+
+@keyframes rotateRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Active Node States */
+.exp-spine-node.active {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.exp-spine-node[data-target="exp-role-infosys"].active {
+    border-color: rgba(var(--spine-cyan-rgb), 0.4);
+    box-shadow: 0 0 20px rgba(var(--spine-cyan-rgb), 0.15);
+}
+
+.exp-spine-node[data-target="exp-role-google"].active {
+    border-color: rgba(var(--spine-violet-rgb), 0.4);
+    box-shadow: 0 0 20px rgba(var(--spine-violet-rgb), 0.15);
+}
+
+.spine-node-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.spine-node-code {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+}
+
+.spine-node-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+.spine-node-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 3px;
+    width: fit-content;
+}
+
+/* Spine Connection Bridge */
+.spine-bridge {
+    position: relative;
+    padding-left: 28px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+@media (max-width: 992px) {
+    .spine-bridge {
+        display: none;
+    }
+}
+
+.spine-bridge-line {
+    width: 14px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.spine-bridge-tag {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   STRIPE/LINEAR GRADE LIGHT THEME OVERRIDES FOR EXPERIENCE & BENTO SYSTEMS
+   ========================================================================== */
+html[data-theme="light"] #experience,
+html[data-theme="classic-light"] #experience,
+[data-theme="light"] #experience,
+[data-theme="classic-light"] #experience,
+.light-theme #experience {
+    --spine-cyan: #0284C7;
+    --spine-cyan-rgb: 2, 132, 199;
+    --spine-cyan-glow: rgba(14, 165, 233, 0.28);
+    --spine-cyan-border: rgba(14, 165, 233, 0.25);
+    --spine-cyan-bg: rgba(14, 165, 233, 0.04);
+
+    --spine-violet: #7E22CE;
+    --spine-violet-rgb: 126, 34, 206;
+    --spine-violet-glow: rgba(147, 51, 234, 0.28);
+    --spine-violet-border: rgba(147, 51, 234, 0.25);
+    --spine-violet-bg: rgba(147, 51, 234, 0.04);
+}
+
+/* 1. Base Surfaces: Pure Elevated Porcelain Cards on Soft Porcelain Canvas */
+html[data-theme="light"] #experience .exp-bento-card,
+html[data-theme="classic-light"] #experience .exp-bento-card,
+[data-theme="light"] #experience .exp-bento-card,
+[data-theme="classic-light"] #experience .exp-bento-card,
+.light-theme #experience .exp-bento-card {
+    background: #FFFFFF !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* Role Card 01: Infosys / CommAI (Vibrant Cyan Accents & Ambient Shadows) */
+html[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"],
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"],
+[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"],
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"],
+.light-theme #experience .exp-bento-card[data-theme="cyan"] {
+    border: 1px solid rgba(14, 165, 233, 0.25) !important;
+    box-shadow: 0 10px 25px -3px rgba(14, 165, 233, 0.12), 0 4px 6px -2px rgba(14, 165, 233, 0.05) !important;
+}
+
+html[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"]:hover,
+html[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"].active,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"]:hover,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"].active,
+[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"]:hover,
+[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"].active,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"]:hover,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"].active,
+.light-theme #experience .exp-bento-card[data-theme="cyan"]:hover,
+.light-theme #experience .exp-bento-card[data-theme="cyan"].active {
+    border-color: rgba(14, 165, 233, 0.48) !important;
+    box-shadow: 0 18px 36px -4px rgba(14, 165, 233, 0.18), 0 6px 14px -3px rgba(14, 165, 233, 0.10) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Role Card 02: Google Cloud / Vertex AI (Vibrant Violet Accents & Ambient Shadows) */
+html[data-theme="light"] #experience .exp-bento-card[data-theme="violet"],
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"],
+[data-theme="light"] #experience .exp-bento-card[data-theme="violet"],
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"],
+.light-theme #experience .exp-bento-card[data-theme="violet"] {
+    border: 1px solid rgba(147, 51, 234, 0.25) !important;
+    box-shadow: 0 10px 25px -3px rgba(147, 51, 234, 0.12), 0 4px 6px -2px rgba(147, 51, 234, 0.05) !important;
+}
+
+html[data-theme="light"] #experience .exp-bento-card[data-theme="violet"]:hover,
+html[data-theme="light"] #experience .exp-bento-card[data-theme="violet"].active,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"]:hover,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"].active,
+[data-theme="light"] #experience .exp-bento-card[data-theme="violet"]:hover,
+[data-theme="light"] #experience .exp-bento-card[data-theme="violet"].active,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"]:hover,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"].active,
+.light-theme #experience .exp-bento-card[data-theme="violet"]:hover,
+.light-theme #experience .exp-bento-card[data-theme="violet"].active {
+    border-color: rgba(147, 51, 234, 0.48) !important;
+    box-shadow: 0 18px 36px -4px rgba(147, 51, 234, 0.18), 0 6px 14px -3px rgba(147, 51, 234, 0.10) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Lightbars */
+html[data-theme="light"] #experience .lightbar-cyan,
+html[data-theme="classic-light"] #experience .lightbar-cyan,
+[data-theme="light"] #experience .lightbar-cyan,
+[data-theme="classic-light"] #experience .lightbar-cyan,
+.light-theme #experience .lightbar-cyan {
+    background: linear-gradient(90deg, #0284C7 0%, #38BDF8 60%, transparent 100%) !important;
+    box-shadow: 0 1px 8px rgba(14, 165, 233, 0.35) !important;
+}
+
+html[data-theme="light"] #experience .lightbar-violet,
+html[data-theme="classic-light"] #experience .lightbar-violet,
+[data-theme="light"] #experience .lightbar-violet,
+[data-theme="classic-light"] #experience .lightbar-violet,
+.light-theme #experience .lightbar-violet {
+    background: linear-gradient(90deg, #9333EA 0%, #C084FC 60%, transparent 100%) !important;
+    box-shadow: 0 1px 8px rgba(147, 51, 234, 0.35) !important;
+}
+
+/* Card Header & Dividing Lines */
+html[data-theme="light"] #experience .exp-card-header,
+html[data-theme="classic-light"] #experience .exp-card-header,
+[data-theme="light"] #experience .exp-card-header,
+[data-theme="classic-light"] #experience .exp-card-header,
+.light-theme #experience .exp-card-header {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] #experience .exp-role-title,
+html[data-theme="classic-light"] #experience .exp-role-title,
+[data-theme="light"] #experience .exp-role-title,
+[data-theme="classic-light"] #experience .exp-role-title,
+.light-theme #experience .exp-role-title {
+    color: #090D16 !important;
+    letter-spacing: -0.015em !important;
+}
+
+html[data-theme="light"] #experience .exp-flagship-tag.tag-cyan,
+html[data-theme="classic-light"] #experience .exp-flagship-tag.tag-cyan,
+[data-theme="light"] #experience .exp-flagship-tag.tag-cyan,
+[data-theme="classic-light"] #experience .exp-flagship-tag.tag-cyan,
+.light-theme #experience .exp-flagship-tag.tag-cyan {
+    color: #0284C7 !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] #experience .exp-flagship-tag.tag-violet,
+html[data-theme="classic-light"] #experience .exp-flagship-tag.tag-violet,
+[data-theme="light"] #experience .exp-flagship-tag.tag-violet,
+[data-theme="classic-light"] #experience .exp-flagship-tag.tag-violet,
+.light-theme #experience .exp-flagship-tag.tag-violet {
+    color: #7E22CE !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] #experience .exp-date-label,
+html[data-theme="classic-light"] #experience .exp-date-label,
+[data-theme="light"] #experience .exp-date-label,
+[data-theme="classic-light"] #experience .exp-date-label,
+.light-theme #experience .exp-date-label {
+    color: #64748B !important;
+}
+
+html[data-theme="light"] #experience .exp-date-val,
+html[data-theme="classic-light"] #experience .exp-date-val,
+[data-theme="light"] #experience .exp-date-val,
+[data-theme="classic-light"] #experience .exp-date-val,
+.light-theme #experience .exp-date-val {
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+/* Badges & Status Pills */
+html[data-theme="light"] #experience .badge-cyan,
+html[data-theme="classic-light"] #experience .badge-cyan,
+[data-theme="light"] #experience .badge-cyan,
+[data-theme="classic-light"] #experience .badge-cyan,
+.light-theme #experience .badge-cyan {
+    background: #F0F9FF !important;
+    color: #0284C7 !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .badge-violet,
+html[data-theme="classic-light"] #experience .badge-violet,
+[data-theme="light"] #experience .badge-violet,
+[data-theme="classic-light"] #experience .badge-violet,
+.light-theme #experience .badge-violet {
+    background: #FAF5FF !important;
+    color: #7E22CE !important;
+    border: 1px solid rgba(147, 51, 234, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .pill-cyan,
+html[data-theme="classic-light"] #experience .pill-cyan,
+[data-theme="light"] #experience .pill-cyan,
+[data-theme="classic-light"] #experience .pill-cyan,
+.light-theme #experience .pill-cyan {
+    background: #ECFDF5 !important;
+    color: #059669 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+html[data-theme="light"] #experience .pill-violet,
+html[data-theme="classic-light"] #experience .pill-violet,
+[data-theme="light"] #experience .pill-violet,
+[data-theme="classic-light"] #experience .pill-violet,
+.light-theme #experience .pill-violet {
+    background: #EFF6FF !important;
+    color: #2563EB !important;
+    border: 1px solid rgba(37, 99, 235, 0.3) !important;
+}
+
+/* 2. Micro-Metric Bento Chips with Individual Accent Personality */
+html[data-theme="light"] #experience .exp-metric-cell.cell-cyan,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan,
+[data-theme="light"] #experience .exp-metric-cell.cell-cyan,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan,
+.light-theme #experience .exp-metric-cell.cell-cyan {
+    background: rgba(14, 165, 233, 0.04) !important;
+    border: 1px solid rgba(14, 165, 233, 0.16) !important;
+}
+
+html[data-theme="light"] #experience .exp-metric-cell.cell-cyan:hover,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan:hover,
+[data-theme="light"] #experience .exp-metric-cell.cell-cyan:hover,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan:hover,
+.light-theme #experience .exp-metric-cell.cell-cyan:hover {
+    background: #F0F9FF !important;
+    border-color: rgba(14, 165, 233, 0.4) !important;
+    box-shadow: 0 6px 18px -2px rgba(14, 165, 233, 0.16) !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] #experience .exp-metric-cell.cell-cyan .metric-tag,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan .metric-tag,
+[data-theme="light"] #experience .exp-metric-cell.cell-cyan .metric-tag,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-cyan .metric-tag,
+.light-theme #experience .exp-metric-cell.cell-cyan .metric-tag {
+    color: #0369A1 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .exp-metric-cell.cell-violet,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet,
+[data-theme="light"] #experience .exp-metric-cell.cell-violet,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet,
+.light-theme #experience .exp-metric-cell.cell-violet {
+    background: rgba(147, 51, 234, 0.04) !important;
+    border: 1px solid rgba(147, 51, 234, 0.16) !important;
+}
+
+html[data-theme="light"] #experience .exp-metric-cell.cell-violet:hover,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet:hover,
+[data-theme="light"] #experience .exp-metric-cell.cell-violet:hover,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet:hover,
+.light-theme #experience .exp-metric-cell.cell-violet:hover {
+    background: #FAF5FF !important;
+    border-color: rgba(147, 51, 234, 0.4) !important;
+    box-shadow: 0 6px 18px -2px rgba(147, 51, 234, 0.16) !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] #experience .exp-metric-cell.cell-violet .metric-tag,
+html[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet .metric-tag,
+[data-theme="light"] #experience .exp-metric-cell.cell-violet .metric-tag,
+[data-theme="classic-light"] #experience .exp-metric-cell.cell-violet .metric-tag,
+.light-theme #experience .exp-metric-cell.cell-violet .metric-tag {
+    color: #7E22CE !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .metric-value,
+html[data-theme="classic-light"] #experience .metric-value,
+[data-theme="light"] #experience .metric-value,
+[data-theme="classic-light"] #experience .metric-value,
+.light-theme #experience .metric-value {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .metric-sub,
+html[data-theme="classic-light"] #experience .metric-sub,
+[data-theme="light"] #experience .metric-sub,
+[data-theme="classic-light"] #experience .metric-sub,
+.light-theme #experience .metric-sub {
+    color: #334155 !important;
+}
+
+/* 3. Engineering Impact Specs */
+html[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"] .exp-summary-item,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"] .exp-summary-item,
+[data-theme="light"] #experience .exp-bento-card[data-theme="cyan"] .exp-summary-item,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="cyan"] .exp-summary-item,
+.light-theme #experience .exp-bento-card[data-theme="cyan"] .exp-summary-item {
+    background: rgba(14, 165, 233, 0.025) !important;
+    border: 1px solid rgba(14, 165, 233, 0.12) !important;
+}
+
+html[data-theme="light"] #experience .exp-bento-card[data-theme="violet"] .exp-summary-item,
+html[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"] .exp-summary-item,
+[data-theme="light"] #experience .exp-bento-card[data-theme="violet"] .exp-summary-item,
+[data-theme="classic-light"] #experience .exp-bento-card[data-theme="violet"] .exp-summary-item,
+.light-theme #experience .exp-bento-card[data-theme="violet"] .exp-summary-item {
+    background: rgba(147, 51, 234, 0.025) !important;
+    border: 1px solid rgba(147, 51, 234, 0.12) !important;
+}
+
+html[data-theme="light"] #experience .bullet-cyan,
+html[data-theme="classic-light"] #experience .bullet-cyan,
+[data-theme="light"] #experience .bullet-cyan,
+[data-theme="classic-light"] #experience .bullet-cyan,
+.light-theme #experience .bullet-cyan {
+    background: #0284C7 !important;
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.45) !important;
+}
+
+html[data-theme="light"] #experience .bullet-violet,
+html[data-theme="classic-light"] #experience .bullet-violet,
+[data-theme="light"] #experience .bullet-violet,
+[data-theme="classic-light"] #experience .bullet-violet,
+.light-theme #experience .bullet-violet {
+    background: #9333EA !important;
+    box-shadow: 0 0 8px rgba(147, 51, 234, 0.45) !important;
+}
+
+html[data-theme="light"] #experience .exp-summary-item p,
+html[data-theme="classic-light"] #experience .exp-summary-item p,
+[data-theme="light"] #experience .exp-summary-item p,
+[data-theme="classic-light"] #experience .exp-summary-item p,
+.light-theme #experience .exp-summary-item p {
+    color: #334155 !important;
+}
+
+html[data-theme="light"] #experience .exp-summary-item strong,
+html[data-theme="classic-light"] #experience .exp-summary-item strong,
+[data-theme="light"] #experience .exp-summary-item strong,
+[data-theme="classic-light"] #experience .exp-summary-item strong,
+.light-theme #experience .exp-summary-item strong {
+    color: #090D16 !important;
+}
+
+/* 4. Action CTAs */
+html[data-theme="light"] #experience .exp-actions-bar,
+html[data-theme="classic-light"] #experience .exp-actions-bar,
+[data-theme="light"] #experience .exp-actions-bar,
+[data-theme="classic-light"] #experience .exp-actions-bar,
+.light-theme #experience .exp-actions-bar {
+    border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] #experience .btn-cyan-glow,
+html[data-theme="classic-light"] #experience .btn-cyan-glow,
+[data-theme="light"] #experience .btn-cyan-glow,
+[data-theme="classic-light"] #experience .btn-cyan-glow,
+.light-theme #experience .btn-cyan-glow {
+    background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+    border-color: #0284C7 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.32) !important;
+}
+
+html[data-theme="light"] #experience .btn-cyan-glow:hover,
+html[data-theme="classic-light"] #experience .btn-cyan-glow:hover,
+[data-theme="light"] #experience .btn-cyan-glow:hover,
+[data-theme="classic-light"] #experience .btn-cyan-glow:hover,
+.light-theme #experience .btn-cyan-glow:hover {
+    background: linear-gradient(135deg, #0369A1 0%, #075985 100%) !important;
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.42) !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] #experience .btn-cyan-outline,
+html[data-theme="classic-light"] #experience .btn-cyan-outline,
+[data-theme="light"] #experience .btn-cyan-outline,
+[data-theme="classic-light"] #experience .btn-cyan-outline,
+.light-theme #experience .btn-cyan-outline {
+    background: #F0F9FF !important;
+    border: 1px solid rgba(14, 165, 233, 0.35) !important;
+    color: #0284C7 !important;
+}
+
+html[data-theme="light"] #experience .btn-cyan-outline:hover,
+html[data-theme="classic-light"] #experience .btn-cyan-outline:hover,
+[data-theme="light"] #experience .btn-cyan-outline:hover,
+[data-theme="classic-light"] #experience .btn-cyan-outline:hover,
+.light-theme #experience .btn-cyan-outline:hover {
+    background: #E0F2FE !important;
+    border-color: #0284C7 !important;
+    color: #0369A1 !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] #experience .btn-violet-glow,
+html[data-theme="classic-light"] #experience .btn-violet-glow,
+[data-theme="light"] #experience .btn-violet-glow,
+[data-theme="classic-light"] #experience .btn-violet-glow,
+.light-theme #experience .btn-violet-glow {
+    background: linear-gradient(135deg, #7E22CE 0%, #6B21A8 100%) !important;
+    border-color: #7E22CE !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(126, 34, 206, 0.32) !important;
+}
+
+html[data-theme="light"] #experience .btn-violet-glow:hover,
+html[data-theme="classic-light"] #experience .btn-violet-glow:hover,
+[data-theme="light"] #experience .btn-violet-glow:hover,
+[data-theme="classic-light"] #experience .btn-violet-glow:hover,
+.light-theme #experience .btn-violet-glow:hover {
+    background: linear-gradient(135deg, #6B21A8 0%, #581C87 100%) !important;
+    box-shadow: 0 6px 20px rgba(126, 34, 206, 0.42) !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] #experience .exp-actions-bar .btn-secondary,
+html[data-theme="classic-light"] #experience .exp-actions-bar .btn-secondary,
+[data-theme="light"] #experience .exp-actions-bar .btn-secondary,
+[data-theme="classic-light"] #experience .exp-actions-bar .btn-secondary,
+.light-theme #experience .exp-actions-bar .btn-secondary {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.14) !important;
+    color: #090D16 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme="light"] #experience .exp-actions-bar .btn-secondary:hover,
+html[data-theme="classic-light"] #experience .exp-actions-bar .btn-secondary:hover,
+[data-theme="light"] #experience .exp-actions-bar .btn-secondary:hover,
+[data-theme="classic-light"] #experience .exp-actions-bar .btn-secondary:hover,
+.light-theme #experience .exp-actions-bar .btn-secondary:hover {
+    background: #F8FAFC !important;
+    border-color: rgba(15, 23, 42, 0.28) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 5. Right-Side Multi-Colored Spine Rail Container */
+html[data-theme="light"] #experience .exp-spine-rail,
+html[data-theme="classic-light"] #experience .exp-spine-rail,
+[data-theme="light"] #experience .exp-spine-rail,
+[data-theme="classic-light"] #experience .exp-spine-rail,
+.light-theme #experience .exp-spine-rail {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.09) !important;
+    box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.05), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-header,
+html[data-theme="classic-light"] #experience .exp-spine-header,
+[data-theme="light"] #experience .exp-spine-header,
+[data-theme="classic-light"] #experience .exp-spine-header,
+.light-theme #experience .exp-spine-header {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] #experience .spine-header-title,
+html[data-theme="classic-light"] #experience .spine-header-title,
+[data-theme="light"] #experience .spine-header-title,
+[data-theme="classic-light"] #experience .spine-header-title,
+.light-theme #experience .spine-header-title {
+    color: #475569 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .spine-live-pulse,
+html[data-theme="classic-light"] #experience .spine-live-pulse,
+[data-theme="light"] #experience .spine-live-pulse,
+[data-theme="classic-light"] #experience .spine-live-pulse,
+.light-theme #experience .spine-live-pulse {
+    background: #0284C7 !important;
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.6) !important;
+}
+
+/* Vertical Spine Rail Track */
+html[data-theme="light"] #experience .spine-line,
+html[data-theme="classic-light"] #experience .spine-line,
+[data-theme="light"] #experience .spine-line,
+[data-theme="classic-light"] #experience .spine-line,
+.light-theme #experience .spine-line {
+    background: #E2E8F0 !important;
+    width: 2px !important;
+}
+
+html[data-theme="light"] #experience .spine-line-fill,
+html[data-theme="classic-light"] #experience .spine-line-fill,
+[data-theme="light"] #experience .spine-line-fill,
+[data-theme="classic-light"] #experience .spine-line-fill,
+.light-theme #experience .spine-line-fill {
+    background: linear-gradient(180deg, #0284C7 0%, #38BDF8 40%, #9333EA 80%, #A855F7 100%) !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+}
+
+/* Spine Nodes & Buttons */
+html[data-theme="light"] #experience .exp-spine-node,
+html[data-theme="classic-light"] #experience .exp-spine-node,
+[data-theme="light"] #experience .exp-spine-node,
+[data-theme="classic-light"] #experience .exp-spine-node,
+.light-theme #experience .exp-spine-node {
+    background: #F8FAFC !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node:hover,
+html[data-theme="classic-light"] #experience .exp-spine-node:hover,
+[data-theme="light"] #experience .exp-spine-node:hover,
+[data-theme="classic-light"] #experience .exp-spine-node:hover,
+.light-theme #experience .exp-spine-node:hover {
+    background: #FFFFFF !important;
+    border-color: rgba(15, 23, 42, 0.18) !important;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node.active,
+html[data-theme="classic-light"] #experience .exp-spine-node.active,
+[data-theme="light"] #experience .exp-spine-node.active,
+[data-theme="classic-light"] #experience .exp-spine-node.active,
+.light-theme #experience .exp-spine-node.active {
+    background: #FFFFFF !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node[data-target="exp-role-infosys"].active,
+html[data-theme="classic-light"] #experience .exp-spine-node[data-target="exp-role-infosys"].active,
+[data-theme="light"] #experience .exp-spine-node[data-target="exp-role-infosys"].active,
+[data-theme="classic-light"] #experience .exp-spine-node[data-target="exp-role-infosys"].active,
+.light-theme #experience .exp-spine-node[data-target="exp-role-infosys"].active {
+    border-color: rgba(14, 165, 233, 0.45) !important;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.16) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node[data-target="exp-role-google"].active,
+html[data-theme="classic-light"] #experience .exp-spine-node[data-target="exp-role-google"].active,
+[data-theme="light"] #experience .exp-spine-node[data-target="exp-role-google"].active,
+[data-theme="classic-light"] #experience .exp-spine-node[data-target="exp-role-google"].active,
+.light-theme #experience .exp-spine-node[data-target="exp-role-google"].active {
+    border-color: rgba(147, 51, 234, 0.45) !important;
+    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.16) !important;
+}
+
+/* Spine Node Markers & Rings */
+html[data-theme="light"] #experience .node-ring,
+html[data-theme="classic-light"] #experience .node-ring,
+[data-theme="light"] #experience .node-ring,
+[data-theme="classic-light"] #experience .node-ring,
+.light-theme #experience .node-ring {
+    border-color: rgba(15, 23, 42, 0.22) !important;
+}
+
+html[data-theme="light"] #experience .node-cyan .node-core,
+html[data-theme="classic-light"] #experience .node-cyan .node-core,
+[data-theme="light"] #experience .node-cyan .node-core,
+[data-theme="classic-light"] #experience .node-cyan .node-core,
+.light-theme #experience .node-cyan .node-core {
+    background: #0284C7 !important;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.6) !important;
+}
+
+html[data-theme="light"] #experience .node-cyan .node-ring,
+html[data-theme="classic-light"] #experience .node-cyan .node-ring,
+[data-theme="light"] #experience .node-cyan .node-ring,
+[data-theme="classic-light"] #experience .node-cyan .node-ring,
+.light-theme #experience .node-cyan .node-ring {
+    border-color: rgba(14, 165, 233, 0.45) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node:hover .node-cyan .node-ring,
+html[data-theme="light"] #experience .exp-spine-node.active .node-cyan .node-ring,
+html[data-theme="classic-light"] #experience .exp-spine-node:hover .node-cyan .node-ring,
+html[data-theme="classic-light"] #experience .exp-spine-node.active .node-cyan .node-ring,
+[data-theme="light"] #experience .exp-spine-node:hover .node-cyan .node-ring,
+[data-theme="light"] #experience .exp-spine-node.active .node-cyan .node-ring,
+[data-theme="classic-light"] #experience .exp-spine-node:hover .node-cyan .node-ring,
+[data-theme="classic-light"] #experience .exp-spine-node.active .node-cyan .node-ring,
+.light-theme #experience .exp-spine-node:hover .node-cyan .node-ring,
+.light-theme #experience .exp-spine-node.active .node-cyan .node-ring {
+    border-color: #0284C7 !important;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.35) !important;
+}
+
+html[data-theme="light"] #experience .node-violet .node-core,
+html[data-theme="classic-light"] #experience .node-violet .node-core,
+[data-theme="light"] #experience .node-violet .node-core,
+[data-theme="classic-light"] #experience .node-violet .node-core,
+.light-theme #experience .node-violet .node-core {
+    background: #7E22CE !important;
+    box-shadow: 0 0 10px rgba(147, 51, 234, 0.6) !important;
+}
+
+html[data-theme="light"] #experience .node-violet .node-ring,
+html[data-theme="classic-light"] #experience .node-violet .node-ring,
+[data-theme="light"] #experience .node-violet .node-ring,
+[data-theme="classic-light"] #experience .node-violet .node-ring,
+.light-theme #experience .node-violet .node-ring {
+    border-color: rgba(147, 51, 234, 0.45) !important;
+}
+
+html[data-theme="light"] #experience .exp-spine-node:hover .node-violet .node-ring,
+html[data-theme="light"] #experience .exp-spine-node.active .node-violet .node-ring,
+html[data-theme="classic-light"] #experience .exp-spine-node:hover .node-violet .node-ring,
+html[data-theme="classic-light"] #experience .exp-spine-node.active .node-violet .node-ring,
+[data-theme="light"] #experience .exp-spine-node:hover .node-violet .node-ring,
+[data-theme="light"] #experience .exp-spine-node.active .node-violet .node-ring,
+[data-theme="classic-light"] #experience .exp-spine-node:hover .node-violet .node-ring,
+[data-theme="classic-light"] #experience .exp-spine-node.active .node-violet .node-ring,
+.light-theme #experience .exp-spine-node:hover .node-violet .node-ring,
+.light-theme #experience .exp-spine-node.active .node-violet .node-ring {
+    border-color: #7E22CE !important;
+    box-shadow: 0 0 12px rgba(147, 51, 234, 0.35) !important;
+}
+
+/* Spine Text & Bridge */
+html[data-theme="light"] #experience .spine-node-code,
+html[data-theme="classic-light"] #experience .spine-node-code,
+[data-theme="light"] #experience .spine-node-code,
+[data-theme="classic-light"] #experience .spine-node-code,
+.light-theme #experience .spine-node-code {
+    color: #64748B !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .spine-node-title,
+html[data-theme="classic-light"] #experience .spine-node-title,
+[data-theme="light"] #experience .spine-node-title,
+[data-theme="classic-light"] #experience .spine-node-title,
+.light-theme #experience .spine-node-title {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] #experience .spine-node-pill.pill-cyan,
+html[data-theme="classic-light"] #experience .spine-node-pill.pill-cyan,
+[data-theme="light"] #experience .spine-node-pill.pill-cyan,
+[data-theme="classic-light"] #experience .spine-node-pill.pill-cyan,
+.light-theme #experience .spine-node-pill.pill-cyan {
+    background: #F0F9FF !important;
+    color: #0284C7 !important;
+    border: 1px solid rgba(14, 165, 233, 0.25) !important;
+}
+
+html[data-theme="light"] #experience .spine-node-pill.pill-violet,
+html[data-theme="classic-light"] #experience .spine-node-pill.pill-violet,
+[data-theme="light"] #experience .spine-node-pill.pill-violet,
+[data-theme="classic-light"] #experience .spine-node-pill.pill-violet,
+.light-theme #experience .spine-node-pill.pill-violet {
+    background: #FAF5FF !important;
+    color: #7E22CE !important;
+    border: 1px solid rgba(147, 51, 234, 0.25) !important;
+}
+
+html[data-theme="light"] #experience .spine-bridge-line,
+html[data-theme="classic-light"] #experience .spine-bridge-line,
+[data-theme="light"] #experience .spine-bridge-line,
+[data-theme="classic-light"] #experience .spine-bridge-line,
+.light-theme #experience .spine-bridge-line {
+    background: #CBD5E1 !important;
+}
+
+html[data-theme="light"] #experience .spine-bridge-tag,
+html[data-theme="classic-light"] #experience .spine-bridge-tag,
+[data-theme="light"] #experience .spine-bridge-tag,
+[data-theme="classic-light"] #experience .spine-bridge-tag,
+.light-theme #experience .spine-bridge-tag {
+    color: #64748B !important;
+}
+
+/* Honors & Credentials Bento Grid */
+.honors-creds-bento {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.8rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .honors-creds-bento {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bento-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bento-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Honor Tiles */
+.honor-tiles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.honor-tile {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    padding: 0.95rem 1.1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    transition: all var(--t-fast);
+}
+
+.honor-tile:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(var(--gold-rgb), 0.28);
+    transform: translateX(4px);
+}
+
+.honor-tile-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.honor-tile-content {
+    flex-grow: 1;
+}
+
+.honor-tile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
+}
+
+.honor-tile-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.honor-tile-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.honor-tile-footer {
+    margin-top: 0.4rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/* Credentials Column Stack */
+.creds-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cred-tile {
+    padding: 0.9rem 1.1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    transition: all var(--t-fast);
+}
+
+.cred-tile:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateX(4px);
+}
+
+.cred-tile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.cred-tile-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.cred-tile-desc {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+}
+
 .timeline-container {
     position: relative;
     padding-left: 2rem;
@@ -4070,89 +5564,129 @@ html.skip-preloader #preloader {
     transition: width 0.1s ease-out;
 }
 
-/* 3. Hero Stats Cards (Glassmorphic) */
-.hero-stats-ticker {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
+/* 3. Hero Stats Dock (3x2 Bento Grid Underneath Photo Showcase) */
+.hero-stats-dock {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+    margin-top: 0;
     max-width: 480px;
-    z-index: 10;
-}
-
-.ticker-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.35rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
+    width: 100%;
+    background: rgba(18, 18, 24, 0.75);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    padding: 0.8rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 0.85rem;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+    z-index: 5;
+}
+
+html[data-theme="light"] .hero-stats-dock,
+html[data-theme="classic-light"] .hero-stats-dock,
+[data-theme="light"] .hero-stats-dock,
+[data-theme="classic-light"] .hero-stats-dock,
+.light-theme .hero-stats-dock {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.04) !important;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 0.4rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-        border-color 0.3s ease,
-        background-color 0.3s ease,
-        box-shadow 0.3s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
 }
 
-.ticker-item:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(var(--gold-rgb), 0.35);
-    box-shadow: 0 10px 25px rgba(var(--gold-rgb), 0.12);
+html[data-theme="light"] .stat-item,
+html[data-theme="classic-light"] .stat-item,
+[data-theme="light"] .stat-item,
+[data-theme="classic-light"] .stat-item,
+.light-theme .stat-item {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
 }
 
-.ticker-val {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text-primary);
+.stat-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(14, 165, 233, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="light"] .stat-item:hover,
+html[data-theme="classic-light"] .stat-item:hover,
+[data-theme="light"] .stat-item:hover,
+[data-theme="classic-light"] .stat-item:hover,
+.light-theme .stat-item:hover {
+    border-color: rgba(14, 165, 233, 0.3) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08) !important;
+}
+
+.stat-number {
+    font-family: var(--font-mono, monospace);
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: nowrap;
+    display: block;
     background: var(--grad-hero);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 15px rgba(var(--gold-rgb), 0.08);
 }
 
-.ticker-lbl {
-    font-size: 0.65rem;
-    font-family: var(--font-display);
-    color: var(--text-secondary);
+html[data-theme="light"] .stat-number,
+html[data-theme="classic-light"] .stat-number,
+[data-theme="light"] .stat-number,
+[data-theme="classic-light"] .stat-number,
+.light-theme .stat-number {
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
+    background: none !important;
+}
+
+.stat-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    line-height: 1.2;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    opacity: 0.85;
 }
 
-@media (max-width: 640px) {
-    .hero-stats-ticker {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
+html[data-theme="light"] .stat-label,
+html[data-theme="classic-light"] .stat-label,
+[data-theme="light"] .stat-label,
+[data-theme="classic-light"] .stat-label,
+.light-theme .stat-label {
+    color: #64748B !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+    .hero-stats-dock {
+        max-width: 100%;
+        margin-top: 1.5rem;
         gap: 0.5rem;
-        max-width: 340px;
+        padding: 0.75rem;
     }
+}
 
-    .ticker-item {
-        width: 100%;
-        padding: 0.4rem 0.5rem;
-        gap: 0.15rem;
-        border-radius: 8px;
-    }
-
-    .ticker-val {
-        font-size: 1.15rem;
-    }
-
-    .ticker-lbl {
-        font-size: 0.58rem;
-        line-height: 1.15;
+@media (max-width: 420px) {
+    .hero-stats-dock {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -4470,61 +6004,324 @@ html[data-theme="light"] .theme-toggle-quick .moon-icon {
     background: rgba(var(--gold-rgb), 0.08);
 }
 
-/* LIGHT THEME EXPLICIT OVERRIDES */
-html[data-theme="light"] .card-glass {
-    background: rgba(255, 255, 255, 0.85) !important;
+/* ==========================================================================
+   STRIPE/LINEAR GRADE LIGHT THEME GLOBAL OVERRIDES & BENTO CARD SYSTEMS
+   ========================================================================== */
+html[data-theme="light"] .card-glass,
+html[data-theme="classic-light"] .card-glass,
+[data-theme="light"] .card-glass,
+[data-theme="classic-light"] .card-glass,
+.light-theme .card-glass {
+    background: #FFFFFF !important;
     border: 1px solid rgba(15, 23, 42, 0.08) !important;
-    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
 
-html[data-theme="light"] .card-glass::before {
+html[data-theme="light"] .card-glass:hover,
+html[data-theme="classic-light"] .card-glass:hover,
+[data-theme="light"] .card-glass:hover,
+[data-theme="classic-light"] .card-glass:hover,
+.light-theme .card-glass:hover {
+    border-color: rgba(14, 165, 233, 0.28) !important;
+    box-shadow: 0 14px 34px -4px rgba(15, 23, 42, 0.09), 0 6px 14px -3px rgba(14, 165, 233, 0.08) !important;
+}
+
+html[data-theme="light"] .card-glass::before,
+html[data-theme="classic-light"] .card-glass::before,
+[data-theme="light"] .card-glass::before,
+[data-theme="classic-light"] .card-glass::before,
+.light-theme .card-glass::before {
     display: none !important;
 }
 
-html[data-theme="light"] .navbar {
-    background: rgba(255, 255, 255, 0.8) !important;
+/* Bento Card System & Content Typography */
+html[data-theme="light"] .bento-card,
+html[data-theme="classic-light"] .bento-card,
+[data-theme="light"] .bento-card,
+[data-theme="classic-light"] .bento-card,
+.light-theme .bento-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] .bento-card h3,
+html[data-theme="classic-light"] .bento-card h3,
+[data-theme="light"] .bento-card h3,
+[data-theme="classic-light"] .bento-card h3,
+.light-theme .bento-card h3 {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .bento-card p,
+html[data-theme="classic-light"] .bento-card p,
+[data-theme="light"] .bento-card p,
+[data-theme="classic-light"] .bento-card p,
+.light-theme .bento-card p {
+    color: #334155 !important;
+}
+
+html[data-theme="light"] .bento-card-label,
+html[data-theme="classic-light"] .bento-card-label,
+[data-theme="light"] .bento-card-label,
+[data-theme="classic-light"] .bento-card-label,
+.light-theme .bento-card-label {
+    color: #0284C7 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .bento-card-label .label-dot,
+html[data-theme="classic-light"] .bento-card-label .label-dot,
+[data-theme="light"] .bento-card-label .label-dot,
+[data-theme="classic-light"] .bento-card-label .label-dot,
+.light-theme .bento-card-label .label-dot {
+    background: #0284C7 !important;
+}
+
+/* Bento Micro-Metrics Chips & Values */
+html[data-theme="light"] .bento-metrics .metric-value,
+html[data-theme="classic-light"] .bento-metrics .metric-value,
+[data-theme="light"] .bento-metrics .metric-value,
+[data-theme="classic-light"] .bento-metrics .metric-value,
+.light-theme .bento-metrics .metric-value {
+    color: #090D16 !important;
+    font-weight: 800 !important;
+}
+
+html[data-theme="light"] .bento-metrics .metric-label,
+html[data-theme="classic-light"] .bento-metrics .metric-label,
+[data-theme="light"] .bento-metrics .metric-label,
+[data-theme="classic-light"] .bento-metrics .metric-label,
+.light-theme .bento-metrics .metric-label {
+    color: #64748B !important;
+    font-weight: 600 !important;
+}
+
+/* Roles Open To Grid & Role Badges */
+html[data-theme="light"] .role-badge-card,
+html[data-theme="classic-light"] .role-badge-card,
+[data-theme="light"] .role-badge-card,
+[data-theme="classic-light"] .role-badge-card,
+.light-theme .role-badge-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme="light"] .role-badge-card:hover,
+html[data-theme="classic-light"] .role-badge-card:hover,
+[data-theme="light"] .role-badge-card:hover,
+[data-theme="classic-light"] .role-badge-card:hover,
+.light-theme .role-badge-card:hover {
+    background: #FAFBFD !important;
+    border-color: rgba(217, 119, 6, 0.35) !important;
+    box-shadow: 0 8px 24px -4px rgba(217, 119, 6, 0.12) !important;
+    transform: translateY(-2px) !important;
+}
+
+html[data-theme="light"] .role-icon,
+html[data-theme="classic-light"] .role-icon,
+[data-theme="light"] .role-icon,
+[data-theme="classic-light"] .role-icon,
+.light-theme .role-icon {
+    background: rgba(217, 119, 6, 0.08) !important;
+    color: #D97706 !important;
+    border: 1px solid rgba(217, 119, 6, 0.18) !important;
+}
+
+html[data-theme="light"] .role-badge-card h4,
+html[data-theme="classic-light"] .role-badge-card h4,
+[data-theme="light"] .role-badge-card h4,
+[data-theme="classic-light"] .role-badge-card h4,
+.light-theme .role-badge-card h4 {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .role-badge-card p,
+html[data-theme="classic-light"] .role-badge-card p,
+[data-theme="light"] .role-badge-card p,
+[data-theme="classic-light"] .role-badge-card p,
+.light-theme .role-badge-card p {
+    color: #334155 !important;
+}
+
+/* Honors & Credentials Bento Tiles */
+html[data-theme="light"] .bento-card-header,
+html[data-theme="classic-light"] .bento-card-header,
+[data-theme="light"] .bento-card-header,
+[data-theme="classic-light"] .bento-card-header,
+.light-theme .bento-card-header {
     border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
 }
 
-html[data-theme="light"] .timeline-line {
-    background: rgba(15, 23, 42, 0.06) !important;
+html[data-theme="light"] .bento-card-title,
+html[data-theme="classic-light"] .bento-card-title,
+[data-theme="light"] .bento-card-title,
+[data-theme="classic-light"] .bento-card-title,
+.light-theme .bento-card-title {
+    color: #090D16 !important;
+    font-weight: 700 !important;
 }
 
-html[data-theme="light"] .timeline-dot {
-    border-color: #FFFFFF !important;
-}
-
-html[data-theme="light"] .experience-layout::before {
-    background: rgba(15, 23, 42, 0.05) !important;
-}
-
-html[data-theme="light"] .preloader {
+html[data-theme="light"] .honor-tile,
+html[data-theme="classic-light"] .honor-tile,
+[data-theme="light"] .honor-tile,
+[data-theme="classic-light"] .honor-tile,
+.light-theme .honor-tile {
     background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
 }
 
-html[data-theme="light"] .preloader-bar {
-    background: rgba(0, 0, 0, 0.05) !important;
+html[data-theme="light"] .honor-tile:hover,
+html[data-theme="classic-light"] .honor-tile:hover,
+[data-theme="light"] .honor-tile:hover,
+[data-theme="classic-light"] .honor-tile:hover,
+.light-theme .honor-tile:hover {
+    background: #FAFBFD !important;
+    border-color: rgba(217, 119, 6, 0.35) !important;
+    box-shadow: 0 8px 20px -4px rgba(217, 119, 6, 0.12) !important;
 }
 
-html[data-theme="light"] .preloader-status {
+html[data-theme="light"] .honor-tile-title,
+html[data-theme="classic-light"] .honor-tile-title,
+[data-theme="light"] .honor-tile-title,
+[data-theme="classic-light"] .honor-tile-title,
+.light-theme .honor-tile-title {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .honor-tile-desc,
+html[data-theme="classic-light"] .honor-tile-desc,
+[data-theme="light"] .honor-tile-desc,
+[data-theme="classic-light"] .honor-tile-desc,
+.light-theme .honor-tile-desc {
+    color: #334155 !important;
+}
+
+html[data-theme="light"] .cred-tile,
+html[data-theme="classic-light"] .cred-tile,
+[data-theme="light"] .cred-tile,
+[data-theme="classic-light"] .cred-tile,
+.light-theme .cred-tile {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+}
+
+html[data-theme="light"] .cred-tile:hover,
+html[data-theme="classic-light"] .cred-tile:hover,
+[data-theme="light"] .cred-tile:hover,
+[data-theme="classic-light"] .cred-tile:hover,
+.light-theme .cred-tile:hover {
+    background: #FAFBFD !important;
+    border-color: rgba(14, 165, 233, 0.35) !important;
+    box-shadow: 0 8px 20px -4px rgba(14, 165, 233, 0.12) !important;
+}
+
+html[data-theme="light"] .cred-tile-title,
+html[data-theme="classic-light"] .cred-tile-title,
+[data-theme="light"] .cred-tile-title,
+[data-theme="classic-light"] .cred-tile-title,
+.light-theme .cred-tile-title {
+    color: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .cred-tile-desc,
+html[data-theme="classic-light"] .cred-tile-desc,
+[data-theme="light"] .cred-tile-desc,
+[data-theme="classic-light"] .cred-tile-desc,
+.light-theme .cred-tile-desc {
     color: #475569 !important;
 }
 
-html[data-theme="light"] .preloader-logo .preloader-text {
-    color: #0F172A !important;
+/* Global Navbar & Surfaces in Light Theme */
+html[data-theme="light"] .navbar,
+html[data-theme="classic-light"] .navbar,
+[data-theme="light"] .navbar,
+[data-theme="classic-light"] .navbar,
+.light-theme .navbar {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03) !important;
 }
 
-html[data-theme="light"] .theme-dropdown {
+html[data-theme="light"] .timeline-line,
+html[data-theme="classic-light"] .timeline-line,
+[data-theme="light"] .timeline-line,
+[data-theme="classic-light"] .timeline-line,
+.light-theme .timeline-line {
+    background: #E2E8F0 !important;
+}
+
+html[data-theme="light"] .timeline-dot,
+html[data-theme="classic-light"] .timeline-dot,
+[data-theme="light"] .timeline-dot,
+[data-theme="classic-light"] .timeline-dot,
+.light-theme .timeline-dot {
+    border-color: #FFFFFF !important;
+}
+
+html[data-theme="light"] .preloader,
+html[data-theme="classic-light"] .preloader,
+[data-theme="light"] .preloader,
+[data-theme="classic-light"] .preloader,
+.light-theme .preloader {
+    background: #FFFFFF !important;
+}
+
+html[data-theme="light"] .preloader-bar,
+html[data-theme="classic-light"] .preloader-bar,
+[data-theme="light"] .preloader-bar,
+[data-theme="classic-light"] .preloader-bar,
+.light-theme .preloader-bar {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="light"] .preloader-status,
+html[data-theme="classic-light"] .preloader-status,
+[data-theme="light"] .preloader-status,
+[data-theme="classic-light"] .preloader-status,
+.light-theme .preloader-status {
+    color: #475569 !important;
+}
+
+html[data-theme="light"] .preloader-logo .preloader-text,
+html[data-theme="classic-light"] .preloader-logo .preloader-text,
+[data-theme="light"] .preloader-logo .preloader-text,
+[data-theme="classic-light"] .preloader-logo .preloader-text,
+.light-theme .preloader-logo .preloader-text {
+    color: #090D16 !important;
+}
+
+html[data-theme="light"] .theme-dropdown,
+html[data-theme="classic-light"] .theme-dropdown,
+[data-theme="light"] .theme-dropdown,
+[data-theme="classic-light"] .theme-dropdown,
+.light-theme .theme-dropdown {
     background: #FFFFFF !important;
     border-color: rgba(15, 23, 42, 0.1) !important;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1) !important;
 }
 
-html[data-theme="light"] .theme-option {
+html[data-theme="light"] .theme-option,
+html[data-theme="classic-light"] .theme-option,
+[data-theme="light"] .theme-option,
+[data-theme="classic-light"] .theme-option,
+.light-theme .theme-option {
     color: #334155 !important;
 }
 
-html[data-theme="light"] .theme-option:hover {
+html[data-theme="light"] .theme-option:hover,
+html[data-theme="classic-light"] .theme-option:hover,
+[data-theme="light"] .theme-option:hover,
+[data-theme="classic-light"] .theme-option:hover,
+.light-theme .theme-option:hover {
     background: #F1F5F9 !important;
 }
 
