@@ -55,7 +55,7 @@
 
   <!-- Subtitle -->
   <text x="80" y="185" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="20" font-weight="500" fill="#e2e8f0" letter-spacing="0.3">
-    B.Tech CSE (Data Science) • AI &amp; Software Engineering • Rank 4 HackDevengers '26 • Top 0.11% PromptWars
+    B.Tech CSE (Data Science) • AI &amp; Software Engineering • Rank 2 Startupathon '26 • Top 0.11% PromptWars
   </text>
 
   <!-- Highlight Pills -->
@@ -66,7 +66,7 @@
 
     <!-- Pill 2 -->
     <rect x="235" y="0" width="275" height="38" rx="8" fill="#121a2e" stroke="#1e293b" stroke-width="1.5"/>
-    <text x="250" y="24" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🏆 <tspan fill="#38bdf8">Rank 4 / 4.2k+ (HackDevengers 1.0)</tspan></text>
+    <text x="250" y="24" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🥈 <tspan fill="#38bdf8">Rank 2 Winner (Startupathon '26)</tspan></text>
 
     <!-- Pill 3 -->
     <rect x="525" y="0" width="270" height="38" rx="8" fill="#121a2e" stroke="#1e293b" stroke-width="1.5"/>
