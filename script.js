@@ -3155,7 +3155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return `🏆 <strong>Major Achievements & Honors:</strong><br><br>
             • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in STARTUPATHON & IDEATHON 2026 organized by WAMPire Slayers on Unstop for exceptional innovation, product validation, and pitching excellence.<br>
             • ⚡ <strong>Rank 4 / 4,200+ Participants Globally</strong> in HackDevengers 1.0 (2026), an 8-hour global hackathon by Devengers for building HospiSynAI.<br>
-            • 🥇 <strong>Rank 1 (Women Developer) & Rank 30 / 26,090+ Nationally (Top 0.2%)</strong> in Virtual PromptWars 2026.<br>
+            • 🥇 <strong>Rank 1 (Women Developer) & Rank 30 / 26,090+ Nationally (Top 0.11%)</strong> in Virtual PromptWars 2026.<br>
             • 🥇 <strong>Rank 1 (Challenge 2)</strong> for VoteWise-AI.<br>
             • 🏅 <strong>Top 40 (Challenge 1)</strong> for SmartStadium-AI.<br>
             • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ skill badges!<br><br>
@@ -3212,7 +3212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <strong>2. Global Hackathon Champion & Competitive Excellence:</strong><br>
             • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in Startupathon & Ideathon 2026 (WAMPire Slayers / Unstop).<br>
             • 🏆 <strong>Rank 4 / 4,200+ Developers Globally</strong> in HackDevengers 1.0 (HospiSynAI).<br>
-            • 🥇 <strong>Rank 1 (Women Developer) & Top 0.2% Nationally (Rank 30 / 26,090+)</strong> in Virtual PromptWars 2026.<br>
+            • 🥇 <strong>Rank 1 (Women Developer) & Top 0.11% Nationally (Rank 30 / 26,090+)</strong> in Virtual PromptWars 2026.<br>
             • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ verified badges.<br><br>
 
             <strong>3. Modern Agentic & Low-Latency AI Stack:</strong><br>

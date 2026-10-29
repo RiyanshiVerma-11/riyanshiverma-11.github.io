@@ -121,7 +121,7 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
     *   Ranked **4th among 4.2k+ participants** globally for building **HospiSynAI**, an AI-powered hospital management and billing platform featuring Groq Llama 3.3 70B clinical note processing, 11-language prescription generation, and hybrid AI billing auditing.
 *   **🏆 Rank 1 (Women Developer) & Overall Rank 30 / 26,090+ (Virtual PromptWars 2026)**
     *   Organized by **Google for Developers** & **Hack2Skills**.
-    *   Ranked in the **top 0.2% nationally** out of 26,090+ participants. Developed *VoteWise AI* achieving a **96.98% AI-verified score** in code quality, security, efficiency, Google services, and accessibility.
+    *   Ranked in the **top 0.11% nationally** out of 26,090+ participants. Developed *VoteWise AI* achieving a **96.98% AI-verified score** in code quality, security, efficiency, Google services, and accessibility.
 
 ---
 
