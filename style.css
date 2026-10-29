@@ -8210,3 +8210,162 @@ body.modal-open {
     overflow: hidden !important;
     touch-action: none;
 }
+
+
+/* ==========================================================================
+   CLASSIC LIGHT MODE REFINEMENTS: SLATE TONES (#334155 / #0F172A) & CRISP BORDERS
+   ========================================================================== */
+html[data-theme="light"] .modal-card,
+html[data-theme="light"] .recruiter-modal-card,
+html[data-theme="light"] .arch-modal-card {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14), 0 0 30px rgba(15, 23, 42, 0.04) !important;
+    color: #0F172A !important;
+}
+
+html[data-theme="light"] .modal-title {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .modal-description {
+    color: #334155 !important;
+}
+
+html[data-theme="light"] .modal-close {
+    color: #334155 !important;
+    background: #F1F5F9 !important;
+    border: 1px solid #CBD5E1 !important;
+}
+
+html[data-theme="light"] .modal-close:hover {
+    color: #0F172A !important;
+    background: #E2E8F0 !important;
+}
+
+html[data-theme="light"] .recruiter-spec-card {
+    background: #F8FAFC !important;
+    border: 1px solid #CBD5E1 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme="light"] .recruiter-spec-card:hover {
+    border-color: #334155 !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] .recruiter-spec-card h4 {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .recruiter-spec-card p {
+    color: #334155 !important;
+}
+
+html[data-theme="light"] .recruiter-spec-card p strong {
+    color: #B45309 !important;
+}
+
+/* Terminals & Sandbox Consoles in Light Mode */
+html[data-theme="light"] .sandbox-console {
+    background: #F8FAFC !important;
+    border-left: 1px solid #CBD5E1 !important;
+}
+
+html[data-theme="light"] .console-header {
+    background: #F1F5F9 !important;
+    border-bottom: 1px solid #CBD5E1 !important;
+}
+
+html[data-theme="light"] .console-title {
+    color: #334155 !important;
+    font-family: var(--font-mono) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] .console-body {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
+    font-family: var(--font-mono) !important;
+}
+
+html[data-theme="light"] .log-line.system {
+    color: #0284C7 !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] .log-line.command {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .log-line.step {
+    color: #334155 !important;
+    font-weight: 500 !important;
+}
+
+html[data-theme="light"] .log-line.trace {
+    color: #475569 !important;
+}
+
+html[data-theme="light"] .log-line.warning {
+    color: #B45309 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .log-line.success {
+    color: #047857 !important;
+    font-weight: 700 !important;
+}
+
+/* Architecture Dry-Run Console in Light Mode */
+html[data-theme="light"] .dryrun-header {
+    background: #F1F5F9 !important;
+    border-bottom: 1px solid #CBD5E1 !important;
+}
+
+html[data-theme="light"] .dryrun-title {
+    color: #334155 !important;
+    font-family: var(--font-mono) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] .dryrun-body {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
+    font-family: var(--font-mono) !important;
+}
+
+html[data-theme="light"] .dryrun-input-row {
+    background: #F8FAFC !important;
+    border-top: 1px solid #CBD5E1 !important;
+}
+
+html[data-theme="light"] .dryrun-prompt {
+    color: #B45309 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .dryrun-input {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
+    font-family: var(--font-mono) !important;
+}
+
+html[data-theme="light"] .code-editor-wrapper {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
+}
+
+html[data-theme="light"] .code-gutter {
+    background: #F8FAFC !important;
+    border-right: 1px solid #CBD5E1 !important;
+    color: #64748B !important;
+}
