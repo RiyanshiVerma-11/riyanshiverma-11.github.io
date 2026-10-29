@@ -7446,8 +7446,10 @@ html[data-theme="light"] .btn-sim-text span {
     }
     .hero-mobile-socials {
         justify-content: center;
-        gap: 1.2rem;
-        margin-top: 0.75rem;
+        align-items: center;
+        gap: 1.1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
     }
     .hero-mobile-socials .social-link {
         width: 42px;
