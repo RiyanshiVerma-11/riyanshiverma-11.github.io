@@ -2272,16 +2272,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetModalTabs();
 
                 archModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // prevent bg scrolling
+                lockBodyScroll();
             }
         });
     });
+
+    // Modal Scroll Locking Helper Functions
+    function lockBodyScroll() {
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function unlockBodyScroll() {
+        const activeModals = document.querySelectorAll('.modal-overlay.active, .cmd-palette-overlay.active');
+        if (activeModals.length === 0) {
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+        }
+    }
 
     // Close Modal Function
     function closeModal() {
         if (archModal) {
             archModal.classList.remove('active');
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
     }
 
@@ -2305,14 +2319,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function openRecruiterModal() {
         if (recruiterModal) {
             recruiterModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            lockBodyScroll();
         }
     }
 
     function closeRecruiterModal() {
         if (recruiterModal) {
             recruiterModal.classList.remove('active');
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
     }
 
@@ -2415,7 +2429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (certModal) {
             certModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            lockBodyScroll();
         }
     }
 
@@ -2425,7 +2439,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeCertModal() {
         if (certModal) {
             certModal.classList.remove('active');
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
     }
 
@@ -2515,6 +2529,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             if (certModal && certModal.classList.contains('active')) closeCertModal();
             if (recruiterModal && recruiterModal.classList.contains('active')) closeRecruiterModal();
+            if (archModal && archModal.classList.contains('active')) closeModal();
         }
     });
 
@@ -2664,12 +2679,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cmdPalette) return;
         const isActive = cmdPalette.classList.toggle('active');
         if (isActive) {
-            document.body.style.overflow = 'hidden';
+            lockBodyScroll();
             cmdInput.value = '';
             filterCommands('');
             setTimeout(() => cmdInput.focus(), 50);
         } else {
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
     }
 
@@ -2739,8 +2754,8 @@ document.addEventListener('DOMContentLoaded', () => {
             item.setAttribute('data-index', idx);
             item.innerHTML = `<span class="cmd-name">${cmd.name}</span><span class="cmd-desc">${cmd.desc}</span>`;
             item.addEventListener('click', () => {
-                cmd.action();
                 toggleCmdPalette();
+                setTimeout(() => cmd.action(), 50);
             });
             cmdResults.appendChild(item);
         });
@@ -2774,10 +2789,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const activeItem = items[cmdActiveIndex];
                     const cmdName = activeItem.querySelector('.cmd-name').textContent;
                     const command = allCommands.find(c => c.name === cmdName);
-                    if (command) {
-                        command.action();
-                    }
                     toggleCmdPalette();
+                    if (command) {
+                        setTimeout(() => command.action(), 50);
+                    }
                 }
             }
         });
@@ -3173,7 +3188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Experience & Education
         if (q.includes('experience') || q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('btech') || q.includes('university')) {
             return `🎓 <strong>Education & Standing:</strong><br>
-            • <strong>Degree:</strong> 4th-Year B.Tech in Computer Science & Engineering (Data Science)<br>
+            • <strong>Degree:</strong> 4th-Year (7th Semester, Graduating 2027) — B.Tech in Computer Science & Engineering (Data Science)<br>
             • <strong>Institute:</strong> Meerut Institute of Engineering and Technology (AKTU)<br>
             • <strong>CGPA:</strong> <strong>8.47 / 10.0</strong><br><br>
             💼 <strong>Completed AI Internship:</strong><br>

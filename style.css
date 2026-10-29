@@ -4517,13 +4517,16 @@ html[data-theme="classic-light"] #experience .spine-bridge-tag,
     -webkit-backdrop-filter: blur(8px);
     z-index: 9999;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity var(--t-normal), visibility var(--t-normal);
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-overlay.active {
@@ -4535,11 +4538,41 @@ html[data-theme="classic-light"] #experience .spine-bridge-tag,
 .modal-card {
     width: 100%;
     max-width: 820px;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     border-radius: var(--radius-lg);
-    padding: 3rem;
+    padding: 2.5rem;
     position: relative;
     transform: translateY(20px);
     transition: transform var(--t-normal);
+    margin: auto;
+    box-sizing: border-box;
+}
+
+/* Modal Custom Scrollbars */
+.modal-card::-webkit-scrollbar,
+.recruiter-modal-card::-webkit-scrollbar,
+.modal-overlay::-webkit-scrollbar {
+    width: 6px;
+}
+.modal-card::-webkit-scrollbar-track,
+.recruiter-modal-card::-webkit-scrollbar-track,
+.modal-overlay::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+.modal-card::-webkit-scrollbar-thumb,
+.recruiter-modal-card::-webkit-scrollbar-thumb,
+.modal-overlay::-webkit-scrollbar-thumb {
+    background: rgba(var(--gold-rgb), 0.35);
+    border-radius: 4px;
+}
+.modal-card::-webkit-scrollbar-thumb:hover,
+.recruiter-modal-card::-webkit-scrollbar-thumb:hover,
+.modal-overlay::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
 }
 
 .modal-overlay.active .modal-card {
@@ -6980,12 +7013,19 @@ html[data-theme="light"] .browser-mockup-address {
 
 /* Recruiter Modal Grid */
 .recruiter-modal-card {
-    max-width: 720px !important;
+    max-width: 780px !important;
+    max-height: calc(100vh - 3.5rem) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 2.25rem 2.25rem 2rem 2.25rem !important;
+    margin: auto !important;
+    box-sizing: border-box;
 }
 
 .recruiter-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: 1.25rem;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
@@ -7007,6 +7047,12 @@ html[data-theme="light"] .browser-mockup-address {
     display: flex;
     gap: 0.75rem;
     align-items: flex-start;
+    transition: transform var(--t-fast), border-color var(--t-fast);
+}
+
+.recruiter-spec-card:hover {
+    border-color: rgba(var(--gold-rgb), 0.3);
+    transform: translateY(-2px);
 }
 
 .spec-icon {
@@ -7033,9 +7079,81 @@ html[data-theme="light"] .browser-mockup-address {
     color: var(--gold);
 }
 
-@media (max-width: 640px) {
+.recruiter-ctas {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Recruiter Modal & General Modal Mobile Optimization */
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 0.75rem 0.5rem !important;
+        align-items: flex-start !important;
+    }
+
+    .modal-card {
+        padding: 1.75rem 1.15rem !important;
+        max-height: calc(100vh - 1.5rem) !important;
+        border-radius: var(--radius-md) !important;
+        margin: 0.4rem auto !important;
+    }
+
+    .recruiter-modal-card {
+        padding: 1.75rem 1.15rem 1.5rem 1.15rem !important;
+        max-height: calc(100vh - 1.5rem) !important;
+        margin: 0.4rem auto !important;
+    }
+
     .recruiter-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem !important;
+    }
+
+    .recruiter-ctas {
+        flex-direction: column !important;
+        gap: 0.6rem !important;
+    }
+
+    .recruiter-ctas .btn-primary,
+    .recruiter-ctas .btn-secondary {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 0.65rem 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 0.5rem 0.25rem !important;
+    }
+
+    .recruiter-modal-card {
+        padding: 1.35rem 0.85rem 1.25rem 0.85rem !important;
+        max-height: calc(100vh - 0.75rem) !important;
+    }
+
+    .recruiter-modal-card .modal-title {
+        font-size: 1.25rem !important;
+    }
+
+    .recruiter-modal-card .modal-description {
+        font-size: 0.8rem !important;
+    }
+
+    .recruiter-spec-card {
+        padding: 0.75rem 0.65rem !important;
+        gap: 0.6rem !important;
+    }
+
+    .recruiter-spec-card h4 {
+        font-size: 0.8rem !important;
+    }
+
+    .recruiter-spec-card p {
+        font-size: 0.74rem !important;
     }
 }
 
@@ -8099,4 +8217,9 @@ html[data-theme="light"] .chatbot-widget-container.dialog-open {
         max-height: 85vh;
         border-radius: 20px 20px 0 0;
     }
+}
+
+body.modal-open {
+    overflow: hidden !important;
+    touch-action: none;
 }
