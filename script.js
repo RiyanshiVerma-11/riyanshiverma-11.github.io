@@ -3186,11 +3186,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Experience & Education
-        if (q.includes('experience') || q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('btech') || q.includes('university')) {
+        if (q.includes('experience') || q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('btech') || q.includes('university') || q.includes('miet') || q.includes('aktu') || q.includes('institute') || q.includes('degree')) {
             return `🎓 <strong>Education & Standing:</strong><br>
             • <strong>Degree:</strong> 4th-Year (7th Semester, Graduating 2027) — B.Tech in Computer Science & Engineering (Data Science)<br>
-            • <strong>Institute:</strong> Meerut Institute of Engineering and Technology (AKTU)<br>
-            • <strong>CGPA:</strong> <strong>8.47 / 10.0</strong><br><br>
+            • <strong>Institute:</strong> Meerut Institute of Engineering and Technology (MIET, Meerut)<br>
+            • <strong>Affiliation:</strong> Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow<br>
+            • <strong>Overall CGPA:</strong> <strong>8.47 / 10.0</strong> (Till 6th Semester)<br><br>
             💼 <strong>Completed AI Internship:</strong><br>
             • <strong>AI Intern at Infosys Springboard 7.0</strong> (June 29, 2026 – August 31, 2026 • Completed), engineered CommAI multilingual mass communications PWA.<br><br>
             📜 <button onclick="openCertModal('infosys')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:4px 12px; font-size:0.78rem; cursor:pointer; border:none;">Inspect Infosys Certificate 📜</button><br><br>
@@ -3219,7 +3220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Specialized in <strong>autonomous multi-agent architectures (LangGraph / Groq LPU inference &lt;100ms latency), RAG semantic caching, and automated circuit breakers</strong> for rock-solid reliability.<br><br>
 
             <strong>4. Full-Stack Delivery & High Ownership:</strong><br>
-            Strong fundamentals (<strong>8.47 CGPA</strong> in B.Tech CSE Data Science) combined with end-to-end delivery: Python, FastAPI microservices, Docker containerization, and modern React interfaces.<br><br>
+            Strong academic fundamentals (<strong>8.47 CGPA till 6th Sem</strong> in B.Tech CSE Data Science at MIET Meerut / AKTU) combined with end-to-end delivery: Python, FastAPI microservices, Docker containerization, and modern React interfaces.<br><br>
 
             👉 <a href="assets/Riyanshi_Verma_Resume.pdf" target="_blank" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 4px; text-decoration:none;">Download Resume PDF 📥</a><br>
             📅 <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank" class="btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 8px; text-decoration:none;">Schedule a 30-Min Technical Chat 📅</a>`;
