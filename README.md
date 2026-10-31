@@ -123,6 +123,9 @@ I am an **AI Developer & Data Science Student** dedicated to building high-perfo
 *   **🏆 Rank 1 (Women Developer) & Overall Rank 30 / 26,090+ (Virtual PromptWars 2026)**
     *   Organized by **Google for Developers** & **Hack2Skills**.
     *   Ranked in the **top 0.11% nationally** out of 26,090+ participants. Developed *VoteWise AI* achieving a **96.98% AI-verified score** in code quality, security, efficiency, Google services, and accessibility.
+*   **🔥 Rank 6 — HACK-A-THRONE National Hackathon 2026**
+    *   Organized on **Unstop**.
+    *   Secured **Rank 6** in the national hackathon, competing against hundreds of participants nationwide with cutting-edge AI solutions.
 
 ---
 

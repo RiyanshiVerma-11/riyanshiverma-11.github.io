@@ -3151,10 +3151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Hackathons & Awards
-        if (q.includes('hackathon') || q.includes('award') || q.includes('rank') || q.includes('achievement') || q.includes('promptwars') || q.includes('startupathon')) {
+        if (q.includes('hackathon') || q.includes('award') || q.includes('rank') || q.includes('achievement') || q.includes('promptwars') || q.includes('startupathon') || q.includes('hack-a-throne') || q.includes('hackathrone')) {
             return `🏆 <strong>Major Achievements & Honors:</strong><br><br>
             • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in STARTUPATHON & IDEATHON 2026 organized by WAMPire Slayers on Unstop for exceptional innovation, product validation, and pitching excellence.<br>
             • ⚡ <strong>Rank 4 / 4,200+ Participants Globally</strong> in HackDevengers 1.0 (2026), an 8-hour global hackathon by Devengers for building HospiSynAI.<br>
+            • 🔥 <strong>Rank 6</strong> in Hack-A-Throne National Hackathon 2026 on Unstop, competing against hundreds of national participants.<br>
             • 🥇 <strong>Rank 1 (Women Developer) & Rank 30 / 26,090+ Nationally (Top 0.11%)</strong> in Virtual PromptWars 2026.<br>
             • 🥇 <strong>Rank 1 (Challenge 2)</strong> for VoteWise-AI.<br>
             • 🏅 <strong>Top 40 (Challenge 1)</strong> for SmartStadium-AI.<br>
@@ -3213,6 +3214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <strong>2. Global Hackathon Champion & Competitive Excellence:</strong><br>
             • 🥈 <strong>2nd Place Winner (Rank 2)</strong> in Startupathon & Ideathon 2026 (WAMPire Slayers / Unstop).<br>
             • 🏆 <strong>Rank 4 / 4,200+ Developers Globally</strong> in HackDevengers 1.0 (HospiSynAI).<br>
+            • 🔥 <strong>Rank 6</strong> in Hack-A-Throne National Hackathon 2026 (Unstop).<br>
             • 🥇 <strong>Rank 1 (Women Developer) & Top 0.11% Nationally (Rank 30 / 26,090+)</strong> in Virtual PromptWars 2026.<br>
             • 💎 <strong>Google Cloud Arcade Diamond Profile</strong> with 49+ verified badges.<br><br>
 
@@ -3408,12 +3410,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // ------------------------------------------------------------------
-        // Universal Instant Unmute Engine:
-        // On ANY user interaction anywhere on the screen (click, tap, keypress),
-        // instantly unmute the video. If the video was already playing silently,
-        // rewind to 0 (if < 3.5s) so the recruiter hears the entire introduction!
+        // Universal Instant Unmute Engine: DISABLED for better UX.
+        // Audio now only unmutes via the explicit sound pill button.
+        // This prevents the jarring auto-unmute on any random page interaction.
         // ------------------------------------------------------------------
         const setupUniversalUnmuteTriggers = () => {
+            // Disabled: let the user control audio via the sound pill button only.
+            return;
             if (window.__universalUnmuteActive) return;
             window.__universalUnmuteActive = true;
 
