@@ -164,24 +164,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let animationId;
         let isCanvasVisible = true;
+        let isTabActive = !document.hidden;
+
+        function updateAnimationState() {
+            if (isCanvasVisible && isTabActive) {
+                if (!animationId) animate();
+            } else {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            }
+        }
 
         const canvasObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 isCanvasVisible = entry.isIntersecting;
-                if (isCanvasVisible) {
-                    if (!animationId) animate();
-                } else {
-                    if (animationId) {
-                        cancelAnimationFrame(animationId);
-                        animationId = null;
-                    }
-                }
+                updateAnimationState();
             });
         }, { threshold: 0 });
         canvasObserver.observe(canvas);
 
+        document.addEventListener('visibilitychange', () => {
+            isTabActive = !document.hidden;
+            updateAnimationState();
+        });
+
         function animate() {
-            if (!isCanvasVisible) return;
+            if (!isCanvasVisible || !isTabActive) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.update();
@@ -354,8 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
+            link.removeAttribute('aria-current');
             if (link.getAttribute('href').slice(1) === currentSectionId) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
             }
         });
     });

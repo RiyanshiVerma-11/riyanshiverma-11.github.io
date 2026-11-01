@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- Google Fonts Import ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Alex+Brush&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&display=swap');
 
 :root {
     /* ── Warm-Cyber Color Palette ── */
@@ -2028,6 +2028,28 @@ html[data-theme="light"] .contact-link-social:hover {
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+.footer-built-with {
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.footer-stack-pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
 }
 
 .footer-right {
@@ -5207,6 +5229,23 @@ html[data-theme="classic-light"] #experience .spine-bridge-tag,
     display: flex;
     justify-content: center;
     overflow-x: auto;
+    /* Smooth momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent the container itself from causing page overflow */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--violet-rgb), 0.4) transparent;
+}
+
+/* Custom scrollbar for webkit (visible hint on mobile that content scrolls) */
+.sandbox-flowmap::-webkit-scrollbar {
+    height: 4px;
+}
+.sandbox-flowmap::-webkit-scrollbar-track {
+    background: transparent;
+}
+.sandbox-flowmap::-webkit-scrollbar-thumb {
+    background: rgba(var(--violet-rgb), 0.4);
+    border-radius: 2px;
 }
 
 .flowmap-svg {
@@ -5214,6 +5253,9 @@ html[data-theme="classic-light"] #experience .spine-bridge-tag,
     width: 100%;
     max-width: 780px;
     height: auto;
+    /* Prevent SVG from collapsing below readable size on narrow screens */
+    min-width: 560px;
+    flex-shrink: 0;
 }
 
 .flowmap-svg.active {
@@ -5273,6 +5315,14 @@ html[data-theme="classic-light"] #experience .spine-bridge-tag,
 @keyframes flowPulse {
     to {
         stroke-dashoffset: -20;
+    }
+}
+
+/* Mobile: reduce padding so the scrollable flowmap has more visible width */
+@media (max-width: 600px) {
+    .sandbox-flowmap {
+        padding: 1rem 0.75rem;
+        border-radius: var(--radius-sm);
     }
 }
 
@@ -5879,31 +5929,31 @@ html[data-theme="classic-light"] .hero-stats-dock,
 /* 21K+ Cloud Points (Google Cloud Azure Blue Glow) */
 .stat-item.glow-blue,
 .metric.glow-blue {
-    border-color: rgba(66, 133, 244, 0.52);
-    background: radial-gradient(circle at 50% 0%, rgba(66, 133, 244, 0.22) 0%, rgba(15, 20, 42, 0.7) 85%);
+    border-color: rgba(59, 130, 246, 0.65);
+    background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.35) 0%, rgba(15, 23, 42, 0.8) 85%);
     box-shadow: 
-        0 0 18px rgba(66, 133, 244, 0.35),
+        0 0 24px rgba(59, 130, 246, 0.45),
         0 4px 14px rgba(0, 0, 0, 0.5),
-        inset 0 0 14px rgba(66, 133, 244, 0.2);
+        inset 0 0 16px rgba(59, 130, 246, 0.25);
     animation: rankAuraPulseBlue 3.5s ease-in-out 2s infinite alternate;
 }
 
 .stat-item.glow-blue:hover,
 .metric.glow-blue:hover {
-    border-color: rgba(66, 133, 244, 0.9);
+    border-color: rgba(96, 165, 250, 0.95);
     box-shadow: 
-        0 0 30px rgba(66, 133, 244, 0.65),
+        0 0 35px rgba(59, 130, 246, 0.75),
         0 8px 24px rgba(0, 0, 0, 0.6),
-        inset 0 0 18px rgba(66, 133, 244, 0.35);
+        inset 0 0 20px rgba(59, 130, 246, 0.4);
 }
 
 .stat-item.glow-blue .stat-number,
 .metric.glow-blue .metric-value {
-    background: linear-gradient(135deg, #BFDBFE 0%, #4285F4 50%, #1D4ED8 100%);
+    background: linear-gradient(135deg, #BFDBFE 0%, #60A5FA 50%, #3B82F6 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(66, 133, 244, 0.75));
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.85));
 }
 
 /* Numbers & Labels inside Stats */
@@ -6090,15 +6140,42 @@ html[data-theme="light"] .metric.glow-emerald .metric-value {
 
 html[data-theme="light"] .stat-item.glow-blue,
 html[data-theme="classic-light"] .stat-item.glow-blue,
-.light-theme .stat-item.glow-blue {
-    background: radial-gradient(circle at 50% 0%, rgba(219, 234, 254, 0.85) 0%, #FFFFFF 85%) !important;
-    border-color: rgba(37, 99, 235, 0.48) !important;
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.24), 0 0 14px rgba(37, 99, 235, 0.18) !important;
+.light-theme .stat-item.glow-blue,
+html[data-theme="light"] .metric.glow-blue,
+html[data-theme="classic-light"] .metric.glow-blue,
+[data-theme="light"] .metric.glow-blue,
+.light-theme .metric.glow-blue {
+    background: radial-gradient(circle at 50% 0%, rgba(219, 234, 254, 0.95) 0%, #FFFFFF 85%) !important;
+    border-color: rgba(37, 99, 235, 0.55) !important;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3), 0 0 16px rgba(37, 99, 235, 0.22) !important;
 }
-html[data-theme="light"] .stat-item.glow-blue .stat-number {
+
+html[data-theme="light"] .stat-item.glow-blue:hover,
+html[data-theme="classic-light"] .stat-item.glow-blue:hover,
+html[data-theme="light"] .metric.glow-blue:hover,
+html[data-theme="classic-light"] .metric.glow-blue:hover,
+[data-theme="light"] .metric.glow-blue:hover,
+.light-theme .metric.glow-blue:hover {
+    border-color: rgba(37, 99, 235, 0.95) !important;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45), 0 0 22px rgba(37, 99, 235, 0.35) !important;
+}
+
+html[data-theme="light"] .stat-item.glow-blue .stat-number,
+html[data-theme="classic-light"] .stat-item.glow-blue .stat-number,
+html[data-theme="light"] .metric.glow-blue .metric-value,
+html[data-theme="classic-light"] .metric.glow-blue .metric-value,
+[data-theme="light"] .metric.glow-blue .metric-value,
+.light-theme .metric.glow-blue .metric-value {
     color: #1D4ED8 !important;
     -webkit-text-fill-color: #1D4ED8 !important;
-    filter: drop-shadow(0 0 4px rgba(37, 99, 235, 0.4)) !important;
+    filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.45)) !important;
+}
+
+html[data-theme="light"] .metric.glow-blue .metric-label,
+html[data-theme="classic-light"] .metric.glow-blue .metric-label,
+[data-theme="light"] .metric.glow-blue .metric-label,
+.light-theme .metric.glow-blue .metric-label {
+    color: #334155 !important;
 }
 
 html[data-theme="light"] .stat-label,
@@ -6907,15 +6984,108 @@ html[data-theme="light"] .metric-label {
     color: #64748B !important;
 }
 
-html[data-theme="light"] .flow-node {
-    fill: #FFFFFF !important;
-    stroke: rgba(15, 23, 42, 0.1) !important;
+/* --- Sandbox Visual Flow Map in Light Theme --- */
+html[data-theme="light"] .sandbox-flowmap,
+html[data-theme="classic-light"] .sandbox-flowmap,
+[data-theme="light"] .sandbox-flowmap,
+[data-theme="classic-light"] .sandbox-flowmap,
+.light-theme .sandbox-flowmap {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
 }
 
+html[data-theme="light"] .flow-node,
+html[data-theme="classic-light"] .flow-node,
+[data-theme="light"] .flow-node,
+.light-theme .flow-node {
+    fill: #F8FAFC !important;
+    stroke: rgba(15, 23, 42, 0.22) !important;
+    filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.05)) !important;
+}
 
+html[data-theme="light"] .flow-node.active,
+html[data-theme="classic-light"] .flow-node.active,
+[data-theme="light"] .flow-node.active,
+.light-theme .flow-node.active {
+    fill: rgba(2, 132, 199, 0.14) !important;
+    stroke: #0284C7 !important;
+    filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.45)) !important;
+}
 
-html[data-theme="light"] .flow-path {
-    stroke: rgba(15, 23, 42, 0.1) !important;
+html[data-theme="light"] .flowmap-svg text,
+html[data-theme="classic-light"] .flowmap-svg text,
+[data-theme="light"] .flowmap-svg text,
+.light-theme .flowmap-svg text {
+    fill: #0F172A !important;
+}
+
+html[data-theme="light"] .flowmap-svg text[font-weight="600"],
+html[data-theme="classic-light"] .flowmap-svg text[font-weight="600"],
+[data-theme="light"] .flowmap-svg text[font-weight="600"],
+.light-theme .flowmap-svg text[font-weight="600"] {
+    fill: #090D16 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .flowmap-svg text:not([font-weight="600"]),
+html[data-theme="classic-light"] .flowmap-svg text:not([font-weight="600"]),
+[data-theme="light"] .flowmap-svg text:not([font-weight="600"]),
+.light-theme .flowmap-svg text:not([font-weight="600"]) {
+    fill: #475569 !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="light"] .flow-node.active + text,
+html[data-theme="classic-light"] .flow-node.active + text,
+[data-theme="light"] .flow-node.active + text,
+.light-theme .flow-node.active + text {
+    fill: #0284C7 !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="light"] .flow-path,
+html[data-theme="classic-light"] .flow-path,
+[data-theme="light"] .flow-path,
+.light-theme .flow-path {
+    stroke: rgba(15, 23, 42, 0.28) !important;
+}
+
+html[data-theme="light"] .flow-path.active,
+html[data-theme="classic-light"] .flow-path.active,
+[data-theme="light"] .flow-path.active,
+.light-theme .flow-path.active {
+    stroke: #0284C7 !important;
+    filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.65)) !important;
+}
+
+html[data-theme="light"] .sandbox-deck,
+html[data-theme="classic-light"] .sandbox-deck {
+    background: #FFFFFF !important;
+    border-right: 1px solid rgba(15, 23, 42, 0.1) !important;
+}
+
+html[data-theme="light"] .sandbox-btn,
+html[data-theme="classic-light"] .sandbox-btn {
+    background: #F8FAFC !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+
+html[data-theme="light"] .sandbox-btn:hover,
+html[data-theme="classic-light"] .sandbox-btn:hover {
+    background: #F1F5F9 !important;
+    border-color: rgba(217, 119, 6, 0.45) !important;
+}
+
+html[data-theme="light"] .sandbox-btn.active,
+html[data-theme="classic-light"] .sandbox-btn.active {
+    background: rgba(217, 119, 6, 0.08) !important;
+    border-color: #D97706 !important;
+}
+
+html[data-theme="light"] .sandbox-btn.active strong,
+html[data-theme="classic-light"] .sandbox-btn.active strong {
+    color: #D97706 !important;
 }
 
 html[data-theme="light"] .tool-badge {
