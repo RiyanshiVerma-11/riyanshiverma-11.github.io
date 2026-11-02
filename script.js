@@ -2999,6 +2999,48 @@ document.addEventListener('DOMContentLoaded', () => {
             chatbotWidgetContainer.classList.remove('dialog-open');
         }
     }
+    window.closeChatbot = closeChatbot;
+
+    // Interactive Technical Chat Scheduler (smooth scrolls to #contact, pre-fills form & highlights)
+    function openScheduleChat(customSubject, customMessage) {
+        closeChatbot();
+        const recruiterModal = document.getElementById('recruiter-modal');
+        if (recruiterModal) {
+            recruiterModal.classList.remove('active');
+            if (typeof unlockBodyScroll === 'function') unlockBodyScroll();
+        }
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        const subjectInput = document.getElementById('subject');
+        const messageInput = document.getElementById('message');
+        const nameInput = document.getElementById('name');
+
+        if (subjectInput) {
+            subjectInput.value = customSubject || '📅 Schedule 30-Minute Technical Chat';
+        }
+        if (messageInput && (!messageInput.value || messageInput.value.trim() === '')) {
+            messageInput.value = customMessage || "Hi Riyanshi, I would like to schedule a 30-minute technical discussion with you regarding software/AI engineering opportunities. Here are my details and available time slots:";
+        }
+
+        setTimeout(() => {
+            if (nameInput) {
+                nameInput.focus();
+            }
+            const contactBox = document.querySelector('.contact-box');
+            if (contactBox) {
+                contactBox.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+                contactBox.style.borderColor = 'var(--gold, #F7B267)';
+                contactBox.style.boxShadow = '0 0 35px rgba(247, 178, 103, 0.45)';
+                setTimeout(() => {
+                    contactBox.style.borderColor = '';
+                    contactBox.style.boxShadow = '';
+                }, 3000);
+            }
+        }, 500);
+    }
+    window.openScheduleChat = openScheduleChat;
 
     if (chatbotTriggerBtn) chatbotTriggerBtn.addEventListener('click', toggleChatbot);
     if (chatbotCloseBtn) chatbotCloseBtn.addEventListener('click', closeChatbot);
@@ -3077,12 +3119,14 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
+                if (targetId === 'contact') {
+                    openScheduleChat();
+                    return;
+                }
                 const targetEl = document.getElementById(targetId);
                 if (targetEl) {
                     targetEl.scrollIntoView({ behavior: 'smooth' });
-                    if (window.innerWidth < 640) {
-                        closeChatbot();
-                    }
+                    closeChatbot();
                 }
             });
         });
@@ -3238,20 +3282,20 @@ document.addEventListener('DOMContentLoaded', () => {
             <strong>4. Full-Stack Delivery & High Ownership:</strong><br>
             Strong academic fundamentals (<strong>8.47 CGPA till 6th Sem</strong> in B.Tech CSE Data Science at MIET Meerut / AKTU) combined with end-to-end delivery: Python, FastAPI microservices, Docker containerization, and modern React interfaces.<br><br>
 
-            👉 <a href="assets/Riyanshi_Verma_Resume.pdf" target="_blank" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 4px; text-decoration:none;">Download Resume PDF 📥</a><br>
-            📅 <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank" class="btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 8px; text-decoration:none;">Schedule a 30-Min Technical Chat 📅</a>`;
+            👉 <a href="assets/Riyanshi_Verma_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 4px; text-decoration:none;">Download Resume PDF 📥</a><br>
+            📅 <button type="button" onclick="window.openScheduleChat()" class="btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:6px; padding: 6px 14px; font-size: 0.8rem; margin-top: 8px; cursor:pointer; text-decoration:none;">Schedule a 30-Min Technical Chat 📅</button>`;
         }
 
         // Contact / Reach Out / Collaboration
         if (q.includes('contact') || q.includes('email') || q.includes('reach') || q.includes('linkedin') || q.includes('github') || q.includes('call') || q.includes('connect') || q.includes('message') || q.includes('hire')) {
             return `📬 I'd love to discuss AI engineering opportunities and collaborations! Here is how to reach me:<br><br>
             • 📧 <strong>Email:</strong> <a href="mailto:riyanshiverma46@gmail.com">riyanshiverma46@gmail.com</a><br>
-            • 💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank">linkedin.com/in/riyanshi-verma</a><br>
-            • 💻 <strong>GitHub:</strong> <a href="https://github.com/RiyanshiVerma-11" target="_blank">github.com/RiyanshiVerma-11</a><br>
-            • 📅 <strong>Calendly:</strong> <a href="https://calendly.com/riyanshiverma-work/30min" target="_blank">Schedule 30-Min Call</a><br>
-            • 📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/builds.by.riyanshi" target="_blank">@builds.by.riyanshi</a><br>
-            • 🎬 <strong>YouTube:</strong> <a href="https://youtube.com/@stylishspins" target="_blank">@stylishspins</a><br><br>
-            👉 Or drop a message directly via the <a href="#contact">Contact Form</a> below!`;
+            • 💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" target="_blank" rel="noopener noreferrer">linkedin.com/in/riyanshi-verma</a><br>
+            • 💻 <strong>GitHub:</strong> <a href="https://github.com/RiyanshiVerma-11" target="_blank" rel="noopener noreferrer">github.com/RiyanshiVerma-11</a><br>
+            • 📅 <strong>Technical Chat:</strong> <button type="button" onclick="window.openScheduleChat()" style="background:none; border:none; color:var(--gold); text-decoration:underline; cursor:pointer; font-weight:600; font-size:0.9rem; padding:0;">Schedule 30-Min Call</button><br>
+            • 📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/builds.by.riyanshi" target="_blank" rel="noopener noreferrer">@builds.by.riyanshi</a><br>
+            • 🎬 <strong>YouTube:</strong> <a href="https://youtube.com/@stylishspins" target="_blank" rel="noopener noreferrer">@stylishspins</a><br><br>
+            👉 Or drop a message directly via the <a href="#contact" onclick="window.openScheduleChat(); return false;">Contact Form</a> below!`;
         }
 
         // Greetings
