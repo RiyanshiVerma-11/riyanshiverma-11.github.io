@@ -378,8 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobileToggle && navLinksContainer) {
         mobileToggle.addEventListener('click', () => {
-            mobileToggle.classList.toggle('active');
+            const isActive = mobileToggle.classList.toggle('active');
             navLinksContainer.classList.toggle('active');
+            document.body.classList.toggle('nav-menu-open', isActive);
         });
 
         // Close menu when clicking nav links
@@ -387,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 mobileToggle.classList.remove('active');
                 navLinksContainer.classList.remove('active');
+                document.body.classList.remove('nav-menu-open');
             });
         });
     }
