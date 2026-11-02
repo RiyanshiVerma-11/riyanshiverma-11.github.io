@@ -12,3 +12,9 @@ Desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Node / Dev tools (not part of static site)
+node_modules/
+package-lock.json
+compress-images.js
+gen-og-image.js

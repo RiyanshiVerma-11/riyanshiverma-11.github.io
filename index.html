@@ -14,10 +14,12 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://riyanshiverma-11.github.io">
     <meta property="og:site_name" content="Riyanshi Verma Portfolio">
-    <meta property="og:image" content="https://riyanshiverma-11.github.io/assets/banner.svg">
+    <meta property="og:image" content="https://riyanshiverma-11.github.io/assets/og-social-card.png">
     <meta property="og:image:alt" content="Riyanshi Verma - AI Developer Banner">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://riyanshiverma-11.github.io/assets/banner.svg">
+    <meta name="twitter:image" content="https://riyanshiverma-11.github.io/assets/og-social-card.png">
     <meta name="twitter:image:alt" content="Riyanshi Verma - AI Developer Banner">
     <meta name="twitter:title" content="Riyanshi Verma | AI Developer">
     <meta name="twitter:description" content="Portfolio of Riyanshi Verma, AI Developer specializing in multi-agent orchestration, RAG, and LLM optimizations.">
@@ -35,8 +37,11 @@
     <!-- Google Fonts & Main Stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4.1">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <!-- Preload most critical display font (Space Grotesk 400 + 700) to cut FOUT -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=4.3">
 
     <!-- Direct link / hash bypass check for job boards and resume cross-checks -->
     <script>
@@ -53,9 +58,36 @@
     <noscript>
         <style>#preloader { display: none !important; } body { visibility: visible !important; }</style>
     </noscript>
+
+    <!-- Structured Data: Person schema for search engines & screen readers -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Riyanshi Verma",
+      "url": "https://riyanshiverma-11.github.io",
+      "image": "https://riyanshiverma-11.github.io/assets/og-social-card.png",
+      "jobTitle": "AI Developer & Full-Stack Engineer",
+      "description": "4th-year B.Tech CSE(DS) student specializing in multi-agent orchestration, RAG pipelines, and LLM optimizations. Ranked Top 0.11% (Rank 1 Women Dev) across 26,090+ developers.",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "B.Tech Computer Science & Data Science"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Multi-Agent Systems", "RAG", "LLM Fine-Tuning", "Full-Stack Development", "Python", "React", "Next.js"],
+      "sameAs": [
+        "https://github.com/RiyanshiVerma-11",
+        "https://www.linkedin.com/in/riyanshi-verma-ba363a2b2",
+        "https://www.instagram.com/builds.by.riyanshi",
+        "https://youtube.com/@stylishspins"
+      ]
+    }
+    </script>
 </head>
 
 <body>
+    <!-- Skip to main content — keyboard & screen reader accessibility -->
+    <a href="#main" class="skip-to-content">Skip to main content</a>
+
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress-container">
         <div class="scroll-progress-bar" id="scroll-progress"></div>
@@ -177,7 +209,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main">
         <!-- Hero Section -->
         <section id="hero" class="hero-section">
             <div class="container hero-container">
@@ -185,8 +217,8 @@
                     <h4 class="hero-greeting"><span class="handwritten-greeting">✨ Hello world,</span> I am</h4>
                     <h1 class="hero-name">Riyanshi Verma</h1>
                     <h2 class="hero-tagline">
-                        Engineering <span class="cursive-word">Intelligence</span>. <br>
-                        Optimizing <span class="gradient-text">Models</span>.
+                        Ranked <span class="gradient-text">Top 0.11%</span> across 26K+ devs. <br>
+                        Building <span class="cursive-word">Intelligence</span> that ships.
                     </h2>
                     <p class="hero-description">
                         I build and deploy advanced AI architectures, multi-agent orchestrations, and optimized
@@ -225,6 +257,9 @@
                         <!-- Main profile video / photo wrapper -->
                         <div class="photo-wrapper" id="photo-wrapper">
                             <img id="hero-profile-photo" src="assets/profile.png" alt="Riyanshi Verma portrait"
+                                width="480" height="480"
+                                fetchpriority="high"
+                                decoding="async"
                                 onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop'"
                                 title="Click photo to replay introduction video">
                             <video id="hero-intro-video" autoplay playsinline muted preload="auto" poster="assets/profile.png" title="Click to mute introduction">
@@ -385,6 +420,9 @@
                                 <span class="metric-label">AI Systems Deployed</span>
                             </div>
                         </div>
+                        <p class="benchmarks-more-tag">
+                            <span class="cursive-word">...& more to go 🚀</span>
+                        </p>
                     </div>
 
                     <!-- Card 5: Target Roles (Span 3) -->
@@ -421,7 +459,7 @@
                             </div>
                             
                             <div class="role-badge-card">
-                                <div class="role-info">💻</div>
+                                <div class="role-icon">💻</div>
                                 <div class="role-info">
                                     <h4>Full-Stack Developer (AI Apps)</h4>
                                     <p>Connecting modern frontends (React) with optimized model inference servers.</p>
@@ -1157,6 +1195,7 @@
                     <div class="sandbox-deck">
                         <h3 class="deck-title">Orchestration Dashboard</h3>
                         <p class="deck-subtitle">Select a pipeline simulation model to deploy on the node logs.</p>
+                        <p class="deck-sim-note" style="font-size:0.72rem;color:var(--text-tertiary);margin-top:-0.4rem;margin-bottom:0.5rem;font-family:var(--font-mono);opacity:0.7;">⚡ Simulated trace for demo — see live projects above for real deployments.</p>
 
                         <div class="sandbox-modes">
                             <button class="sandbox-btn active" data-simulation="rag">

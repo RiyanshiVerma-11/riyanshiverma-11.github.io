@@ -4,7 +4,28 @@
    ========================================================================== */
 
 /* ---------- Google Fonts Import ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&display=swap');
+
+/* ---------- Skip-to-Content Link (Accessibility) ---------- */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 10000;
+    padding: 0.75rem 1.25rem;
+    background: var(--gold, #F7B267);
+    color: #060810;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+    outline: none;
+}
+.skip-to-content:focus {
+    top: 0;
+}
 
 :root {
     /* ── Warm-Cyber Color Palette ── */
@@ -6212,6 +6233,25 @@ html[data-theme="classic-light"] .stat-label,
 
 .bento-metrics .metric:hover {
     transform: translateY(-3px) scale(1.02);
+}
+
+/* "...& more to go" personal cursive tag on benchmarks card */
+.benchmarks-more-tag {
+    text-align: right;
+    margin-top: 1.1rem;
+    padding-right: 0.5rem;
+    opacity: 0.95;
+}
+.benchmarks-more-tag .cursive-word {
+    font-size: clamp(1.45rem, 2.5vw + 0.6rem, 1.85rem);
+    letter-spacing: 0.02em;
+    display: inline-block;
+    transform: rotate(-1.5deg);
+    text-shadow: 0 0 16px rgba(247, 178, 103, 0.35);
+    transition: transform var(--t-fast);
+}
+.benchmarks-more-tag .cursive-word:hover {
+    transform: rotate(0deg) scale(1.05);
 }
 
 @media (max-width: 768px) {
