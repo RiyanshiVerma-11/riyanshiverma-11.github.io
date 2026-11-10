@@ -3,8 +3,7 @@
    Riyanshi Verma | AI Developer & Data Science Student
    ========================================================================== */
 
-/* ---------- Google Fonts Import ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&display=swap');
+/* ---------- Google Fonts (loaded via <link> in HTML, @import removed to avoid render-blocking duplicate) ---------- */
 
 /* ---------- Skip-to-Content Link (Accessibility) ---------- */
 .skip-to-content {
@@ -8552,11 +8551,10 @@ body.modal-open .chatbot-widget-container {
     max-width: calc(100vw - 32px);
     height: 540px;
     max-height: calc(100vh - 120px);
-    background: radial-gradient(circle at 10% 10%, rgba(18, 24, 48, 0.97), rgba(8, 12, 24, 0.98));
+    background: radial-gradient(circle at 10% 10%, rgb(18, 24, 48), rgb(8, 12, 24));
     border: 1px solid rgba(var(--gold-rgb), 0.35);
     border-radius: var(--radius-xl);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(var(--violet-rgb), 0.25);
-    backdrop-filter: blur(24px);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -8714,7 +8712,7 @@ body.modal-open .chatbot-widget-container {
 }
 
 .chat-msg.bot .chat-bubble {
-    background: rgba(20, 28, 55, 0.85);
+    background: rgb(20, 28, 55);
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #e2e8f0;
     border-top-left-radius: 4px;

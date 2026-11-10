@@ -2675,9 +2675,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize theme from storage
-    const savedTheme = localStorage.getItem('riyanshi-portfolio-theme') || 'default';
-    applyTheme(savedTheme);
+    // Initialize theme from storage (or auto-detect from OS preference)
+    const savedTheme = localStorage.getItem('riyanshi-portfolio-theme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        applyTheme('light');
+    } else {
+        applyTheme('default');
+    }
 
 
     // ----------------------------------------------------------------------

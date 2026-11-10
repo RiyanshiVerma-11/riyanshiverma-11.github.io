@@ -41,7 +41,7 @@
     <!-- Preload most critical display font (Space Grotesk 400 + 700) to cut FOUT -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4.5">
+    <link rel="stylesheet" href="style.css?v=4.6">
 
     <!-- Direct link / hash bypass check for job boards and resume cross-checks -->
     <script>
@@ -114,13 +114,13 @@
     <canvas id="neural-canvas"></canvas>
 
     <!-- Header Navigation -->
-    <header class="navbar" id="navbar">
+    <header class="navbar" id="navbar" role="banner">
         <div class="nav-container">
             <a href="#hero" class="logo">
                 <span class="logo-symbol">&lt;/&gt;</span>
                 <span class="logo-text">Riyanshi<span class="highlight">.ai</span></span>
             </a>
-            <nav class="nav-links" id="nav-links">
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
                 <a href="#about" class="nav-link active" aria-current="page">About</a>
                 <a href="#experience" class="nav-link">Experience</a>
                 <a href="#skills" class="nav-link">Skills</a>
@@ -169,7 +169,7 @@
                     <svg class="icon moon-icon" viewBox="0 0 24 24" width="16" height="16" style="display: none;"><path fill="currentColor" d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-9 8.3-9.8.6-.1 1.2.3 1.3.9.1.6-.3 1.2-.9 1.3-3.7.6-6.4 3.8-6.4 7.6 0 4.4 3.6 8 8 8 3.8 0 7-2.7 7.6-6.4.1-.6.7-1 1.3-.9.6.1 1 .7.9 1.3-.8 4.8-5 8.3-9.7 8.3z"/></svg>
                 </button>
                 <a href="https://github.com/RiyanshiVerma-11" class="nav-highlight-github desktop-only" target="_blank"
-                    rel="noopener noreferrer">
+                    rel="noopener noreferrer" aria-label="GitHub">
                     <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                         <path fill="currentColor"
                             d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
@@ -177,7 +177,7 @@
                     <span class="nav-btn-text">GitHub</span>
                 </a>
                 <a href="https://www.linkedin.com/in/riyanshi-verma-ba363a2b2" class="nav-highlight-linkedin desktop-only"
-                    style="margin-left: 0.5rem;" target="_blank" rel="noopener noreferrer">
+                    style="margin-left: 0.5rem;" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                         <path fill="currentColor"
                             d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.8v8.37h2.8v-4.67c0-.25.02-.5.1-.68a1.14 1.14 0 0 1 1-.77c.76 0 1 .58 1 1.42v4.7h2.8M6.5 8.37a1.37 1.37 0 0 0 1.37-1.37A1.37 1.37 0 0 0 6.5 5.63A1.37 1.37 0 0 0 5.13 7A1.37 1.37 0 0 0 6.5 8.37m1.4 10.13V10.13h-2.8v8.37h2.8z" />
@@ -214,7 +214,7 @@
         <section id="hero" class="hero-section">
             <div class="container hero-container">
                 <div class="hero-left reveal">
-                    <h4 class="hero-greeting"><span class="handwritten-greeting">✨ Hello world,</span> I am</h4>
+                    <p class="hero-greeting"><span class="handwritten-greeting">✨ Hello world,</span> I am</p>
                     <h1 class="hero-name">Riyanshi Verma</h1>
                     <h2 class="hero-tagline">
                         Ranked <span class="gradient-text">Top 0.11%</span> across 26K+ devs. <br>
@@ -262,8 +262,9 @@
                                 decoding="async"
                                 onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop'"
                                 title="Click photo to replay introduction video">
-                            <video id="hero-intro-video" autoplay playsinline muted preload="auto" poster="assets/profile.png" title="Click to mute introduction">
+                            <video id="hero-intro-video" autoplay playsinline muted preload="metadata" poster="assets/profile.png" title="Click to mute introduction">
                                 <source src="assets/Riyanshi_Intro.mp4" type="video/mp4">
+                                <track kind="captions" label="English" srclang="en" default>
                             </video>
                             <button class="video-sound-pill unmuted" id="video-sound-btn" aria-label="Toggle Introduction Audio" title="Click to mute introduction">
                                 <svg class="sound-icon-play" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="display: none;">
@@ -353,11 +354,11 @@
         <div class="section-divider"></div>
 
         <!-- About Section (Bento Grid) -->
-        <section id="about" class="section">
+        <section id="about" class="section" aria-labelledby="about-title">
             <div class="container">
                 <div class="section-header reveal">
                     <div class="section-tag">identity <span class="cursive-subheading">the journey so far ~</span></div>
-                    <h2 class="section-title">Decentralizing <span class="cursive-word">Complexity</span></h2>
+                    <h2 id="about-title" class="section-title">Decentralizing <span class="cursive-word">Complexity</span></h2>
                     <p class="section-subtitle">Translating advanced neural network research into robust,
                         deployment-ready software systems.</p>
                 </div>
@@ -481,11 +482,11 @@
         <div class="section-divider"></div>
 
         <!-- Experience & Credentials Section -->
-        <section id="experience" class="section">
+        <section id="experience" class="section" aria-labelledby="experience-title">
             <div class="container">
                 <div class="section-header reveal">
                     <div class="section-tag">timeline <span class="cursive-subheading">where ideas ship ~</span></div>
-                    <h2 class="section-title">System <span class="cursive-word">Experience</span></h2>
+                    <h2 id="experience-title" class="section-title">System <span class="cursive-word">Experience</span></h2>
                     <p class="section-subtitle">Chronological footprint of enterprise AI implementations, collaborative
                         research, and credentials.</p>
                 </div>
@@ -907,11 +908,11 @@
         <div class="section-divider"></div>
 
         <!-- Skills Section -->
-        <section id="skills" class="section bg-alt">
+        <section id="skills" class="section bg-alt" aria-labelledby="skills-title">
             <div class="container">
                 <div class="section-header reveal">
                     <div class="section-tag">capabilities <span class="cursive-subheading">neural toolbelt &amp; stack ~</span></div>
-                    <h2 class="section-title">Technical <span class="cursive-word">Matrix</span></h2>
+                    <h2 id="skills-title" class="section-title">Technical <span class="cursive-word">Matrix</span></h2>
                     <p class="section-subtitle">Deep capability across the full vertical stack of model integration,
                         deep learning pipelines, and backend MLOps infrastructure.</p>
                 </div>
@@ -1114,11 +1115,11 @@
         <div class="section-divider"></div>
 
         <!-- Systems Sandbox Section (Interactive AI Lab) -->
-        <section id="sandbox" class="section bg-alt">
+        <section id="sandbox" class="section bg-alt" aria-labelledby="sandbox-title">
             <div class="container">
                 <div class="section-header reveal">
                     <div class="section-tag">interactive <span class="cursive-subheading">live experimental lab ~</span></div>
-                    <h2 class="section-title">Systems <span class="cursive-word">Sandbox</span></h2>
+                    <h2 id="sandbox-title" class="section-title">Systems <span class="cursive-word">Sandbox</span></h2>
                     <p class="section-subtitle">Run live simulation traces of advanced retrieval, multi-agent
                         coordination, and system guardrail pipelines.</p>
                 </div>
@@ -1260,11 +1261,11 @@
         <div class="section-divider"></div>
 
         <!-- Projects Section -->
-        <section id="projects" class="section">
+        <section id="projects" class="section" aria-labelledby="projects-title">
             <div class="container">
                 <div class="section-header reveal">
                     <div class="section-tag">builds <span class="cursive-subheading">crafted with passion ~</span></div>
-                    <h2 class="section-title">Showcase <span class="cursive-word">Deployments</span></h2>
+                    <h2 id="projects-title" class="section-title">Showcase <span class="cursive-word">Deployments</span></h2>
                     <p class="section-subtitle">A collection of custom architectures, agentic pipelines, and optimized
                         systems built for production benchmarks.</p>
                 </div>
@@ -2323,12 +2324,12 @@
         <div class="section-divider"></div>
 
         <!-- Contact Section -->
-        <section id="contact" class="section">
+        <section id="contact" class="section" aria-labelledby="contact-title">
             <div class="container">
                 <div class="contact-box card-glass reveal">
                     <div class="contact-header">
                         <div class="section-tag">handshake <span class="cursive-subheading">let's build together ~</span></div>
-                        <h2 class="section-title">Initialize <span class="cursive-word">Connection</span></h2>
+                        <h2 id="contact-title" class="section-title">Initialize <span class="cursive-word">Connection</span></h2>
                         <p>Have an open role, an interesting project, or want to collaborate on generative AI
                             infrastructure? Shoot me a message below.</p>
                         <div class="contact-alternative">
@@ -2416,7 +2417,7 @@
     </button>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container footer-inner">
             <div class="footer-top">
                 <div class="footer-brand">
@@ -2780,7 +2781,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=3.9"></script>
+    <script src="script.js?v=4.0"></script>
 </body>
 
 </html>
