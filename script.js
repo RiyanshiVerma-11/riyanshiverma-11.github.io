@@ -2744,6 +2744,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: '/theme mono', desc: 'Switch to Monochrome theme', action: () => applyTheme('mono') },
         { name: '/theme light', desc: 'Switch to Classic Light theme', action: () => applyTheme('light') },
         { name: '/theme default', desc: 'Switch to Default Cyber theme', action: () => applyTheme('default') },
+        { name: '/aws', desc: 'Inspect verified AWS Community Builder profile', action: () => { window.open('https://builder.aws.com/community/@riyanshiverma', '_blank', 'noopener,noreferrer'); } },
         { name: '/hackathon', desc: 'Judging this portfolio? Unlock hackathon pitch & easter egg', action: () => triggerHackathonEasterEgg() },
         { name: '/easteregg', desc: 'Launch confetti & unlock Top 0.11% Dev Mode', action: () => triggerHackathonEasterEgg() }
     ];
@@ -3237,6 +3238,15 @@ document.addEventListener('DOMContentLoaded', () => {
             • <strong>Validation:</strong> Verified via Wingspan QR verification.<br><br>
             <button onclick="openCertModal('prompt_engineering')" class="btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:5px 14px; font-size:0.8rem; cursor:pointer; border:none; margin-bottom:8px;">Inspect Certificate 📜</button><br><br>
             👉 <a href="#experience">Explore in Experience &amp; Credentials</a>`;
+        }
+
+        // AWS Builder & Cloud
+        if (q.includes('aws') || q.includes('amazon') || (q.includes('cloud') && !q.includes('gcp'))) {
+            return `☁️ <strong>Cloud Engineering & Community Builder:</strong><br><br>
+            • 🟧 <strong>AWS Community Builder:</strong> Verified member of the official AWS Builder Center community (<a href="https://builder.aws.com/community/@riyanshiverma" target="_blank" rel="noopener noreferrer">Inspect AWS Profile ↗</a>).<br>
+            • 💎 <strong>Google Cloud Profile:</strong> Diamond League tier with 15+ verified skill badges spanning GenAI, Vertex AI, and Cloud Run.<br>
+            • 🐳 <strong>DevOps:</strong> Containerized Docker pipelines deployed across Vercel and Render with automated health checks.<br><br>
+            👉 <a href="#skills">Inspect Cloud Matrix in Skills</a>`;
         }
 
         // Certificates & Credentials

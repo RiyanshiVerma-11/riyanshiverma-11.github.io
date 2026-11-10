@@ -1853,6 +1853,7 @@ html[data-theme="light"] .contact-link-social:hover {
 /* ── Navigation Highlighting ── */
 .nav-highlight-github,
 .nav-highlight-linkedin,
+.nav-highlight-aws,
 .nav-highlight-instagram,
 .nav-highlight-youtube {
     display: inline-flex;
@@ -1893,6 +1894,20 @@ html[data-theme="light"] .contact-link-social:hover {
 .nav-highlight-linkedin:hover {
     background: #004182;
     box-shadow: 0 4px 12px rgba(10, 102, 194, 0.45);
+    transform: translateY(-1.5px);
+}
+
+.nav-highlight-aws {
+    background: #232F3E;
+    color: #FF9900 !important;
+    border: 1px solid rgba(255, 153, 0, 0.35);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.nav-highlight-aws:hover {
+    background: #131921;
+    border-color: #FF9900;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.35);
     transform: translateY(-1.5px);
 }
 
