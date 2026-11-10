@@ -72,7 +72,7 @@
     --font-cursive: 'Great Vibes', 'Alex Brush', cursive, sans-serif;
 
     /* ── Layout ── */
-    --max-w: 1240px;
+    --max-w: 1440px;
     --nav-h: 76px;
     --radius-sm: 8px;
     --radius-md: 14px;
@@ -254,7 +254,7 @@ main {
     width: 100%;
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 clamp(1.5rem, 3.5vw, 3.5rem);
 }
 
 .section {
@@ -374,7 +374,7 @@ a {
 .section-subtitle {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    max-width: 560px;
+    max-width: 680px;
     margin: 1rem auto 0;
 }
 
@@ -538,10 +538,10 @@ a {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 clamp(1.5rem, 3.5vw, 3.5rem);
     width: 100%;
-    max-width: 100%;
-    margin: 0;
+    max-width: var(--max-w);
+    margin: 0 auto;
 }
 
 .logo {
@@ -682,7 +682,7 @@ a {
 }
 
 .hero-left {
-    max-width: 580px;
+    max-width: 680px;
 }
 
 .hero-badge {
@@ -749,7 +749,7 @@ a {
     color: var(--text-secondary);
     line-height: 1.7;
     margin-bottom: 1.5rem;
-    max-width: 500px;
+    max-width: 620px;
 }
 
 .hero-typed-line {
@@ -1434,7 +1434,7 @@ html[data-theme="light"] .video-sound-pill .sound-text {
    SKILLS SECTION — Orbital Visualization
    ========================================================================== */
 .skills-tabs-container {
-    max-width: 960px;
+    max-width: 1320px;
     margin: 0 auto;
 }
 
@@ -1713,7 +1713,7 @@ html[data-theme="light"] .video-sound-pill .sound-text {
    CONTACT SECTION
    ========================================================================== */
 .contact-box {
-    max-width: 760px;
+    max-width: 980px;
     margin: 0 auto;
     padding: 3.5rem;
 }
@@ -1729,7 +1729,7 @@ html[data-theme="light"] .video-sound-pill .sound-text {
 
 .contact-header p {
     font-size: 1.05rem;
-    max-width: 500px;
+    max-width: 640px;
     margin: 0 auto;
 }
 
