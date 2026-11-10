@@ -2743,7 +2743,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: '/theme deepspace', desc: 'Switch to Deep Space theme', action: () => applyTheme('deepspace') },
         { name: '/theme mono', desc: 'Switch to Monochrome theme', action: () => applyTheme('mono') },
         { name: '/theme light', desc: 'Switch to Classic Light theme', action: () => applyTheme('light') },
-        { name: '/theme default', desc: 'Switch to Default Cyber theme', action: () => applyTheme('default') }
+        { name: '/theme default', desc: 'Switch to Default Cyber theme', action: () => applyTheme('default') },
+        { name: '/hackathon', desc: 'Judging this portfolio? Unlock hackathon pitch & easter egg', action: () => triggerHackathonEasterEgg() },
+        { name: '/easteregg', desc: 'Launch confetti & unlock Top 0.11% Dev Mode', action: () => triggerHackathonEasterEgg() }
     ];
 
     function scrollToSection(selector) {
@@ -3634,6 +3636,155 @@ document.addEventListener('DOMContentLoaded', () => {
             // Preloader already gone or not present — try direct playback
             startHeroIntroduction();
         }
+    }
+
+    // ----------------------------------------------------------------------
+    // 21. Creativity Easter Eggs & Delights (Konami Code + Logo Secret)
+    // ----------------------------------------------------------------------
+    function showToast(message, duration = 4000) {
+        let toast = document.getElementById('portfolio-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'portfolio-toast';
+            toast.className = 'portfolio-toast';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = message;
+        toast.classList.add('active');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+            toast.classList.remove('active');
+        }, duration);
+    }
+
+    function playChimeSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const now = ctx.currentTime;
+            const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+            freqs.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                gain.gain.setValueAtTime(0.0001, now + idx * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.15, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.35);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.4);
+            });
+        } catch (e) {
+            // AudioContext not allowed or not supported; silent fallback
+        }
+    }
+
+    function fireConfetti() {
+        let canvas = document.getElementById('confetti-canvas');
+        if (!canvas) {
+            canvas = document.createElement('canvas');
+            canvas.id = 'confetti-canvas';
+            document.body.appendChild(canvas);
+        }
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = ['#f7b267', '#38bdf8', '#ec4899', '#10b981', '#8b5cf6', '#ffffff'];
+        const particles = [];
+        for (let i = 0; i < 90; i++) {
+            particles.push({
+                x: canvas.width * (0.3 + Math.random() * 0.4),
+                y: canvas.height * 0.45,
+                vx: (Math.random() - 0.5) * 14,
+                vy: (Math.random() - 0.8) * 16,
+                size: Math.random() * 7 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                vr: (Math.random() - 0.5) * 12,
+                alpha: 1,
+                decay: 0.012 + Math.random() * 0.008
+            });
+        }
+
+        let animId;
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.35; // gravity
+                p.vx *= 0.98;
+                p.rotation += p.vr;
+                p.alpha -= p.decay;
+
+                if (p.alpha > 0) {
+                    alive = true;
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.alpha);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                    ctx.restore();
+                }
+            });
+
+            if (alive) {
+                animId = requestAnimationFrame(render);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                cancelAnimationFrame(animId);
+            }
+        }
+        render();
+    }
+
+    function triggerHackathonEasterEgg() {
+        playChimeSound();
+        fireConfetti();
+        showToast('✨ <strong>Top 0.11% Dev Mode Unlocked!</strong> Riyanshi Verma — Startupathon Winner &amp; #1 Women Dev 🚀', 4500);
+    }
+
+    // Konami Code: Up, Up, Down, Down, Left, Right, Left, Right, B, A
+    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+    window.addEventListener('keydown', (e) => {
+        const expected = konamiSequence[konamiIndex];
+        if (e.key && e.key.toLowerCase() === expected.toLowerCase()) {
+            konamiIndex++;
+            if (konamiIndex === konamiSequence.length) {
+                konamiIndex = 0;
+                triggerHackathonEasterEgg();
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    // Logo 5-click easter egg
+    const logoEl = document.querySelector('.logo');
+    if (logoEl) {
+        let logoClicks = 0;
+        let logoTimer = null;
+        logoEl.addEventListener('click', (e) => {
+            logoClicks++;
+            clearTimeout(logoTimer);
+            logoTimer = setTimeout(() => { logoClicks = 0; }, 2200);
+            if (logoClicks === 5) {
+                logoClicks = 0;
+                logoEl.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                logoEl.style.transform = 'scale(1.2) rotate(360deg)';
+                setTimeout(() => {
+                    logoEl.style.transform = '';
+                }, 650);
+                triggerHackathonEasterEgg();
+            }
+        });
     }
 
     bindChatChips();

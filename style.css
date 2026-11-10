@@ -9466,3 +9466,88 @@ html[data-theme="light"] .honor-tile:hover {
     background: rgba(180, 83, 9, 0.04) !important;
 }
 
+/* ── 19. Semantic Micro-Badge System ── */
+.badge-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.62rem;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+}
+.badge-tag-cyan {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+.badge-tag-emerald {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--emerald);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.badge-tag-gold {
+    background: rgba(var(--gold-rgb), 0.12);
+    color: var(--gold);
+    border: 1px solid rgba(var(--gold-rgb), 0.25);
+}
+.badge-tag-violet {
+    background: rgba(139, 92, 246, 0.12);
+    color: var(--violet);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+}
+.badge-tag-blue {
+    background: rgba(66, 133, 244, 0.12);
+    color: #4285F4;
+    border: 1px solid rgba(66, 133, 244, 0.25);
+}
+.badge-tag-rose {
+    background: rgba(236, 72, 153, 0.12);
+    color: var(--rose);
+    border: 1px solid rgba(236, 72, 153, 0.25);
+}
+.badge-tag-muted {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── 20. Easter Egg Toast & Canvas Overlay ── */
+.portfolio-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--gold);
+    color: #ffffff;
+    padding: 0.85rem 1.4rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--gold-rgb), 0.35);
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 100000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(12px);
+}
+.portfolio-toast.active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99999;
+}
+
+
