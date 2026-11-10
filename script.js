@@ -403,10 +403,14 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const targetTab = btn.getAttribute('data-tab');
 
-            tabButtons.forEach(b => b.classList.remove('active'));
+            tabButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             tabContents.forEach(c => c.classList.remove('active'));
 
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             const activeContent = document.getElementById(targetTab);
             if (activeContent) {
                 activeContent.classList.add('active');
@@ -521,8 +525,12 @@ document.addEventListener('DOMContentLoaded', () => {
             currentFilter = btn.getAttribute('data-filter');
             showAllProjects = false; // Reset to show only top 3 on filter change
 
-            filterButtons.forEach(b => b.classList.remove('active'));
+            filterButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
 
             updateProjectVisibility();
         });
@@ -977,8 +985,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             if (isSimulating) return; // block change during run
             
-            sandboxBtns.forEach(b => b.classList.remove('active'));
+            sandboxBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             
             activeSimulation = btn.getAttribute('data-simulation');
             
@@ -2244,12 +2256,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetModalTabs() {
-        modalTabBtns.forEach(btn => btn.classList.remove('active'));
+        modalTabBtns.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+        });
         modalTabContents.forEach(c => c.classList.remove('active'));
 
         const defaultBtn = document.querySelector('.modal-tab-btn[data-modal-tab="system-map"]');
         const defaultContent = document.getElementById('modal-tab-system-map');
-        if (defaultBtn) defaultBtn.classList.add('active');
+        if (defaultBtn) {
+            defaultBtn.classList.add('active');
+            defaultBtn.setAttribute('aria-selected', 'true');
+        }
         if (defaultContent) defaultContent.classList.add('active');
     }
 
@@ -2291,10 +2309,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ----------------------------------------------------------------------
+    // Modal Accessibility & Focus Management (WCAG 2.1 SC 2.1.2 & SC 2.4.3)
+    // ----------------------------------------------------------------------
+    let lastFocusedElementBeforeModal = null;
+
+    function trapFocusInModal(modal) {
+        if (!modal) return;
+        lastFocusedElementBeforeModal = document.activeElement;
+        const focusableElements = Array.from(modal.querySelectorAll(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )).filter(el => el.offsetParent !== null);
+        if (focusableElements.length > 0) {
+            setTimeout(() => {
+                const firstInput = modal.querySelector('input:not([disabled])');
+                const target = firstInput || focusableElements[0];
+                if (target && typeof target.focus === 'function') target.focus();
+            }, 60);
+        }
+    }
+
+    function releaseFocusFromModal() {
+        if (lastFocusedElementBeforeModal && typeof lastFocusedElementBeforeModal.focus === 'function') {
+            try {
+                lastFocusedElementBeforeModal.focus();
+            } catch (_) {}
+        }
+        lastFocusedElementBeforeModal = null;
+    }
+
     // Modal Scroll Locking Helper Functions
-    function lockBodyScroll() {
+    function lockBodyScroll(modalElement) {
         document.body.classList.add('modal-open');
         document.body.style.overflow = 'hidden';
+        const targetModal = modalElement || document.querySelector('.modal-overlay.active, .cmd-palette-overlay.active');
+        if (targetModal) trapFocusInModal(targetModal);
     }
 
     function unlockBodyScroll() {
@@ -2302,6 +2351,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeModals.length === 0) {
             document.body.classList.remove('modal-open');
             document.body.style.overflow = '';
+            releaseFocusFromModal();
         }
     }
 
@@ -2538,22 +2588,48 @@ document.addEventListener('DOMContentLoaded', () => {
         expCards.forEach(card => expObserver.observe(card));
     }
 
-    // Global Escape Key to close active modals
+    // Global Keyboard Trap and Escape Key Handler for Active Modals (WCAG 2.1)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (certModal && certModal.classList.contains('active')) closeCertModal();
             if (recruiterModal && recruiterModal.classList.contains('active')) closeRecruiterModal();
             if (archModal && archModal.classList.contains('active')) closeModal();
+            if (skillModal && skillModal.classList.contains('active')) {
+                skillModal.classList.remove('active');
+                unlockBodyScroll();
+            }
+        } else if (e.key === 'Tab') {
+            const activeModal = document.querySelector('.modal-overlay.active, .cmd-palette-overlay.active');
+            if (activeModal) {
+                const focusables = Array.from(activeModal.querySelectorAll(
+                    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )).filter(el => el.offsetParent !== null);
+                if (focusables.length > 0) {
+                    const first = focusables[0];
+                    const last = focusables[focusables.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            }
         }
     });
 
     // Modal tabs click handling
     modalTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            modalTabBtns.forEach(b => b.classList.remove('active'));
+            modalTabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             modalTabContents.forEach(c => c.classList.remove('active'));
 
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             const tabId = btn.getAttribute('data-modal-tab');
             const targetContent = document.getElementById(`modal-tab-${tabId}`);
             if (targetContent) targetContent.classList.add('active');
@@ -2938,12 +3014,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Close modal when clicking the X button
         skillModalCloseBtn.addEventListener('click', () => {
             skillModal.classList.remove('active');
+            unlockBodyScroll();
         });
 
         // Close modal when clicking outside the card
         skillModal.addEventListener('click', (e) => {
             if (e.target === skillModal) {
                 skillModal.classList.remove('active');
+                unlockBodyScroll();
             }
         });
 
@@ -2962,6 +3040,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     skillModalDesc.textContent = descText;
                     
                     skillModal.classList.add('active');
+                    lockBodyScroll(skillModal);
                 }
             });
         });
