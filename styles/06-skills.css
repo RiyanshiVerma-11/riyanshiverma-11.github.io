@@ -1,0 +1,151 @@
+/* ==========================================================================
+   MODULE: 06-skills.css
+   SKILLS SECTION: CATEGORY TABS & SKILLS GRID
+   ========================================================================== */
+
+/* ==========================================================================
+   SKILLS SECTION — Orbital Visualization
+   ========================================================================== */
+.skills-tabs-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.skills-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.4rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.55rem 1.5rem;
+    border-radius: 100px;
+    transition: all var(--t-fast);
+}
+
+.tab-btn.active {
+    background: var(--grad-warm);
+    color: var(--bg-deep);
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(var(--gold-rgb), 0.3);
+}
+
+.tab-btn:hover:not(.active) {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeSlideUp 0.5s var(--ease-out);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+}
+
+.skill-card {
+    padding: 1.35rem 1.5rem;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+}
+
+.skill-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.skill-orb {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.skill-orb-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--gold);
+    border-right-color: var(--violet);
+    animation: ring-spin 3s linear infinite;
+}
+
+.skill-orb-core {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: var(--grad-glass);
+    border: 1px solid rgba(var(--gold-rgb), 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+}
+
+.skill-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.skill-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+}
+
+/* Skill proficiency bar — warm variant */
+.skill-bar-track {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.skill-bar-fill {
+    height: 100%;
+    background: var(--grad-warm);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.3);
+    transition: width 1.2s var(--ease-out);
+    width: 0;
+}
+
+
+/* ── 12. Skill Cards — Refined Hover State ── */
+.skill-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.skill-card:hover {
+    transform: translateY(-3px) !important;
+}

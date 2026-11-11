@@ -1,0 +1,18 @@
+{
+  "name": "riyanshi-verma-portfolio",
+  "version": "5.5.0",
+  "description": "Riyanshi Verma AI Portfolio & Personal Website",
+  "scripts": {
+    "build:css": "node build-css.js",
+    "watch:css": "node build-css.js --watch",
+    "dev:css": "node build-css.js --watch"
+  },
+  "keywords": [
+    "portfolio",
+    "ai-developer",
+    "data-science"
+  ],
+  "author": "Riyanshi Verma",
+  "license": "MIT"
+}
+

@@ -1,0 +1,253 @@
+/* ==========================================================================
+   MODULE: 01-variables.css
+   DESIGN TOKENS & THEME VARIABLES
+   ========================================================================== */
+
+/* ==========================================================================
+   DIGITAL ATELIER — Premium Portfolio Design System
+   Riyanshi Verma | AI Developer & Data Science Student
+   ========================================================================== */
+
+/* ---------- Google Fonts (loaded via <link> in HTML, @import removed to avoid render-blocking duplicate) ---------- */
+
+/* ---------- Skip-to-Content Link (Accessibility) ---------- */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 10000;
+    padding: 0.75rem 1.25rem;
+    background: var(--gold, #F7B267);
+    color: #060810;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+    outline: none;
+}
+.skip-to-content:focus {
+    top: 0;
+}
+
+:root {
+    /* ── Warm-Cyber Color Palette ── */
+    --bg-deep: #060810;
+    --bg-dark: #0A0E1A;
+    --bg-surface: #0F1424;
+    --bg-card: rgba(15, 20, 40, 0.55);
+    --bg-card-hover: rgba(20, 28, 55, 0.7);
+
+    --border: rgba(255, 255, 255, 0.16);
+    --border-warm: rgba(247, 178, 103, 0.25);
+    --border-violet: rgba(139, 92, 246, 0.30);
+
+    --gold: #F7B267;
+    --gold-rgb: 247, 178, 103;
+    --violet: #8B5CF6;
+    --violet-rgb: 139, 92, 246;
+    --rose: #EC4899;
+    --rose-rgb: 236, 72, 153;
+    --cyan: #06B6D4;
+    --cyan-rgb: 6, 182, 212;
+    --emerald: #10B981;
+
+    --accent-cyan: var(--cyan);
+    --accent-gold: var(--gold);
+    --text-light: var(--text-secondary);
+
+    --text-primary: #FFFFFF;
+    --text-secondary: #E2E8F0;
+    --text-tertiary: #94A3B8;
+
+    /* ── Gradients ── */
+    --grad-hero: linear-gradient(135deg, var(--gold) 0%, var(--rose) 50%, var(--violet) 100%);
+    --grad-warm: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);
+    --grad-cool: linear-gradient(135deg, var(--violet) 0%, var(--cyan) 100%);
+    --grad-glass: linear-gradient(135deg, rgba(var(--gold-rgb), 0.08) 0%, rgba(var(--violet-rgb), 0.08) 100%);
+    --grad-shimmer: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.05) 50%, transparent 75%);
+
+    /* ── Fonts ── */
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-hand: 'Caveat', cursive, sans-serif;
+    --font-cursive: 'Great Vibes', 'Alex Brush', cursive, sans-serif;
+
+    /* ── Layout ── */
+    --max-w: min(96vw, 1720px);
+    --nav-h: 76px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+
+    /* ── Shadows & Glows ── */
+    --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 12px 40px -8px rgba(0, 0, 0, 0.6);
+    --glow-gold: 0 0 30px rgba(var(--gold-rgb), 0.25);
+    --glow-violet: 0 0 30px rgba(var(--violet-rgb), 0.25);
+    --glow-rose: 0 0 30px rgba(var(--rose-rgb), 0.2);
+
+    /* ── Transitions ── */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --t-fast: 0.2s var(--ease-out);
+    --t-normal: 0.4s var(--ease-out);
+    --t-slow: 0.6s var(--ease-out);
+
+    /* ── Custom Input Variables ── */
+    --input-bg: rgba(6, 8, 16, 0.45);
+    --input-bg-focus: rgba(6, 8, 16, 0.75);
+    --input-border: rgba(255, 255, 255, 0.08);
+    --label-bg: #0F1424;
+    /* blends with var(--bg-surface) */
+}
+
+/* ---------- Theme Overrides ---------- */
+html[data-theme="matrix"] {
+    --gold: #22C55E;
+    --gold-rgb: 34, 197, 94;
+    --violet: #84CC16;
+    --violet-rgb: 132, 204, 22;
+    --rose: #14B8A6;
+    --rose-rgb: 20, 184, 166;
+    --border: rgba(34, 197, 94, 0.25);
+    --border-warm: rgba(34, 197, 94, 0.30);
+    --border-violet: rgba(132, 204, 22, 0.30);
+}
+
+html[data-theme="deepspace"] {
+    --gold: #F472B6;
+    --gold-rgb: 244, 114, 182;
+    --violet: #06B6D4;
+    --violet-rgb: 6, 182, 212;
+    --rose: #A78BFA;
+    --rose-rgb: 167, 139, 250;
+    --border: rgba(6, 182, 212, 0.25);
+    --border-warm: rgba(244, 114, 182, 0.30);
+    --border-violet: rgba(6, 182, 212, 0.30);
+}
+
+html[data-theme="mono"] {
+    --gold: #F8FAFC;
+    --gold-rgb: 248, 250, 252;
+    --violet: #64748B;
+    --violet-rgb: 100, 116, 139;
+    --rose: #CBD5E1;
+    --rose-rgb: 203, 213, 225;
+    --border: rgba(248, 250, 252, 0.22);
+    --border-warm: rgba(248, 250, 252, 0.28);
+    --border-violet: rgba(100, 116, 139, 0.30);
+}
+
+html[data-theme="light"],
+html[data-theme="classic-light"],
+[data-theme="light"],
+[data-theme="classic-light"],
+.light-theme {
+    /* ── Ceramic/Porcelain Base Canvas & Surfaces ── */
+    --bg-deep: #F6F8FB;
+    --bg-dark: #FFFFFF;
+    --bg-surface: #EEF2F6;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #FFFFFF;
+
+    /* ── Ink & Contrast Hierarchy ── */
+    --text-primary: #090D16;   /* Deep Midnight Ink */
+    --text-secondary: #334155; /* Refined Slate Ink */
+    --text-tertiary: #475569;  /* Crisp Graphite Ink */
+
+    /* ── Vibrant Accents ── */
+    --gold: #D97706;
+    --gold-rgb: 217, 119, 6;
+    --violet: #7E22CE;
+    --violet-rgb: 126, 34, 206;
+    --rose: #BE185D;
+    --rose-rgb: 190, 24, 93;
+    --cyan: #0284C7;
+    --cyan-rgb: 2, 132, 199;
+    --emerald: #059669;
+
+    --accent-cyan: var(--cyan);
+    --accent-gold: var(--gold);
+    --text-light: var(--text-secondary);
+
+    /* ── Colored Ambient Shadows & Glass ── */
+    --border: rgba(15, 23, 42, 0.08);
+    --border-warm: rgba(217, 119, 6, 0.25);
+    --border-violet: rgba(126, 34, 206, 0.25);
+    --border-cyan: rgba(14, 165, 233, 0.25);
+
+    --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    --shadow-hover: 0 14px 34px -4px rgba(15, 23, 42, 0.10), 0 6px 12px -2px rgba(15, 23, 42, 0.04);
+    --glow-gold: 0 0 24px rgba(217, 119, 6, 0.15);
+    --glow-violet: 0 0 24px rgba(126, 34, 206, 0.15);
+    --glow-rose: 0 0 24px rgba(190, 24, 93, 0.15);
+
+    /* ── Light Theme Custom Input Variables ── */
+    --input-bg: rgba(15, 23, 42, 0.03);
+    --input-bg-focus: #FFFFFF;
+    --input-border: rgba(15, 23, 42, 0.12);
+    --label-bg: #FFFFFF;
+    /* matches var(--bg-dark) */
+}
+
+
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 14.5px;
+    background: var(--bg-deep);
+}
+
+body {
+    font-family: var(--font-display);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Ambient Mouse Glow (controlled via JS) ── */
+.ambient-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--violet-rgb), 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: left 0.3s ease, top 0.3s ease;
+    will-change: left, top;
+}
+
+/* ── Canvas Background ── */
+#neural-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+}
+
+main {
+    position: relative;
+    z-index: 1;
+}

@@ -1,0 +1,761 @@
+/* ==========================================================================
+   MODULE: 09-honors.css
+   HONORS & CREDENTIALS: COMPETITIVE ACCOLADES & GOOGLE CLOUD DIAMOND BLOCK
+   ========================================================================== */
+
+/* ── Honors & Credentials Editorial Showcase (Pure Canvas, No Card Walls) ── */
+.honors-editorial-section {
+    padding-top: 3.5rem;
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    position: relative;
+}
+
+.honors-editorial-header {
+    margin-bottom: 2.25rem;
+}
+
+.honors-editorial-headline {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin: 0.5rem 0;
+    letter-spacing: -0.025em;
+}
+
+.honors-editorial-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.honors-editorial-layout {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.stream-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stream-section-title .stream-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.stream-section-title h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.stream-count-pill {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 100px;
+    background: rgba(var(--gold-rgb, 245, 158, 11), 0.12);
+    color: var(--gold, #F59E0B);
+    border: 1px solid rgba(var(--gold-rgb, 245, 158, 11), 0.3);
+    margin-left: auto;
+}
+
+.stream-count-pill.emerald {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--emerald, #10B981);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.honors-editorial-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.honor-editorial-item {
+    display: flex;
+    gap: 1.15rem;
+    align-items: flex-start;
+    padding: 1.25rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background var(--t-fast, 0.2s ease), transform var(--t-fast, 0.2s ease);
+    border-radius: var(--radius-sm, 8px);
+}
+
+.honor-editorial-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+    transform: translateX(4px);
+}
+
+.honor-editorial-item:last-child {
+    border-bottom: none;
+}
+
+.honor-medal-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.honor-item-body {
+    flex-grow: 1;
+}
+
+.honor-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+}
+
+.honor-item-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin: 0;
+}
+
+.honor-item-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.honor-item-action {
+    margin-top: 0.5rem;
+}
+
+.cert-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.82rem;
+    color: var(--gold, #F59E0B);
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: inherit;
+    transition: color var(--t-fast, 0.2s ease), transform var(--t-fast, 0.2s ease);
+}
+
+.cert-link-btn:hover {
+    color: #FFFFFF;
+    transform: translateX(2px);
+}
+
+.creds-stream-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Google Cloud Diamond League Editorial Block */
+.gcp-editorial-block {
+    padding: 1.85rem;
+    background: radial-gradient(130% 120% at 50% 0%, rgba(66, 133, 244, 0.12) 0%, rgba(15, 20, 42, 0.55) 100%);
+    border: 1px solid rgba(66, 133, 244, 0.25);
+    border-radius: var(--radius-md, 12px);
+    box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.4), 0 0 24px rgba(66, 133, 244, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.gcp-block-top {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    margin-bottom: 1.1rem;
+}
+
+.gcp-brand-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(66, 133, 244, 0.28);
+    border-radius: var(--radius-sm, 8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gcp-kicker {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #60A5FA;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.gcp-league-title {
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 3px 0;
+    letter-spacing: -0.01em;
+}
+
+.gcp-tier-note {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+}
+
+.gcp-points-badge {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gold, #F59E0B);
+}
+
+.gcp-badge-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.1rem 0;
+    padding: 0.85rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: var(--radius-sm, 8px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gcp-badge-banner-img {
+    max-height: 95px;
+    width: auto;
+    object-fit: contain;
+    transition: transform var(--t-fast, 0.2s ease);
+}
+
+.gcp-badge-banner-img:hover {
+    transform: scale(1.05);
+}
+
+.gcp-summary-text {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+/* Certs Editorial Block */
+.certs-editorial-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.certs-editorial-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cert-editorial-item {
+    padding: 1.15rem 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-sm, 8px);
+    transition: background var(--t-fast, 0.2s ease), border-color var(--t-fast, 0.2s ease), transform var(--t-fast, 0.2s ease);
+}
+
+.cert-editorial-item:hover {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: rgba(6, 182, 212, 0.35);
+    transform: translateX(4px);
+}
+
+.cert-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+}
+
+.cert-item-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.cert-item-meta {
+    font-size: 0.82rem;
+    color: var(--text-tertiary);
+    line-height: 1.45;
+    margin: 0 0 0.5rem 0;
+}
+
+/* Light theme overrides */
+html[data-theme="light"] .honors-editorial-section,
+html[data-theme="classic-light"] .honors-editorial-section,
+[data-theme="light"] .honors-editorial-section,
+[data-theme="classic-light"] .honors-editorial-section,
+.light-theme .honors-editorial-section {
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .stream-section-title,
+html[data-theme="classic-light"] .stream-section-title,
+[data-theme="light"] .stream-section-title,
+[data-theme="classic-light"] .stream-section-title,
+.light-theme .stream-section-title {
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .honor-editorial-item,
+html[data-theme="classic-light"] .honor-editorial-item,
+[data-theme="light"] .honor-editorial-item,
+[data-theme="classic-light"] .honor-editorial-item,
+.light-theme .honor-editorial-item {
+    border-bottom-color: rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .honor-editorial-item:hover,
+html[data-theme="classic-light"] .honor-editorial-item:hover,
+[data-theme="light"] .honor-editorial-item:hover,
+[data-theme="classic-light"] .honor-editorial-item:hover,
+.light-theme .honor-editorial-item:hover {
+    background: rgba(15, 23, 42, 0.02);
+}
+
+html[data-theme="light"] .honor-item-title,
+html[data-theme="classic-light"] .honor-item-title,
+[data-theme="light"] .honor-item-title,
+[data-theme="classic-light"] .honor-item-title,
+.light-theme .honor-item-title,
+html[data-theme="light"] .cert-item-title,
+html[data-theme="classic-light"] .cert-item-title,
+[data-theme="light"] .cert-item-title,
+[data-theme="classic-light"] .cert-item-title,
+.light-theme .cert-item-title,
+html[data-theme="light"] .stream-section-title h4,
+html[data-theme="classic-light"] .stream-section-title h4,
+[data-theme="light"] .stream-section-title h4,
+[data-theme="classic-light"] .stream-section-title h4,
+.light-theme .stream-section-title h4,
+html[data-theme="light"] .gcp-league-title,
+html[data-theme="classic-light"] .gcp-league-title,
+[data-theme="light"] .gcp-league-title,
+[data-theme="classic-light"] .gcp-league-title,
+.light-theme .gcp-league-title {
+    color: #090D16;
+}
+
+html[data-theme="light"] .honor-item-desc,
+html[data-theme="classic-light"] .honor-item-desc,
+[data-theme="light"] .honor-item-desc,
+[data-theme="classic-light"] .honor-item-desc,
+.light-theme .honor-item-desc,
+html[data-theme="light"] .gcp-summary-text,
+html[data-theme="classic-light"] .gcp-summary-text,
+[data-theme="light"] .gcp-summary-text,
+[data-theme="classic-light"] .gcp-summary-text,
+.light-theme .gcp-summary-text {
+    color: #334155;
+}
+
+html[data-theme="light"] .gcp-editorial-block,
+html[data-theme="classic-light"] .gcp-editorial-block,
+[data-theme="light"] .gcp-editorial-block,
+[data-theme="classic-light"] .gcp-editorial-block,
+.light-theme .gcp-editorial-block {
+    background: #FFFFFF;
+    border-color: rgba(66, 133, 244, 0.3);
+    box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 0 16px rgba(66, 133, 244, 0.12);
+}
+
+html[data-theme="light"] .gcp-badge-banner,
+html[data-theme="classic-light"] .gcp-badge-banner,
+[data-theme="light"] .gcp-badge-banner,
+[data-theme="classic-light"] .gcp-badge-banner,
+.light-theme .gcp-badge-banner {
+    background: #F8FAFC;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .cert-editorial-item,
+html[data-theme="classic-light"] .cert-editorial-item,
+[data-theme="light"] .cert-editorial-item,
+[data-theme="classic-light"] .cert-editorial-item,
+.light-theme .cert-editorial-item {
+    background: #FFFFFF;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .cert-editorial-item:hover,
+html[data-theme="classic-light"] .cert-editorial-item:hover,
+[data-theme="light"] .cert-editorial-item:hover,
+[data-theme="classic-light"] .cert-editorial-item:hover,
+.light-theme .cert-editorial-item:hover {
+    background: #F8FAFC;
+    border-color: rgba(6, 182, 212, 0.4);
+}
+
+html[data-theme="light"] .cert-link-btn:hover,
+html[data-theme="classic-light"] .cert-link-btn:hover,
+[data-theme="light"] .cert-link-btn:hover,
+[data-theme="classic-light"] .cert-link-btn:hover,
+.light-theme .cert-link-btn:hover {
+    color: #090D16;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+    .honors-editorial-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .honors-editorial-section {
+        padding-top: 2.25rem;
+        margin-top: 2.25rem;
+    }
+    .honor-editorial-item {
+        padding: 1rem 0;
+        gap: 0.85rem;
+    }
+    .honor-item-title {
+        font-size: 0.98rem;
+    }
+    .honor-item-desc {
+        font-size: 0.84rem;
+    }
+    .gcp-editorial-block {
+        padding: 1.25rem;
+    }
+    .gcp-block-top {
+        gap: 0.85rem;
+    }
+    .gcp-brand-icon {
+        width: 44px;
+        height: 44px;
+    }
+    .gcp-brand-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+.timeline-container {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--violet) 50%, var(--rose) 100%);
+    opacity: 0.25;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.2rem;
+    transition: transform var(--t-normal), opacity var(--t-normal);
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item:hover {
+    transform: translateX(8px);
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 24px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-deep);
+    border: 3px solid var(--gold);
+    transform: translateX(-6px);
+    box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.6);
+    z-index: 2;
+    transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.timeline-item:nth-child(2) .timeline-dot {
+    border-color: var(--violet);
+    box-shadow: 0 0 10px rgba(var(--violet-rgb), 0.6);
+}
+
+.timeline-item:hover .timeline-dot {
+    background: var(--gold);
+    box-shadow: 0 0 18px rgba(var(--gold-rgb), 0.9);
+}
+
+.timeline-item:nth-child(2):hover .timeline-dot {
+    background: var(--violet);
+    box-shadow: 0 0 18px rgba(var(--violet-rgb), 0.9);
+}
+
+.timeline-content {
+    padding: 2.2rem;
+    transition: border-color var(--t-normal), box-shadow var(--t-normal);
+}
+
+.timeline-item:hover .timeline-content {
+    border-color: rgba(var(--gold-rgb), 0.3);
+    box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--gold-rgb), 0.05);
+}
+
+.timeline-item:nth-child(2):hover .timeline-content {
+    border-color: rgba(var(--violet-rgb), 0.3);
+    box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--violet-rgb), 0.05);
+}
+
+.timeline-header-info {
+    margin-bottom: 1.2rem;
+}
+
+.timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    display: inline-block;
+    margin-bottom: 0.4rem;
+}
+
+.timeline-item:nth-child(2) .timeline-date {
+    color: var(--violet);
+}
+
+.timeline-role {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+}
+
+.timeline-company {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.badge-status {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--emerald);
+    padding: 0.1rem 0.5rem;
+    border-radius: 100px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.timeline-bullets {
+    list-style: none;
+}
+
+.timeline-bullets li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.timeline-bullets li:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: bold;
+}
+
+.timeline-item:nth-child(2) .timeline-bullets li::before {
+    color: var(--violet);
+}
+
+/* Credentials Sidebar styling */
+.credentials-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cred-card {
+    padding: 1.8rem;
+    position: relative;
+}
+
+.google-cloud-cred {
+    background: linear-gradient(135deg, rgba(66, 133, 244, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%);
+    border-color: rgba(66, 133, 244, 0.15);
+}
+
+.cred-glow-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(150px circle at top right, rgba(66, 133, 244, 0.12), transparent 60%);
+    pointer-events: none;
+}
+
+.cred-card-top {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.google-cloud-badge-logo {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cred-details h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.cred-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+    display: block;
+}
+
+.gcp-points {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.cred-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.cred-btn {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.achievement-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.ach-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.ach-text h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+}
+
+.ach-text p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.open-cert-modal {
+    transition: all var(--t-fast);
+}
+
+.open-cert-modal:hover {
+    color: var(--gold) !important;
+    transform: translateY(-1px);
+}
+
+.cert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cert-list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+}
+
+.cert-check {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.cert-list li strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: block;
+}
+
+.cert-list li p {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+
+/* ── 11. Honor Tiles — Subtle left border accent ── */
+.honor-tile {
+    border-left: 3px solid rgba(var(--gold-rgb), 0.25) !important;
+    transition: border-left-color 0.3s ease, background 0.3s ease !important;
+}
+
+.honor-tile:hover {
+    border-left-color: var(--gold) !important;
+    background: rgba(var(--gold-rgb), 0.04) !important;
+}

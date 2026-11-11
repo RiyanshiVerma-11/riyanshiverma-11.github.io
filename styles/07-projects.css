@@ -1,0 +1,341 @@
+/* ==========================================================================
+   MODULE: 07-projects.css
+   PROJECTS SECTION: 3D TILT CARDS, TAGS & EXPANDABLE CASE STUDIES
+   ========================================================================== */
+
+/* ==========================================================================
+   PROJECTS SECTION — 3D Tilt Cards
+   ========================================================================== */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.55rem 1.4rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all var(--t-fast);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: rgba(var(--gold-rgb), 0.06);
+    border-color: rgba(var(--gold-rgb), 0.35);
+    color: var(--gold);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.15rem;
+}
+
+.project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover {
+    z-index: 5;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(var(--gold-rgb), 0.08);
+}
+
+.project-body {
+    padding: 1.35rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.project-header {
+    margin-bottom: 1rem;
+}
+
+.project-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--rose);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.project-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.project-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    line-height: 1.65;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    background: rgba(var(--violet-rgb), 0.06);
+    border: 1px solid rgba(var(--violet-rgb), 0.12);
+    color: var(--violet);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+}
+
+.project-links {
+    margin-top: auto;
+    display: flex;
+    gap: 1.2rem;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.project-link:hover {
+    color: var(--text-primary);
+    transform: translateX(2px);
+}
+
+/* Spotlight glow on card hover */
+.card-spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at 0px 0px, rgba(var(--gold-rgb), 0.06), transparent 40%);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: inherit;
+}
+
+.project-card:hover .card-spotlight {
+    opacity: 1;
+}
+
+
+/* ==========================================================================
+   PROJECT METADATA & EXPANDABLE CASE STUDY STYLES
+   ========================================================================== */
+
+.project-problem-statement {
+    position: relative;
+    padding-left: 0.85rem;
+    border-left: 2px solid var(--rose);
+    margin-bottom: 1.25rem;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.project-problem-statement strong {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-style: normal;
+    letter-spacing: 0.05em;
+}
+
+.project-problem-statement p {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.project-what-i-built {
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.project-what-i-built strong {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--violet);
+    display: block;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.05em;
+}
+
+.project-engineering-highlight {
+    background: rgba(var(--gold-rgb), 0.03);
+    border: 1px solid rgba(var(--gold-rgb), 0.15);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.project-engineering-highlight strong {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.05em;
+}
+
+.project-case-study {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.01);
+    overflow: hidden;
+    transition: border-color var(--t-fast);
+}
+
+.project-case-study:hover {
+    border-color: rgba(var(--violet-rgb), 0.25);
+}
+
+.case-study-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    background: rgba(var(--violet-rgb), 0.03);
+    cursor: pointer;
+    list-style: none;
+    /* Hide default HTML disclosure triangle */
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--violet);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+
+.case-study-trigger::-webkit-details-marker {
+    display: none;
+    /* Hide Chrome default arrow */
+}
+
+.case-study-trigger .chevron-icon {
+    transition: transform var(--t-fast) ease;
+    color: var(--violet);
+}
+
+.project-case-study[open] .case-study-trigger .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.case-study-content {
+    padding: 1.25rem 1rem;
+    border-top: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.case-study-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.cs-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: left;
+}
+
+.cs-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+}
+
+.cs-value {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Show More Projects styles */
+#show-more-projects-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--gold-rgb), 0.03);
+    border: 1px solid rgba(var(--gold-rgb), 0.25);
+    color: var(--gold);
+    padding: 0.75rem 1.75rem;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all var(--t-fast) var(--ease-out);
+}
+
+#show-more-projects-btn:hover {
+    background: rgba(var(--gold-rgb), 0.08);
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(var(--gold-rgb), 0.2);
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================================================
+   UNIQUE TYPOGRAPHY & EDITORIAL STYLING ("Writing Alag")
+   ========================================================================== */
+
+/* ── 6. Project Cards — Featured vs Regular Visual Hierarchy ── */
+.project-card.featured-project {
+    border: 1px solid rgba(var(--gold-rgb), 0.2) !important;
+}
+
+.project-card.featured-project .featured-badge {
+    background: linear-gradient(135deg, var(--gold), var(--rose)) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    box-shadow: 0 2px 12px rgba(var(--gold-rgb), 0.3) !important;
+}
