@@ -43,7 +43,7 @@
     <!-- Preload most critical display font (Space Grotesk 400 + 700) to cut FOUT -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5.3">
+    <link rel="stylesheet" href="style.css?v=5.4">
 
     <!-- Direct link / hash bypass check for job boards and resume cross-checks -->
     <script>
@@ -783,160 +783,177 @@
                         </div>
                     </div>
 
-                    <!-- Part 2: Honors, Awards & Verified Credentials Bento -->
-                    <div class="reveal reveal-delay-2">
-                        <div class="exp-subhead">
-                            <span class="label-dot" style="background: var(--gold);"></span> Competitive Honors, Awards &amp; Verified Credentials
+                    <!-- Part 2: Honors, Awards & Verified Credentials (Pure Editorial Canvas Showcase) -->
+                    <div class="honors-editorial-section reveal reveal-delay-2">
+                        <div class="honors-editorial-header">
+                            <div class="academic-kicker">
+                                <span class="label-dot"></span> Accolades &amp; Industry Verification
+                            </div>
+                            <h3 class="honors-editorial-headline">
+                                Competitive Honors, Awards &amp; <span class="cursive-word">Credentials</span>
+                            </h3>
+                            <p class="honors-editorial-sub">
+                                Validated performance across national hackathons, global AI developer competitions, and enterprise cloud ecosystems.
+                            </p>
                         </div>
 
-                        <div class="honors-creds-bento">
-                            <!-- Left: Honors & Hackathon Wins (5 structured items) -->
-                            <div class="card-glass" style="padding: 1.8rem;">
-                                <div class="bento-card-header">
-                                    <div class="bento-card-title">
-                                        <span>🏆</span> Honors &amp; Competitive Victories
-                                    </div>
-                                    <span class="badge-tag" style="font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; background: rgba(var(--gold-rgb), 0.12); color: var(--gold); border: 1px solid rgba(var(--gold-rgb), 0.25); font-weight: 600;">6 Accolades</span>
+                        <div class="honors-editorial-layout">
+                            <!-- Left: Honors & Victories Stream (Pure Canvas, No Card Walls) -->
+                            <div class="honors-stream-column">
+                                <div class="stream-section-title">
+                                    <span class="stream-icon">🏆</span>
+                                    <h4>Competitive Victories &amp; Recognitions</h4>
+                                    <span class="stream-count-pill">6 Accolades</span>
                                 </div>
 
-                                <div class="honor-tiles-list">
+                                <div class="honors-editorial-list">
                                     <!-- 1. Startupathon -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">🥈</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">2nd Place Winner (Rank 2)</span>
-                                                <span class="badge-tag badge-tag-cyan" style="text-transform: uppercase;">New Win</span>
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">🥈</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">2nd Place Winner (Rank 2) — STARTUPATHON 2026</h5>
+                                                <span class="badge-tag badge-tag-gold">Unstop Winner</span>
                                             </div>
-                                            <p class="honor-tile-desc"><strong>STARTUPATHON &amp; IDEATHON 2026:</strong> Secured 2nd Place, organized by WAMPire Slayers on Unstop (Oct 17–18, 2026). Awarded for exceptional innovation, product validation, and pitching excellence.</p>
-                                            <div class="honor-tile-footer">
-                                                <button class="open-cert-modal" data-cert="startupathon" type="button" style="background: none; border: none; padding: 0; font-size: 0.78rem; color: var(--gold); cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;">
-                                                    <span>View Certificate</span> 📜
+                                            <p class="honor-item-desc">
+                                                Secured 2nd Place in <strong>STARTUPATHON &amp; IDEATHON 2026</strong>, organized by WAMPire Slayers on Unstop (Oct 17–18, 2026). Awarded for exceptional technical innovation, autonomous model validation, and pitch excellence.
+                                            </p>
+                                            <div class="honor-item-action">
+                                                <button class="open-cert-modal cert-link-btn" data-cert="startupathon" type="button">
+                                                    <span>View Verified Certificate</span> 📜
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- 2. HackDevengers -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">⚡</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">Rank 4 / 4.2k+ Participants Globally</span>
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">⚡</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">Rank 4 / 4.2k+ Developers Globally — HackDevengers 1.0</h5>
                                                 <span class="badge-tag badge-tag-emerald">Global Hackathon</span>
                                             </div>
-                                            <p class="honor-tile-desc">Ranked 4th among 4,200+ participants in <strong>HackDevengers 1.0 (2026)</strong>, an 8-hour global hackathon by Devengers, for architecting HospiSynAI.</p>
+                                            <p class="honor-item-desc">
+                                                Ranked 4th among 4,200+ global engineers in <strong>HackDevengers 1.0 (2026)</strong> for architecting HospiSynAI, an async multilingual hospital consultation and automated billing engine.
+                                            </p>
                                         </div>
                                     </div>
 
                                     <!-- 3. PromptWars -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">🏆</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">Rank 1 (Women Developer) // Top 0.11%</span>
-                                                <span class="badge-tag badge-tag-gold">Score: 96.98%</span>
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">🥇</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">Rank 1 (Women Developer) // Top 0.11% Across 26,090+ Devs</h5>
+                                                <span class="badge-tag badge-tag-cyan">Score: 96.98%</span>
                                             </div>
-                                            <p class="honor-tile-desc">Overall <strong>Rank 30 / 26,090+</strong> in Google/Hack2Skills PromptWars Virtual 2026. VoteWise-AI scored 96.98% by autonomous AI evaluation.</p>
+                                            <p class="honor-item-desc">
+                                                Ranked #1 Women Developer and overall <strong>Rank 30 out of 26,090+</strong> participants in Google/Hack2Skills PromptWars Virtual 2026. VoteWise-AI achieved a verified 96.98% accuracy score under autonomous LLM evaluation.
+                                            </p>
                                         </div>
                                     </div>
 
                                     <!-- 4. HACKDAY 1.0 -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">🚀</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">Rank 8 / 1,750+ Projects (Top 50 Finalist)</span>
-                                                <span class="badge-tag badge-tag-violet">Finalist</span>
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">🚀</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">Rank 8 / 1,750+ Submissions — HACKDAY 1.0</h5>
+                                                <span class="badge-tag badge-tag-violet">Top 50 Finalist</span>
                                             </div>
-                                            <p class="honor-tile-desc"><strong>HACKDAY 1.0 (2026):</strong> Global hackathon organized by DECODEP &amp; GO.HUB, powered by Unstop. Secured Rank 8 among 1,750+ submitted projects nationwide.</p>
+                                            <p class="honor-item-desc">
+                                                Global hackathon organized by DECODEP &amp; GO.HUB, powered by Unstop. Secured Rank 8 among 1,750+ projects nationwide for high-throughput distributed AI pipelines.
+                                            </p>
                                         </div>
                                     </div>
 
-                                    <!-- 5. Hack-A-Throne National Hackathon 2026 -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">🔥</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">Rank 6 — HACK-A-THRONE National Hackathon 2026</span>
+                                    <!-- 5. Hack-A-Throne -->
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">🔥</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">Rank 6 — HACK-A-THRONE National Hackathon 2026</h5>
                                                 <span class="badge-tag badge-tag-blue">National</span>
                                             </div>
-                                            <p class="honor-tile-desc"><strong>HACK-A-THRONE (2026):</strong> Secured Rank 6 in the national hackathon organized on Unstop, competing against hundreds of national participants with cutting-edge solutions.</p>
+                                            <p class="honor-item-desc">
+                                                Secured Rank 6 in the national hackathon on Unstop, outperforming hundreds of engineering teams with robust real-time AI agents.
+                                            </p>
                                         </div>
                                     </div>
 
                                     <!-- 6. Academic Excellence Cup -->
-                                    <div class="honor-tile">
-                                        <div class="honor-tile-icon">🏅</div>
-                                        <div class="honor-tile-content">
-                                            <div class="honor-tile-header">
-                                                <span class="honor-tile-title">Academic Excellence Cup</span>
-                                                <span class="badge-tag badge-tag-rose">9.02 YGPA</span>
+                                    <div class="honor-editorial-item">
+                                        <div class="honor-medal-icon">🏅</div>
+                                        <div class="honor-item-body">
+                                            <div class="honor-item-top">
+                                                <h5 class="honor-item-title">Academic Excellence Cup (9.02 YGPA Honors)</h5>
+                                                <span class="badge-tag badge-tag-rose">1st Year Honors</span>
                                             </div>
-                                            <p class="honor-tile-desc">Awarded by Gateway Classes for outstanding first year academic performance (9.02 YGPA, 1st Year Honors).</p>
+                                            <p class="honor-item-desc">
+                                                Awarded by Gateway Classes for outstanding first-year academic performance and foundational algorithmic excellence.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Right: Google Cloud Profile & Verified Certifications -->
-                            <div class="creds-stack">
-                                <!-- Google Cloud Profile Card -->
-                                <div class="cred-card card-glass google-cloud-cred">
-                                    <div class="cred-glow-glow"></div>
-                                    <div class="cred-card-top">
-                                        <div class="google-cloud-badge-logo">
-                                            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" style="color: #4285F4;">
+                            <div class="creds-stream-column">
+                                <!-- Google Cloud Profile Block -->
+                                <div class="gcp-editorial-block">
+                                    <div class="gcp-block-top">
+                                        <div class="gcp-brand-icon">
+                                            <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" style="color: #4285F4;">
                                                 <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
                                             </svg>
                                         </div>
-                                        <div class="cred-details">
-                                            <span class="cred-subtitle">GOOGLE CLOUD PROFILE</span>
-                                            <h3>Diamond League <span style="font-size: 0.8rem; opacity: 0.8; font-weight: normal;">(Top Global Tier)</span></h3>
-                                            <span class="gcp-points">💎 21,635 Points • 15+ Skill Badges</span>
+                                        <div>
+                                            <span class="gcp-kicker">GOOGLE CLOUD ECOSYSTEM</span>
+                                            <h4 class="gcp-league-title">Diamond League <span class="gcp-tier-note">(Top Global Tier)</span></h4>
+                                            <span class="gcp-points-badge">💎 21,635 Points &bull; 15+ Skill Badges</span>
                                         </div>
                                     </div>
-                                    <div class="gcp-badge-showcase">
-                                        <img src="assets/gcp_badge.png" alt="Google Cloud Skills Badge" class="gcp-badge-img" loading="lazy" />
+                                    <div class="gcp-badge-banner">
+                                        <img src="assets/gcp_badge.png" alt="Google Cloud Skills Badge" class="gcp-badge-banner-img" loading="lazy" />
                                     </div>
-                                    <p class="cred-desc">Ranked in the top global tier. Verified hands-on badges in Vertex AI Prompt Design, Vector Search, BigQuery ML, and Cloud Systems Architecture.</p>
+                                    <p class="gcp-summary-text">
+                                        Ranked in top global tier. Verified hands-on badges in Vertex AI Prompt Design, Vector Search, BigQuery ML, and Cloud Systems Architecture.
+                                    </p>
                                     <a href="https://www.skills.google/public_profiles/ef613bba-04fa-46f7-8ff7-3a867cf4db7f" class="btn-outline btn-block cred-btn" target="_blank" rel="noopener noreferrer">
                                         <span>Verify Cloud Profile</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 4px; display: inline-block; vertical-align: middle;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 6px; display: inline-block; vertical-align: middle;">
                                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
                                         </svg>
                                     </a>
                                 </div>
 
-                                <!-- Verified Certifications Hub -->
-                                <div class="cred-card card-glass">
-                                    <div class="bento-card-header">
-                                        <div class="bento-card-title">
-                                            <span>📜</span> Verified Certifications
-                                        </div>
-                                        <span class="badge-tag" style="font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.12); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.25); font-weight: 600;">Authentic</span>
+                                <!-- Verified Certifications Block -->
+                                <div class="certs-editorial-block">
+                                    <div class="stream-section-title">
+                                        <span class="stream-icon">📜</span>
+                                        <h4>Verified Certifications</h4>
+                                        <span class="stream-count-pill emerald">Authentic</span>
                                     </div>
 
-                                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                                        <!-- Prompt Engineering -->
-                                        <div class="cred-tile">
-                                            <div class="cred-tile-top">
-                                                <span class="cred-tile-title">Prompt Engineering</span>
+                                    <div class="certs-editorial-list">
+                                        <div class="cert-editorial-item">
+                                            <div class="cert-item-header">
+                                                <h5 class="cert-item-title">Prompt Engineering</h5>
                                                 <span class="badge-tag badge-tag-cyan">Verified</span>
                                             </div>
-                                            <p class="cred-tile-desc">Course Completion Certificate • Infosys Springboard (Issued Nov 29, 2025)</p>
-                                            <button class="open-cert-modal" data-cert="prompt_engineering" type="button" style="background: none; border: none; padding: 0; font-size: 0.78rem; color: var(--gold); cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;">
+                                            <p class="cert-item-meta">Course Completion Certificate &bull; Infosys Springboard (Issued Nov 29, 2025)</p>
+                                            <button class="open-cert-modal cert-link-btn" data-cert="prompt_engineering" type="button">
                                                 <span>View Certificate</span> 📜
                                             </button>
                                         </div>
 
-                                        <!-- Infosys Pragati -->
-                                        <div class="cred-tile">
-                                            <div class="cred-tile-top">
-                                                <span class="cred-tile-title">Infosys Pragati (Cohort 6)</span>
+                                        <div class="cert-editorial-item">
+                                            <div class="cert-item-header">
+                                                <h5 class="cert-item-title">Infosys Pragati (Cohort 6)</h5>
                                                 <span class="badge-tag badge-tag-muted">Cohort 6</span>
                                             </div>
-                                            <p class="cred-tile-desc">Path to Future AI engineering preparation program</p>
+                                            <p class="cert-item-meta">Path to Future AI engineering preparation program</p>
                                         </div>
                                     </div>
                                 </div>
