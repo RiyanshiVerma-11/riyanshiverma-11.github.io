@@ -959,9 +959,9 @@ html[data-theme="classic-light"] .stat-label,
 }
 
 .featured-badge {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
+    position: static;
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 700;

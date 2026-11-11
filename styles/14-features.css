@@ -47,7 +47,9 @@
     }
 
     .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .bento-grid {

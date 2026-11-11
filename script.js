@@ -2973,11 +2973,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------------------------
     // 15. Skill Card Interactive Modal
     // ----------------------------------------------------------------------
-    const skillCards = document.querySelectorAll('.skill-card, .tool-card');
+    // ----------------------------------------------------------------------
+    // 8.1 Project Architecture & Case Study Expand Toggle
+    // ----------------------------------------------------------------------
+    const projectExpandToggles = document.querySelectorAll('.project-expand-toggle');
+    projectExpandToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetId = btn.getAttribute('data-target');
+            const deepDive = document.getElementById(targetId);
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            const toggleText = btn.querySelector('.toggle-text');
+
+            if (deepDive) {
+                if (isExpanded) {
+                    deepDive.hidden = true;
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (toggleText) toggleText.textContent = 'Explore Full Architecture & Case Study';
+                } else {
+                    deepDive.hidden = false;
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (toggleText) toggleText.textContent = 'Show Less Architecture & Case Study';
+                }
+            }
+        });
+    });
+
+    const skillCards = document.querySelectorAll('.skill-chip, .skill-card, .tool-card');
     const skillModal = document.getElementById('skill-modal');
     const skillModalCloseBtn = document.getElementById('skill-modal-close-btn');
     const skillModalTitle = document.getElementById('skill-modal-title');
     const skillModalDesc = document.getElementById('skill-modal-desc');
+    const skillModalCategory = document.getElementById('skill-modal-category');
 
     const skillDescriptions = {
         'Agentic Orchestration': 'This skill involves building smart AI agents that can think, plan, and execute tasks on their own. Instead of just answering questions, these agents use tools, follow dynamic workflows, and correct themselves to solve complex problems.',
@@ -3025,19 +3053,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Add click event to all skill cards
+        // Add click event to all skill cards and chips
         skillCards.forEach(card => {
-            // Make them appear clickable
             card.style.cursor = 'pointer';
             
             card.addEventListener('click', () => {
-                const titleEl = card.querySelector('h4, .tool-card-name');
-                if (titleEl) {
-                    const titleText = titleEl.textContent.trim();
-                    const descText = skillDescriptions[titleText] || 'Detailed information about this skill is currently being updated in the system.';
+                const titleText = card.getAttribute('data-skill') || 
+                                  card.querySelector('.skill-chip-name')?.textContent.trim() || 
+                                  card.querySelector('h4, .tool-card-name')?.textContent.trim();
+                if (titleText) {
+                    const descText = skillDescriptions[titleText] || 
+                                     'Detailed architectural context and benchmark implementation for ' + titleText + ' across Google and enterprise pipelines.';
                     
                     skillModalTitle.textContent = titleText;
                     skillModalDesc.textContent = descText;
+                    if (skillModalCategory) {
+                        const tabParent = card.closest('.tab-content');
+                        const catMap = {
+                            'genai': 'Agentic AI & RAG Pipeline',
+                            'ml-core': 'Deep Learning & Analytical Modeling',
+                            'infrastructure': 'Backend MLOps & High-Throughput APIs',
+                            'tools': 'Production Tools & Ecosystem'
+                        };
+                        const catName = tabParent ? (catMap[tabParent.id] || 'Technical Stack') : 'Technical Stack';
+                        skillModalCategory.textContent = catName;
+                    }
                     
                     skillModal.classList.add('active');
                     lockBodyScroll(skillModal);
