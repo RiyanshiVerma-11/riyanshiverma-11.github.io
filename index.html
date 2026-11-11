@@ -43,7 +43,7 @@
     <!-- Preload most critical display font (Space Grotesk 400 + 700) to cut FOUT -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5.2">
+    <link rel="stylesheet" href="style.css?v=5.3">
 
     <!-- Direct link / hash bypass check for job boards and resume cross-checks -->
     <script>
@@ -376,31 +376,60 @@
                         deployment-ready software systems.</p>
                 </div>
 
-                <div class="bento-grid">
-
-
-                    <!-- Card 3: CGPA & Education details -->
-                    <div class="bento-card card-glass reveal">
-                        <div class="bento-card-label">
-                            <span class="label-dot"></span> Academic Profile
+                <!-- Academic Profile — Pure Editorial Canvas Showcase (Directly on screen, NO card walls) -->
+                <div class="academic-editorial-showcase reveal">
+                    <div class="academic-editorial-main">
+                        <div class="academic-kicker">
+                            <span class="label-dot"></span> Academic Profile // Higher Education
                         </div>
-                        <h3>Education &amp; Core Fields</h3>
-                        <p>Pursuing a rigorous curriculum in computer science and data science, specializing in advanced algorithms, machine learning architectures, and distributed systems.</p>
+                        <h3 class="academic-degree-title">
+                            B.Tech in Computer Science &amp; Engineering
+                            <span class="academic-spec-tag">Data Science</span>
+                        </h3>
+                        <div class="academic-institution-line">
+                            <span class="inst-icon">🏛️</span>
+                            <span class="inst-name">Meerut Institute of Engineering and Technology <span class="inst-abbr">(MIET, Meerut)</span></span>
+                        </div>
+                        <div class="academic-affiliation-line">
+                            <span class="inst-icon">📍</span>
+                            <span class="inst-affil">Affiliated to Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow</span>
+                        </div>
+                        <p class="academic-curriculum-desc">
+                            Pursuing a rigorous curriculum in computer science and data science, specializing in advanced algorithms, machine learning architectures, and distributed systems.
+                        </p>
+                    </div>
 
-                        <div class="edu-card">
-                            <div class="edu-icon">🎓</div>
-                            <div class="edu-details">
-                                <h4>B.Tech in Computer Science &amp; Engineering (Data Science)</h4>
-                                <span class="edu-institution">Meerut Institute of Engineering and Technology (MIET, Meerut)</span>
-                                <span class="edu-affiliation">Affiliated to Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow</span>
-                                <span class="edu-meta">4th Year &bull; 7th Semester (Graduating 2027)</span>
-                                <span class="edu-cgpa">Overall CGPA: <strong style="color: var(--gold);">8.47</strong> <span style="font-size: 0.74rem; color: var(--text-tertiary);">(Till 6th Semester)</span></span>
+                    <div class="academic-editorial-meta">
+                        <div class="academic-cgpa-box">
+                            <span class="cgpa-eyebrow">Academic Standing</span>
+                            <div class="cgpa-val-wrap">
+                                <span class="cgpa-val gradient-text">8.47</span>
+                                <span class="cgpa-denom">/ 10</span>
+                            </div>
+                            <span class="cgpa-note">Overall CGPA (Till 6th Sem)</span>
+                        </div>
+                        <div class="academic-pills-col">
+                            <div class="academic-pill">
+                                <span class="pill-icon">🎓</span>
+                                <div class="pill-text">
+                                    <strong>4th Year &bull; 7th Semester</strong>
+                                    <span>Graduating Class of 2027</span>
+                                </div>
+                            </div>
+                            <div class="academic-pill">
+                                <span class="pill-icon">🏆</span>
+                                <div class="pill-text">
+                                    <strong>Academic Excellence Honors</strong>
+                                    <span>Top 1st Year (9.02 YGPA Gateway Cup)</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Card 4: Metrics Showcase (Span 2) -->
-                    <div class="bento-card card-glass span-2 reveal reveal-delay-2">
+                <div class="bento-grid">
+                    <!-- Card 4: Metrics Showcase (Span 3 / Full Width) -->
+                    <div class="bento-card card-glass span-3 reveal reveal-delay-1">
                         <div class="bento-card-label">
                             <span class="label-dot"></span> Performance metrics
                         </div>
