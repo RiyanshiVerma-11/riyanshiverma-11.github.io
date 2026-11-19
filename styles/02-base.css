@@ -10,7 +10,7 @@
     width: 100%;
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 clamp(0.75rem, 1.5vw, 1.5rem);
+    padding: 0 clamp(1rem, 2.5vw, 2rem);
     box-sizing: border-box;
 }
 

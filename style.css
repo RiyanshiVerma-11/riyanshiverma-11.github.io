@@ -1,7 +1,7 @@
 /**
  * Riyanshi Verma — Portfolio Production Stylesheet
  * COMPILED FROM MODULAR SOURCE: /styles/*.css
- * Build time: 2026-11-19T14:16:02.185Z
+ * Build time: 2026-11-19T14:26:27.973Z
  *
  * NOTE: To edit styles, modify the component files in /styles/
  * and run: node build-css.js (or npm run build:css)
@@ -86,7 +86,7 @@
     --font-cursive: 'Great Vibes', 'Alex Brush', cursive, sans-serif;
 
     /* ── Layout ── */
-    --max-w: min(96vw, 1720px);
+    --max-w: min(94vw, 1520px);
     --nav-h: 76px;
     --radius-sm: 8px;
     --radius-md: 14px;
@@ -277,7 +277,7 @@ main {
     width: 100%;
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 clamp(0.75rem, 1.5vw, 1.5rem);
+    padding: 0 clamp(1rem, 2.5vw, 2rem);
     box-sizing: border-box;
 }
 
@@ -2714,7 +2714,7 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.35rem;
+    gap: 1.15rem;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -2735,8 +2735,8 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     overflow: hidden;
     background: rgba(255, 255, 255, 0.015);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 1.4rem 1.35rem;
+    border-radius: 14px;
+    padding: 1.25rem 1.15rem;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     transition: border-color var(--t-normal), box-shadow var(--t-normal), transform var(--t-normal);
@@ -2764,43 +2764,46 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .showcase-header {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .showcase-title-group {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.3rem;
     min-width: 0;
     max-width: 100%;
 }
 
 .project-label {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: var(--rose);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     word-break: break-word;
     white-space: normal;
+    line-height: 1.35;
 }
 
 .showcase-title-row {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    justify-content: space-between;
+    gap: 0.5rem;
     flex-wrap: wrap;
     min-width: 0;
     max-width: 100%;
 }
 
 .project-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
@@ -2815,11 +2818,11 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     position: static !important;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.3rem;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     font-weight: 600;
-    padding: 0.2rem 0.55rem;
+    padding: 0.18rem 0.5rem;
     border-radius: 100px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
@@ -2837,7 +2840,7 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .project-links {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
     min-width: 0;
     max-width: 100%;
@@ -2846,13 +2849,13 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .project-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
+    gap: 0.35rem;
+    font-size: 0.74rem;
     font-weight: 600;
     color: var(--gold);
     text-decoration: none;
     transition: all 0.2s ease;
-    padding: 0.3rem 0.6rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 6px;
     background: rgba(var(--gold-rgb), 0.04);
     border: 1px solid rgba(var(--gold-rgb), 0.15);
@@ -2863,25 +2866,25 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     color: var(--text-primary);
     background: rgba(var(--gold-rgb), 0.12);
     border-color: var(--gold);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 /* ── 2. Bada Screenshot Showcase (Prominent, High-Fidelity) ── */
 .project-screenshots,
 .showcase-screenshot-large {
     width: 100%;
-    margin: 0.4rem 0 1rem;
+    margin: 0.35rem 0 0.85rem;
     overflow: hidden;
 }
 
 .browser-mockup-frame {
     width: 100%;
     max-width: 100%;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
     background: #090d1c;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
     transition: transform var(--t-normal), box-shadow var(--t-normal);
     box-sizing: border-box;
 }
@@ -2895,8 +2898,8 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
-    padding: 0.45rem 0.75rem;
+    gap: 5px;
+    padding: 0.4rem 0.65rem;
     background: rgba(14, 19, 38, 0.95);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
@@ -2907,13 +2910,13 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .browser-mockup-dots {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     flex-shrink: 0;
 }
 
 .mockup-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     display: inline-block;
 }
@@ -2925,14 +2928,14 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 .browser-mockup-address {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 0.2rem 0.65rem;
-    border-radius: 16px;
+    padding: 0.18rem 0.55rem;
+    border-radius: 14px;
     color: var(--text-tertiary);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     min-width: 0;
     flex: 1 1 auto;
     overflow: hidden;
@@ -2954,30 +2957,30 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 
 .browser-mockup-badge {
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     color: var(--emerald);
     display: flex;
     align-items: center;
     gap: 4px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     flex-shrink: 0;
     white-space: nowrap;
 }
 
 .browser-mockup-badge .badge-indicator {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--emerald);
-    box-shadow: 0 0 8px var(--emerald);
+    box-shadow: 0 0 6px var(--emerald);
     animation: pulseDot 2s infinite;
 }
 
 .browser-mockup-viewport {
     width: 100%;
-    height: 195px;
-    max-height: 220px;
+    height: 180px;
+    max-height: 200px;
     line-height: 0;
     overflow: hidden;
     background: #02040a;
@@ -2998,45 +3001,49 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 }
 
 .project-screenshot-item {
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: #090d1c;
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
 }
 
 /* ── 3. Problem Statement (3-4 Lines Directly Visible on Screen) ── */
 .project-problem-statement,
 .showcase-problem-callout {
     position: relative;
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 0.9rem;
     background: rgba(var(--rose-rgb), 0.04);
     border-left: 3px solid var(--rose);
     border-radius: 0 8px 8px 0;
-    margin: 0.4rem 0 1.1rem;
+    margin: 0.35rem 0 0.85rem;
     flex-grow: 1;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .project-problem-statement strong,
 .showcase-problem-callout strong {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     color: var(--rose);
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 0.3rem;
+    gap: 0.35rem;
+    margin-bottom: 0.25rem;
     font-style: normal;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
 }
 
 .project-problem-statement p,
 .showcase-problem-callout p {
-    font-size: 0.86rem;
+    font-size: 0.83rem;
     color: var(--text-primary);
     margin: 0;
-    line-height: 1.55;
+    line-height: 1.5;
+    word-break: break-word;
 }
 
 /* ── 4. Interactive "Show More" / Arrow Recruiter Toggle Button ── */
@@ -3045,20 +3052,21 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 0.9rem;
     background: rgba(var(--violet-rgb), 0.05);
     border: 1px solid rgba(var(--violet-rgb), 0.2);
-    border-radius: 10px;
+    border-radius: 8px;
     color: var(--violet);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     cursor: pointer;
     transition: all 0.25s ease;
     user-select: none;
     outline: none;
     margin-top: auto;
+    box-sizing: border-box;
 }
 
 .project-expand-toggle:hover {
@@ -3087,13 +3095,17 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 
 /* ── 5. Expandable Deep Dive Drawer ── */
 .project-deep-dive {
-    margin-top: 1.25rem;
-    padding-top: 1.25rem;
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
     border-top: 1px dashed rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 1rem;
     animation: fadeSlideUp 0.35s var(--ease-out);
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .project-deep-dive[hidden] {
@@ -3103,9 +3115,61 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 /* ── Architecture Badges Grid ── */
 .arch-badge-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
-    margin-bottom: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-bottom: 0.4rem;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.arch-badge-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 0.5rem 0.65rem;
+    transition: border-color 0.2s ease;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.arch-badge-pill:hover {
+    border-color: rgba(var(--gold-rgb), 0.3);
+}
+
+.arch-badge-pill .badge-icon {
+    font-size: 1.05rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.arch-badge-pill .badge-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.arch-badge-pill .badge-text strong {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arch-badge-pill .badge-text small {
+    font-size: 0.64rem;
+    color: var(--text-tertiary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .arch-badge-pill {
@@ -3277,15 +3341,13 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     transform: translateY(-2px);
 }
 
-/* ── Responsive Styling (3 Cols Desktop -> 2 Cols Tablet -> 1 Col Mobile) ── */
-@media (max-width: 1200px) {
+/* ── Responsive Styling: 3 Cols on Laptops/Desktop, 2 Cols on Tablet, 1 Col on Mobile ── */
+@media (max-width: 992px) {
     .projects-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.25rem;
+        gap: 1.15rem;
     }
-}
 
-@media (max-width: 900px) {
     .arch-badge-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -3302,23 +3364,23 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
 @media (max-width: 768px) {
     .projects-grid {
         grid-template-columns: minmax(0, 1fr) !important;
-        gap: 1.5rem;
+        gap: 1.4rem;
     }
 
     .project-card,
     .project-showcase-item {
-        padding: 1.35rem 1.15rem;
+        padding: 1.25rem 1.1rem;
         border-radius: 12px;
     }
 
     .showcase-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.8rem;
+        gap: 0.75rem;
     }
 
     .project-title {
-        font-size: 1.35rem;
+        font-size: 1.3rem;
     }
 
     .browser-mockup-address {
@@ -3326,8 +3388,8 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     }
 
     .browser-mockup-viewport {
-        height: 220px;
-        max-height: 250px;
+        height: 200px;
+        max-height: 220px;
     }
 
     .arch-badge-grid {
@@ -3341,34 +3403,34 @@ html[data-theme="classic-light"] .academic-pill .pill-text strong {
     }
 
     .project-link {
-        font-size: 0.8rem;
-        padding: 0.35rem 0.7rem;
+        font-size: 0.78rem;
+        padding: 0.3rem 0.6rem;
     }
 }
 
 @media (max-width: 480px) {
     .projects-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.35rem;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 1.25rem;
     }
 
     .project-card,
     .project-showcase-item {
-        padding: 1.15rem 1rem;
+        padding: 1.1rem 0.95rem;
     }
 
     .project-title {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
     .browser-mockup-viewport {
-        height: 190px;
-        max-height: 210px;
+        height: 180px;
+        max-height: 200px;
     }
 
     .showcase-links-inline,
     .project-links {
-        gap: 0.5rem;
+        gap: 0.4rem;
     }
 }
 
@@ -7032,10 +7094,6 @@ body.modal-open {
         height: 300px;
     }
 
-    .projects-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .bento-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -7165,8 +7223,15 @@ body.modal-open {
     }
 
     .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
         grid-template-columns: minmax(0, 1fr) !important;
-        gap: 1.6rem;
+        gap: 1.4rem;
     }
 }
 
@@ -7177,7 +7242,7 @@ body.modal-open {
 
     .projects-grid {
         grid-template-columns: minmax(0, 1fr) !important;
-        gap: 1.35rem;
+        gap: 1.25rem;
     }
 
     .hero-name {

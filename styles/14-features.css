@@ -46,10 +46,6 @@
         height: 300px;
     }
 
-    .projects-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .bento-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -179,8 +175,15 @@
     }
 
     .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
         grid-template-columns: minmax(0, 1fr) !important;
-        gap: 1.6rem;
+        gap: 1.4rem;
     }
 }
 
@@ -191,7 +194,7 @@
 
     .projects-grid {
         grid-template-columns: minmax(0, 1fr) !important;
-        gap: 1.35rem;
+        gap: 1.25rem;
     }
 
     .hero-name {
