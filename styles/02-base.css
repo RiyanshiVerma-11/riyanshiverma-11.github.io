@@ -11,12 +11,15 @@
     max-width: var(--max-w);
     margin: 0 auto;
     padding: 0 clamp(0.75rem, 1.5vw, 1.5rem);
+    box-sizing: border-box;
 }
 
 .section {
     position: relative;
     padding: 4.25rem 0;
     z-index: 2;
+    max-width: 100%;
+    overflow-x: clip;
 }
 
 /* ── Scroll Reveal Utility ── */
