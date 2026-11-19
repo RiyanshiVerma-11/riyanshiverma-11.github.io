@@ -218,12 +218,6 @@
         border-radius: var(--radius-sm);
     }
 
-    .projects-grid {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-
     .form-row {
         grid-template-columns: 1fr;
     }

@@ -47,9 +47,7 @@
     }
 
     .projects-grid {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .bento-grid {
@@ -179,11 +177,21 @@
         border-color: var(--gold);
         transform: translateY(-2px);
     }
+
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.6rem;
+    }
 }
 
 @media (max-width: 480px) {
     .nav-container {
         padding: 0 0.8rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.35rem;
     }
 
     .hero-name {
