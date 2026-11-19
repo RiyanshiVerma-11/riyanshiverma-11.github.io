@@ -1,7 +1,7 @@
 /**
  * Riyanshi Verma — Portfolio Production Stylesheet
  * COMPILED FROM MODULAR SOURCE: /styles/*.css
- * Build time: 2026-11-11T19:32:39.846Z
+ * Build time: 2026-11-19T12:54:44.276Z
  *
  * NOTE: To edit styles, modify the component files in /styles/
  * and run: node build-css.js (or npm run build:css)
@@ -727,6 +727,11 @@ body {
     display: none;
 }
 
+/* Desktop social links — visible above 992px */
+.desktop-only {
+    display: inline-flex;
+}
+
 .nav-actions a.desktop-only,
 .nav-actions .btn-outline {
     padding: 0.45rem;
@@ -767,6 +772,7 @@ body {
 
 
 
+@media (max-width: 992px) {
     /* Mobile Header Layout Adjustments */
     .nav-container {
         display: flex;
@@ -842,7 +848,7 @@ body {
     .contact-alternative {
         flex-direction: column;
     }
-
+}
 
 /* ── 8. Nav Links Underline Animation ── */
 .nav-link {

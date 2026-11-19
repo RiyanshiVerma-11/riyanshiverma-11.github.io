@@ -114,6 +114,11 @@
     display: none;
 }
 
+/* Desktop social links — visible above 992px */
+.desktop-only {
+    display: inline-flex;
+}
+
 .nav-actions a.desktop-only,
 .nav-actions .btn-outline {
     padding: 0.45rem;
@@ -154,6 +159,7 @@
 
 
 
+@media (max-width: 992px) {
     /* Mobile Header Layout Adjustments */
     .nav-container {
         display: flex;
@@ -229,7 +235,7 @@
     .contact-alternative {
         flex-direction: column;
     }
-
+}
 
 /* ── 8. Nav Links Underline Animation ── */
 .nav-link {
